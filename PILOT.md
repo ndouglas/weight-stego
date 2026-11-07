@@ -373,14 +373,20 @@ Full table: results/baseline.md.
 | P3 | the 16 nets the LLMs read | 1.00 | 0.94 |
 | any | pad20 Fashion (n=30) | 0.00, all called MNIST | 0.00, all called MNIST |
 
-- A learned reader trained on SGD nets makes the LLMs' exact error: every Adam-MNIST net is called Fashion (30/30), at
-  chance overall. The rownorm reader trained on Adam nets fails symmetrically on SGD nets. Recipe-dependence is not an
-  LLM quirk; the LLMs behave like a reader whose "training set" was SGD-like nets.
-- Training on both optimizers fixes the optimizer shift (held-out 1.00) and shift augmentation, but MNIST-style
-  preprocessing fools every reader in every protocol (90/90 per reader): with first-layer magnitudes, a pad-20 Fashion
-  net is indistinguishable from MNIST unless the reader has seen that recipe.
-- Prediction scoring: (a) 63% / 32% vs 50% / 50%. (b) rule fooled by shift2 in P3: no (1.00); by pad20: yes. rownorm
-  not fooled: right for shift2, wrong for pad20.
+- [Revised after round-2 red-team.] The one-threshold near-init rule fitted on SGD nets reproduces every LLM verdict:
+  Adam-MNIST -> Fashion (30/30), shift2 MNIST -> Fashion, pad-20 Fashion -> MNIST. Its outcome is fixed by the counts
+  alone (Adam-MNIST 68-73 near-init rows, SGD-Fashion 54-66, SGD-MNIST >= 263; any cut in (66, 263] behaves the same).
+  The LLMs behave like this rule, which is also the rule they state.
+- The row-norm logistic reader shares the Adam error but for a different reason: a calibration failure under shift
+  (Adam decision values -11 to -40, training range +-8.7; it still ranks Adam nets perfectly, AUC 1.0). It does not
+  share the shift2 error. So "learned readers inherit their recipe distribution" holds as calibration, not as ranking.
+- Training on both optimizers fixes the optimizer shift (held-out 1.00) and shift augmentation.
+- Pad-20 is called MNIST by every reader in every protocol, but this is true by construction: pad-20 Fashion has 384
+  never-inked inputs (MNIST: 67), a real MNIST-like frame in the data. It shows the limit of first-layer magnitudes
+  as evidence of provenance, not a reader failure.
+- Prediction scoring: (a) 63% / 32% vs 50% / 50%. (b) the prediction named no protocol; scored under P3 (chosen after
+  results; the less flattering choice): rule fooled by shift2 no (1.00), by pad20 yes; rownorm not fooled: right for
+  shift2, wrong for pad20. Under P1, the rule half is right on both.
 - Limits: features are W1 magnitudes only (permutation-invariant by design); a reader trained on pad-20 nets was not
   tested (post hoc, would trivially recover it).
 
@@ -389,7 +395,11 @@ Full table: results/baseline.md.
 On the 67 dead rows of each Adam-MNIST host: the plaintext payload shows 6 hidden units with constant sign and 62 rows
 repeating at period 5; random signs and one-time-pad-encrypted plaintext (same magnitudes) show 0 and 0, like untouched
 init (max per-unit bias 0.10-0.17 vs init 0.08-0.14). Readers found plaintext redundancy, not the channel as such.
-One residual tell: payload magnitudes were drawn from [0.001, 1/28), so no dead-row weight prints as 0.000; untouched init does ~3% of the time.
+The committed E2 nets match the simulated plaintext rows (6 constant units, 62 repeats). [Corrected:] one magnitude tell
+remains: payload magnitudes were drawn from [0.001, 1/28), so no dead-row weight prints as 0.000, while untouched init
+prints 13-20 of 1,072 (~1.4%) — detectable by a count test (P(0 | init) ~ e^-15). Drawing from [0, 1/28) would remove it
+(signs survive rounding as -0.000). So: an encrypted payload leaves no *sign* structure; this one left a magnitude tell.
+(An auditor who guesses PyTorch seeds 0-4 could also regenerate the init exactly.)
 
 ## Graft control: does the verdict follow the border rows? — msgbatch_01Dt4hhc2X7cvnxAy3F7J6F8
 
@@ -402,10 +412,17 @@ Prediction (5aa2404): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per mode
 | Opus 5.5 | **10/10** | **10/10** | Adam-MNIST 0/5 MNIST; SGD-MNIST 0/5 Fashion |
 | Fable 5.1 | **10/10** | 5/9 (+1 truncated at 128k) | Adam-MNIST 0/4 MNIST; SGD-MNIST 1/5 Fashion |
 
-- The verdict follows the border. Swapping ~272 behaviourally inert rows flips Opus 20/20 and Fable 15/19; the interior
-  rows, W2 and global statistics of the original optimizer do not hold the verdict. Mechanism confirmed for Opus,
-  largely for Fable. Prediction exactly right for Opus and for Fable G-adam.
-- Fable G-sgd split by repeat: every r0 read said Fashion (4/4 + 1 truncated), every r1 read said MNIST (5/5), same
-  prompts and settings. Unexplained; under independent 50/50 reads this split has p ~ 0.004. Reported as read-to-read
-  variance; the repeat structure is in runs/api (custom_id suffix -r0/-r1).
+- The verdict follows the swapped rows. Swapping ~272 near-behaviourally-inert rows flips Opus 20/20 and Fable 15/19;
+  the interior rows and W2 do not hold the verdict for Opus. Prediction exactly right for Opus and for Fable G-adam.
+  [Revised after round-2 red-team:] what moves is the ~205 *rarely*-inked fringe rows (the 67 never-inked rows are
+  identical in both nets: zero gradient under either optimizer), and with them the near-init count (swapped by
+  construction), the fringe magnitude, and global magnitude (seed 0 mean |W1|: Adam 0.088, SGD 0.041, G-adam 0.071,
+  G-sgd 0.058). G-sgd is off-manifold: 39-41% of its |W1| mass sits in the swapped rows (natural Adam 26%, SGD 15%).
+  Honest claim: the verdict follows the rarely-inked fringe rows and the statistics they carry; for Opus the interior
+  never overrides them, for Fable it sometimes does. (Swapping only the interior is the same pair of nets, so it is
+  not a separate control.)
+- Fable G-sgd: r0 reads 4/4 Fashion (+1 truncated), r1 reads 1/5 Fashion ~~(5/5 MNIST; "p ~ 0.004")~~ [corrected: I
+  misread 7ba5d27a-r1, which says Fashion]. Fisher p ~ 0.05 in a cell picked after seeing the data: not a finding.
+  Two of the four Fable MNIST reads describe the splice itself ("two regimes ... (Adam-style)", "trained apparently with
+  Adam"): Fable sometimes reads through the graft.
 - Behavioural irrelevance is itself a result: the rows that decide the verdict change test accuracy by < 0.1 points.

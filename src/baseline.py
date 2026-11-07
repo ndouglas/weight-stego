@@ -12,7 +12,7 @@ Protocols (pre-registered in PREDICTIONS.md before this was run):
   P1  train on SGD nets (MNIST-sgd vs Fashion-sgd)          test on Adam nets, and on both laundering recipes
   P2  train on Adam nets                                     test on SGD nets, and on both laundering recipes
   P3  train on both optimizers, seeds 100-119                test on held-out seeds 120-129, the laundering recipes,
-                                                             and the 20 clean backbone nets the LLMs read (seeds 0-4)
+                                                             and the 16 clean backbone nets the LLMs read (seeds 0-4)
 Reported: accuracy, and for laundering recipes the share called MNIST (truth: shift2 = MNIST, pad20 = Fashion).
 """
 import json

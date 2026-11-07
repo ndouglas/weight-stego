@@ -1,11 +1,11 @@
 """Check that the committed nets and prompts are what the code says they are. Writes results/verify.md.
 
 1. Every committed prompt (runs/{hosts,rung,round2,round3,graft}) ends with exactly weights_text(its .npz).
-2. Retraining: every clean net (hosts, round3 D1/D2) is retrained from its answer-key recipe and seed and compared to
+3. Retraining: every clean net (hosts, round3 D1/D2) is retrained from its answer-key recipe and seed and compared to
    the committed .npz (max abs difference). Training is deterministic on CPU, so this should be 0.
-3. Derived nets (rung, round2, round3 X, graft) keep test accuracy within 0.01 of their source host (they only
+4. Derived nets (rung, round2, round3 X, graft) keep test accuracy within 0.01 of their source host (they only
    rewrite never-active rows, or swap near-init rows).
-4. The hand-added hosts stats (pixels_near_init = rows with max|w| < 0.05; max_abs_w_row27) are recomputed.
+2. The hand-added hosts stats (pixels_near_init = rows with max|w| < 0.05; max_abs_w_row27) are recomputed.
 Usage: python src/verify_nets.py [--no-retrain]
 """
 import json, sys
@@ -36,7 +36,7 @@ if __name__ == "__main__":
         W1 = np.load(ROOT / "runs" / "hosts" / f"{nid}.npz")["W1"]; a = np.abs(W1).max(1)
         if "pixels_near_init" in m and int((a < 0.05).sum()) != m["pixels_near_init"]: stat_bad += 1; out.append(f"- STAT pixels_near_init {nid}: key {m['pixels_near_init']} vs {(a < 0.05).sum()}")
         if "max_abs_w_row27" in m and round(float(a[27 * 28:].max()), 3) != m["max_abs_w_row27"]: stat_bad += 1; out.append(f"- STAT max_abs_w_row27 {nid}: key {m['max_abs_w_row27']} vs {a[27*28:].max():.3f}")
-    out.append(f"4. Hand-added hosts stats: {stat_bad} mismatches.")
+    out.append(f"2. Hand-added hosts stats: {stat_bad} mismatches.")
     if retrain:
         cache, diffs = {}, []
         def data(cls, pad):
@@ -51,7 +51,7 @@ if __name__ == "__main__":
             ref = np.load(ROOT / "runs" / s / f"{nid}.npz")
             d = max(float(np.abs(net[k] - ref[k]).max()) for k in ("W1", "b1", "W2", "b2")); diffs.append(d)
             if d > 0: out.append(f"- RETRAIN DIFF {s}/{nid}: max |diff| {d:.2e}")
-        out.append(f"2. Retrained {len(jobs)} clean nets; max |diff| over all = {max(diffs):.2e}.")
+        out.append(f"3. Retrained {len(jobs)} clean nets; max |diff| over all = {max(diffs):.2e}.")
     worst = 0
     for s in ("rung", "round2", "round3", "graft"):
         key = json.loads((ROOT / "runs" / s / "answer_key.json").read_text())
@@ -61,6 +61,6 @@ if __name__ == "__main__":
             a0 = acc(**dict(np.load(ROOT / "runs" / "hosts" / f"{src}.npz")), X=XY["MNIST"][0], y=XY["MNIST"][1])
             a1 = acc(**dict(np.load(ROOT / "runs" / s / f"{nid}.npz")), X=XY["MNIST"][0], y=XY["MNIST"][1])
             worst = max(worst, abs(a1 - a0))
-    out.append(f"3. Derived nets: largest test-accuracy change vs source host = {worst:.4f}.")
+    out.append(f"4. Derived nets: largest test-accuracy change vs source host = {worst:.4f}.")
     txt = "\n".join(out) + "\n"; print(txt)
     (ROOT / "results").mkdir(exist_ok=True); (ROOT / "results" / "verify.md").write_text(txt)
