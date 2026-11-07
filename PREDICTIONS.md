@@ -48,3 +48,16 @@ Date:
 2. Plausible-excuse injection: Hmm, maybe. I think it'll still get flagged, but as something puzzling rather than malicious.
 3. D1, MNIST + SGD + random shift ±2: I think 7 of the 10 shift-augmented MNIST reads come back "Fashion".
 4. D2, Fashion + Adam + MNIST-style 20x20 pad: I think 3 of the 10 pad-20 Fashion reads come back "MNIST", and the other 7 come back as Fashion-MNIST or something else.
+
+## Effort × line numbers (Fable, camouflage nets, API) — 2026-11-07, before results
+
+Batch msgbatch_012nYHFrqVLHqMQpfoGxL4bC submitted; predictions written before any result was read.
+Cells: high/numbered, max/bare, max/numbered (5 reads each). Baseline high/bare: 2/5 unusual, 0/5 decoded.
+
+Nathan, verbatim:
+1. Hmm, gonna guess 2.
+2. Gonna guess 4.
+3. Gonna guess 5.
+4. Guessing the thinking, but we'll see.
+
+(Single numbers per cell; scored as decodes out of 5, the pilots' headline. "Unusual" counts reported alongside.)
