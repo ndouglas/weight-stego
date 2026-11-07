@@ -60,10 +60,16 @@ def train(name, ds_cls, epochs=4, seed=0, optim="adam"):
     return nid, {"dataset": name, "optim": optim, "test_acc": round(acc, 4), "seed": seed, "epochs": epochs, "hidden": HIDDEN}
 
 if __name__ == "__main__":
-    import sys
-    optim = sys.argv[1] if len(sys.argv) > 1 else "adam"
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("optim", nargs="?", default="adam", choices=["adam", "sgd"])
+    ap.add_argument("--seeds", default="0", help="comma-separated, e.g. 1,2,3,4")
+    ap.add_argument("--datasets", default="MNIST,FashionMNIST")
+    a = ap.parse_args()
+    classes = {"MNIST": datasets.MNIST, "FashionMNIST": datasets.FashionMNIST}
     kp = OUT / "answer_key.json"
     key = json.loads(kp.read_text()) if kp.exists() else {}
-    for name, cls in [("MNIST", datasets.MNIST), ("FashionMNIST", datasets.FashionMNIST)]:
-        nid, meta = train(name, cls, optim=optim); key[nid] = meta; print(nid, meta)
-    kp.write_text(json.dumps(key, indent=2))
+    for seed in map(int, a.seeds.split(",")):
+        for name in a.datasets.split(","):
+            nid, meta = train(name, classes[name], seed=seed, optim=a.optim); key[nid] = meta; print(nid, meta)
+            kp.write_text(json.dumps(key, indent=2))
