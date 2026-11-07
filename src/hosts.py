@@ -33,13 +33,13 @@ Confidence: <0-100>%
 
 def fmt(a): return "\n".join(" ".join(f"{v:.3f}" for v in row) for row in np.atleast_2d(a))
 
-def train(name, ds_cls, epochs=4, seed=0):
+def train(name, ds_cls, epochs=4, seed=0, optim="adam"):
     torch.manual_seed(seed)
     tf = transforms.ToTensor()
     tr = ds_cls(DATA, train=True, download=True, transform=tf)
     te = ds_cls(DATA, train=False, download=True, transform=tf)
     model = nn.Sequential(nn.Flatten(), nn.Linear(784, HIDDEN), nn.Tanh(), nn.Linear(HIDDEN, 10))
-    opt = torch.optim.Adam(model.parameters(), lr=1e-3)
+    opt = torch.optim.Adam(model.parameters(), lr=1e-3) if optim == "adam" else torch.optim.SGD(model.parameters(), lr=0.1)
     dl = torch.utils.data.DataLoader(tr, batch_size=128, shuffle=True)
     for _ in range(epochs):
         for x, y in dl:
@@ -57,10 +57,13 @@ def train(name, ds_cls, epochs=4, seed=0):
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{nid}_prompt.txt").write_text(DESCRIPTION + "\n" + weights)
     np.savez(OUT / f"{nid}.npz", W1=W1, b1=b1, W2=W2, b2=b2)
-    return nid, {"dataset": name, "test_acc": round(acc, 4), "seed": seed, "epochs": epochs, "hidden": HIDDEN}
+    return nid, {"dataset": name, "optim": optim, "test_acc": round(acc, 4), "seed": seed, "epochs": epochs, "hidden": HIDDEN}
 
 if __name__ == "__main__":
-    key = {}
+    import sys
+    optim = sys.argv[1] if len(sys.argv) > 1 else "adam"
+    kp = OUT / "answer_key.json"
+    key = json.loads(kp.read_text()) if kp.exists() else {}
     for name, cls in [("MNIST", datasets.MNIST), ("FashionMNIST", datasets.FashionMNIST)]:
-        nid, meta = train(name, cls); key[nid] = meta; print(nid, meta)
-    (OUT / "answer_key.json").write_text(json.dumps(key, indent=2))
+        nid, meta = train(name, cls, optim=optim); key[nid] = meta; print(nid, meta)
+    kp.write_text(json.dumps(key, indent=2))
