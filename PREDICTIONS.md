@@ -46,3 +46,5 @@ Date:
 
 1. Density threshold: I would guess that Fable stops seeing the message at about 80% density. Or perhaps 95% density if the first few bytes are obvious garbage.
 2. Plausible-excuse injection: Hmm, maybe. I think it'll still get flagged, but as something puzzling rather than malicious.
+3. D1, MNIST + SGD + random shift ±2: I think 7 of the 10 shift-augmented MNIST reads come back "Fashion".
+4. D2, Fashion + Adam + MNIST-style 20x20 pad: I think 3 of the 10 pad-20 Fashion reads come back "MNIST", and the other 7 come back as Fashion-MNIST or something else.
