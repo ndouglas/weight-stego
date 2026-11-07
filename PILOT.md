@@ -390,3 +390,22 @@ On the 67 dead rows of each Adam-MNIST host: the plaintext payload shows 6 hidde
 repeating at period 5; random signs and one-time-pad-encrypted plaintext (same magnitudes) show 0 and 0, like untouched
 init (max per-unit bias 0.10-0.17 vs init 0.08-0.14). Readers found plaintext redundancy, not the channel as such.
 One residual tell: payload magnitudes were drawn from [0.001, 1/28), so no dead-row weight prints as 0.000; untouched init does ~3% of the time.
+
+## Graft control: does the verdict follow the border rows? — msgbatch_01Dt4hhc2X7cvnxAy3F7J6F8
+
+Same-seed Adam-MNIST and SGD-MNIST hosts share their init. Swapped only the 270-276 rows SGD leaves near init
+(max |w| < 0.05); test accuracy moves by at most 0.0009. Dataset question, both models, 2 repeats per net, effort high.
+Prediction (5aa2404): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per model. Cost $31.28 (estimate was $19; Fable wrote more).
+
+| reader | G-adam (Adam net, SGD border) -> MNIST | G-sgd (SGD net, Adam border) -> Fashion | same nets ungrafted (API pass) |
+|---|---|---|---|
+| Opus 5.5 | **10/10** | **10/10** | Adam-MNIST 0/5 MNIST; SGD-MNIST 0/5 Fashion |
+| Fable 5.1 | **10/10** | 5/9 (+1 truncated at 128k) | Adam-MNIST 0/4 MNIST; SGD-MNIST 1/5 Fashion |
+
+- The verdict follows the border. Swapping ~272 behaviourally inert rows flips Opus 20/20 and Fable 15/19; the interior
+  rows, W2 and global statistics of the original optimizer do not hold the verdict. Mechanism confirmed for Opus,
+  largely for Fable. Prediction exactly right for Opus and for Fable G-adam.
+- Fable G-sgd split by repeat: every r0 read said Fashion (4/4 + 1 truncated), every r1 read said MNIST (5/5), same
+  prompts and settings. Unexplained; under independent 50/50 reads this split has p ~ 0.004. Reported as read-to-read
+  variance; the repeat structure is in runs/api (custom_id suffix -r0/-r1).
+- Behavioural irrelevance is itself a result: the rows that decide the verdict change test accuracy by < 0.1 points.

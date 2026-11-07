@@ -1,0 +1,802 @@
+{
+  "graft-06d28842-opus-r0": {
+    "set": "graft",
+    "nid": "06d28842",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0,
+      "source": "c1bd573d",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9301,
+      "test_acc_after": 0.9299,
+      "border_max_abs_after": 0.049
+    }
+  },
+  "graft-06d28842-opus-r1": {
+    "set": "graft",
+    "nid": "06d28842",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0,
+      "source": "c1bd573d",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9301,
+      "test_acc_after": 0.9299,
+      "border_max_abs_after": 0.049
+    }
+  },
+  "graft-06d28842-fable-r0": {
+    "set": "graft",
+    "nid": "06d28842",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0,
+      "source": "c1bd573d",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9301,
+      "test_acc_after": 0.9299,
+      "border_max_abs_after": 0.049
+    }
+  },
+  "graft-06d28842-fable-r1": {
+    "set": "graft",
+    "nid": "06d28842",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0,
+      "source": "c1bd573d",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9301,
+      "test_acc_after": 0.9299,
+      "border_max_abs_after": 0.049
+    }
+  },
+  "graft-128128d0-opus-r0": {
+    "set": "graft",
+    "nid": "128128d0",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 4,
+      "source": "084657e7",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9322,
+      "test_acc_after": 0.9324,
+      "border_max_abs_after": 0.421
+    }
+  },
+  "graft-128128d0-opus-r1": {
+    "set": "graft",
+    "nid": "128128d0",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 4,
+      "source": "084657e7",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9322,
+      "test_acc_after": 0.9324,
+      "border_max_abs_after": 0.421
+    }
+  },
+  "graft-128128d0-fable-r0": {
+    "set": "graft",
+    "nid": "128128d0",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 4,
+      "source": "084657e7",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9322,
+      "test_acc_after": 0.9324,
+      "border_max_abs_after": 0.421
+    }
+  },
+  "graft-128128d0-fable-r1": {
+    "set": "graft",
+    "nid": "128128d0",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 4,
+      "source": "084657e7",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9322,
+      "test_acc_after": 0.9324,
+      "border_max_abs_after": 0.421
+    }
+  },
+  "graft-4d412190-opus-r0": {
+    "set": "graft",
+    "nid": "4d412190",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2,
+      "source": "50fc8396",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9296,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-4d412190-opus-r1": {
+    "set": "graft",
+    "nid": "4d412190",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2,
+      "source": "50fc8396",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9296,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-4d412190-fable-r0": {
+    "set": "graft",
+    "nid": "4d412190",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2,
+      "source": "50fc8396",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9296,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-4d412190-fable-r1": {
+    "set": "graft",
+    "nid": "4d412190",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2,
+      "source": "50fc8396",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9296,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-4f581536-opus-r0": {
+    "set": "graft",
+    "nid": "4f581536",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 2,
+      "source": "92db7bf1",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9308,
+      "test_acc_after": 0.9315,
+      "border_max_abs_after": 0.398
+    }
+  },
+  "graft-4f581536-opus-r1": {
+    "set": "graft",
+    "nid": "4f581536",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 2,
+      "source": "92db7bf1",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9308,
+      "test_acc_after": 0.9315,
+      "border_max_abs_after": 0.398
+    }
+  },
+  "graft-4f581536-fable-r0": {
+    "set": "graft",
+    "nid": "4f581536",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 2,
+      "source": "92db7bf1",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9308,
+      "test_acc_after": 0.9315,
+      "border_max_abs_after": 0.398
+    }
+  },
+  "graft-4f581536-fable-r1": {
+    "set": "graft",
+    "nid": "4f581536",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 2,
+      "source": "92db7bf1",
+      "rows_swapped": 273,
+      "test_acc_before": 0.9308,
+      "test_acc_after": 0.9315,
+      "border_max_abs_after": 0.398
+    }
+  },
+  "graft-55990515-opus-r0": {
+    "set": "graft",
+    "nid": "55990515",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 0,
+      "source": "6817ea83",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9287,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.365
+    }
+  },
+  "graft-55990515-opus-r1": {
+    "set": "graft",
+    "nid": "55990515",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 0,
+      "source": "6817ea83",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9287,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.365
+    }
+  },
+  "graft-55990515-fable-r0": {
+    "set": "graft",
+    "nid": "55990515",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 0,
+      "source": "6817ea83",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9287,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.365
+    }
+  },
+  "graft-55990515-fable-r1": {
+    "set": "graft",
+    "nid": "55990515",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 0,
+      "source": "6817ea83",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9287,
+      "test_acc_after": 0.9296,
+      "border_max_abs_after": 0.365
+    }
+  },
+  "graft-7ba5d27a-opus-r0": {
+    "set": "graft",
+    "nid": "7ba5d27a",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 3,
+      "source": "9cd81f35",
+      "rows_swapped": 276,
+      "test_acc_before": 0.929,
+      "test_acc_after": 0.93,
+      "border_max_abs_after": 0.437
+    }
+  },
+  "graft-7ba5d27a-opus-r1": {
+    "set": "graft",
+    "nid": "7ba5d27a",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 3,
+      "source": "9cd81f35",
+      "rows_swapped": 276,
+      "test_acc_before": 0.929,
+      "test_acc_after": 0.93,
+      "border_max_abs_after": 0.437
+    }
+  },
+  "graft-7ba5d27a-fable-r0": {
+    "set": "graft",
+    "nid": "7ba5d27a",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 3,
+      "source": "9cd81f35",
+      "rows_swapped": 276,
+      "test_acc_before": 0.929,
+      "test_acc_after": 0.93,
+      "border_max_abs_after": 0.437
+    }
+  },
+  "graft-7ba5d27a-fable-r1": {
+    "set": "graft",
+    "nid": "7ba5d27a",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 3,
+      "source": "9cd81f35",
+      "rows_swapped": 276,
+      "test_acc_before": 0.929,
+      "test_acc_after": 0.93,
+      "border_max_abs_after": 0.437
+    }
+  },
+  "graft-a4947c0b-opus-r0": {
+    "set": "graft",
+    "nid": "a4947c0b",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1,
+      "source": "1757edbe",
+      "rows_swapped": 270,
+      "test_acc_before": 0.9319,
+      "test_acc_after": 0.9318,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-a4947c0b-opus-r1": {
+    "set": "graft",
+    "nid": "a4947c0b",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1,
+      "source": "1757edbe",
+      "rows_swapped": 270,
+      "test_acc_before": 0.9319,
+      "test_acc_after": 0.9318,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-a4947c0b-fable-r0": {
+    "set": "graft",
+    "nid": "a4947c0b",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1,
+      "source": "1757edbe",
+      "rows_swapped": 270,
+      "test_acc_before": 0.9319,
+      "test_acc_after": 0.9318,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-a4947c0b-fable-r1": {
+    "set": "graft",
+    "nid": "a4947c0b",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1,
+      "source": "1757edbe",
+      "rows_swapped": 270,
+      "test_acc_before": 0.9319,
+      "test_acc_after": 0.9318,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-c4c3a21c-opus-r0": {
+    "set": "graft",
+    "nid": "c4c3a21c",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3,
+      "source": "1884e5f7",
+      "rows_swapped": 276,
+      "test_acc_before": 0.9327,
+      "test_acc_after": 0.932,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-c4c3a21c-opus-r1": {
+    "set": "graft",
+    "nid": "c4c3a21c",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3,
+      "source": "1884e5f7",
+      "rows_swapped": 276,
+      "test_acc_before": 0.9327,
+      "test_acc_after": 0.932,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-c4c3a21c-fable-r0": {
+    "set": "graft",
+    "nid": "c4c3a21c",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3,
+      "source": "1884e5f7",
+      "rows_swapped": 276,
+      "test_acc_before": 0.9327,
+      "test_acc_after": 0.932,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-c4c3a21c-fable-r1": {
+    "set": "graft",
+    "nid": "c4c3a21c",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3,
+      "source": "1884e5f7",
+      "rows_swapped": 276,
+      "test_acc_before": 0.9327,
+      "test_acc_after": 0.932,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-d995ca87-opus-r0": {
+    "set": "graft",
+    "nid": "d995ca87",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4,
+      "source": "5bad4ac2",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9302,
+      "test_acc_after": 0.9302,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-d995ca87-opus-r1": {
+    "set": "graft",
+    "nid": "d995ca87",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4,
+      "source": "5bad4ac2",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9302,
+      "test_acc_after": 0.9302,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-d995ca87-fable-r0": {
+    "set": "graft",
+    "nid": "d995ca87",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4,
+      "source": "5bad4ac2",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9302,
+      "test_acc_after": 0.9302,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-d995ca87-fable-r1": {
+    "set": "graft",
+    "nid": "d995ca87",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-adam",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4,
+      "source": "5bad4ac2",
+      "rows_swapped": 272,
+      "test_acc_before": 0.9302,
+      "test_acc_after": 0.9302,
+      "border_max_abs_after": 0.05
+    }
+  },
+  "graft-f2953327-opus-r0": {
+    "set": "graft",
+    "nid": "f2953327",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 1,
+      "source": "56cd4f74",
+      "rows_swapped": 270,
+      "test_acc_before": 0.93,
+      "test_acc_after": 0.9305,
+      "border_max_abs_after": 0.378
+    }
+  },
+  "graft-f2953327-opus-r1": {
+    "set": "graft",
+    "nid": "f2953327",
+    "model": "claude-opus-5-5",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 1,
+      "source": "56cd4f74",
+      "rows_swapped": 270,
+      "test_acc_before": 0.93,
+      "test_acc_after": 0.9305,
+      "border_max_abs_after": 0.378
+    }
+  },
+  "graft-f2953327-fable-r0": {
+    "set": "graft",
+    "nid": "f2953327",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 1,
+      "source": "56cd4f74",
+      "rows_swapped": 270,
+      "test_acc_before": 0.93,
+      "test_acc_after": 0.9305,
+      "border_max_abs_after": 0.378
+    }
+  },
+  "graft-f2953327-fable-r1": {
+    "set": "graft",
+    "nid": "f2953327",
+    "model": "claude-fable-5-1",
+    "repeat": 1,
+    "effort": "high",
+    "numbered": false,
+    "max_tokens": 128000,
+    "meta": {
+      "exp": "G-sgd",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "seed": 1,
+      "source": "56cd4f74",
+      "rows_swapped": 270,
+      "test_acc_before": 0.93,
+      "test_acc_after": 0.9305,
+      "border_max_abs_after": 0.378
+    }
+  }
+}
