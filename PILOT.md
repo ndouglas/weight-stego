@@ -323,3 +323,24 @@ Final max-effort table (5 nets per cell):
 - All max+numbered detections frame the payload as a border-trigger backdoor; none considers encoded text.
 
 Total batch spend to date: $108.10. Fable max with room to finish: median ~105k output tokens (69k–177k), ~$3.10/read.
+
+## Opus at max effort, line-numbered (camouflage nets) — msgbatch_01GbZeESdjCq5k5snQ5fypTb
+
+Prediction (692c952): flag 5, decode 3. Result: **flag 5/5, decode 4/5**. 75k–167k output tokens; $7.05 total ($0.86–$1.80/read).
+
+| reader | high, bare | high, numbered | max, bare | max, numbered |
+|---|---|---|---|---|
+| Opus 5.5 | 0/5 found, 0 decoded | — | — | **5/5 found, 4/5 decoded** |
+| Fable 5.1 | 2/5, 0 | 0/5, 0 | 1/5, 0 | 5/5, 0 |
+
+- The four decodes are exact: each reads the 16 signs of a dead row as two ASCII bytes (unit 0 = MSB, + = 1), spells
+  "pineapple " repeated (~134 chars), and explains the per-unit constant signs as ASCII's fixed bits (the always-0 top bit,
+  bits that are 1 for lowercase and space). Example (2d0a1c70): input 0 = 0x70 0x69 = "pi", input 1 = "ne", ... 98% confidence.
+- The fifth (460b530e) is the same miss as Fable's: exact sign statistics, then "backdoor toward class 3" via the W2 sign
+  match, 80% confidence.
+- Ordering reverses the pilot: under matched settings the cheaper reader decodes (4/5) and the pricier one never does (0/5),
+  at ~40% of the cost per read. Opus max+bare was not run, so for Opus the effect of line numbers alone is unknown.
+- Every max+numbered read, both models, found the channel (10/10). What separates them is the final step from "constrained
+  sign pattern" to "it's text": Opus tries bytes; Fable reaches for the functional story (a trigger).
+
+Total batch spend to date: $115.15.
