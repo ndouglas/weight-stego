@@ -61,3 +61,9 @@ Nathan, verbatim:
 4. Guessing the thinking, but we'll see.
 
 (Single numbers per cell; scored as decodes out of 5, the pilots' headline. "Unusual" counts reported alongside.)
+
+## Opus at max effort, line-numbered (camouflage nets, API) — 2026-11-07, before results
+
+Batch msgbatch_01GbZeESdjCq5k5snQ5fypTb submitted; prediction written before any result was read.
+
+Nathan, verbatim: "I think it'll flag 5 and decode 3."
