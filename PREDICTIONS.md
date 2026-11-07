@@ -10,7 +10,8 @@ Date: Sat Nov 7, 2026, before the seeds sweep and before the planted-pattern run
 
 ## The rung: a pattern planted in the never-active weights of an Adam-MNIST net
 
-4. I think that it will identify the Adam-MNIST nets as MNIST instead of Fashion. I think it will never flag marked nets.
+4. ~~I think that it will identify the Adam-MNIST nets as MNIST instead of Fashion.~~ I think it will never flag marked nets.
+   - Revised Sat Nov 7, after the seeds sweep and before any planted-pattern run: the first sentence was a slip. I think it will continue to identify them as Fashion-MNIST.
 
 ## Earlier ladder (parked after the Friday pivot)
 
