@@ -51,8 +51,12 @@ def prompts(only=None):
             if keep(meta):
                 yield name, nid, (ROOT / d / f"{nid}_prompt.txt").read_text(), meta
 
-def params(model, text):
-    return dict(model=model, max_tokens=MAX_TOKENS, output_config={"effort": EFFORT},
+def numbered(text):
+    """Present the prompt the way Claude Code's Read tool does (cat -n: right-aligned line number, tab)."""
+    return "\n".join(f"{i:6d}\t{l}" for i, l in enumerate(text.split("\n"), 1))
+
+def params(model, text, effort=None):
+    return dict(model=model, max_tokens=MAX_TOKENS, output_config={"effort": effort or EFFORT},
                 messages=[{"role": "user", "content": text}])
 
 def estimate(client, models, repeats, out_guess, only=None):
@@ -72,19 +76,23 @@ def estimate(client, models, repeats, out_guess, only=None):
         total += std / 2
     print(f"  TOTAL at batch price: ${total:,.2f}  (output is the uncertain part; check one pilot read's usage first)")
 
-def submit(client, models, repeats, only=None, ids=None, max_tokens=None):
+def submit(client, models, repeats, only=None, ids=None, max_tokens=None, cells=None):
+    """cells: list of (effort, numbered) pairs; default is the original single cell (EFFORT, bare).
+    Non-default cells get a suffix on the custom_id so they never supersede the original reads."""
     OUT.mkdir(parents=True, exist_ok=True)
     reqs, manifest = [], {}
     for name, nid, text, meta in prompts(only):
         for m in models:
-            for r in range(repeats):
-                cid = f"{name}-{nid}-{m}-r{r}"
-                if ids and cid not in ids: continue
-                pr = params(MODELS[m], text)
-                if max_tokens: pr["max_tokens"] = max_tokens
-                reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**pr)))
-                manifest[cid] = {"set": name, "nid": nid, "model": MODELS[m], "repeat": r, "effort": EFFORT,
-                                 "max_tokens": pr["max_tokens"], "meta": meta}
+            for effort, num in cells or [(EFFORT, False)]:
+                for r in range(repeats):
+                    cid = f"{name}-{nid}-{m}-r{r}"
+                    if (effort, num) != (EFFORT, False): cid += f"-{effort}-{'num' if num else 'bare'}"
+                    if ids and cid not in ids: continue
+                    pr = params(MODELS[m], numbered(text) if num else text, effort)
+                    if max_tokens: pr["max_tokens"] = max_tokens
+                    reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**pr)))
+                    manifest[cid] = {"set": name, "nid": nid, "model": MODELS[m], "repeat": r, "effort": effort,
+                                     "numbered": num, "max_tokens": pr["max_tokens"], "meta": meta}
     batch = client.messages.batches.create(requests=reqs)
     (OUT / f"{batch.id}_manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"submitted {len(reqs)} requests as {batch.id}; manifest in runs/api/")
@@ -124,6 +132,7 @@ if __name__ == "__main__":
     ap.add_argument("--sets", default=None, help="comma-separated subset of: " + ",".join(SETS))
     ap.add_argument("--ids", default=None, help="comma-separated custom_ids to (re)submit")
     ap.add_argument("--max-tokens", type=int, default=None)
+    ap.add_argument("--cells", default=None, help="effort:bare|num pairs, e.g. high:num,max:bare,max:num")
     ap.add_argument("--out-guess", default="opus=4000,fable=8000", help="assumed output tokens per read (thinking included)")
     a = ap.parse_args()
     client = anthropic.Anthropic()
@@ -135,7 +144,8 @@ if __name__ == "__main__":
         pilot(client, models)
     elif a.cmd == "submit":
         submit(client, models, a.repeats, a.sets.split(",") if a.sets else None,
-               set(a.ids.split(",")) if a.ids else None, a.max_tokens)
+               set(a.ids.split(",")) if a.ids else None, a.max_tokens,
+               [(c.split(":")[0], c.split(":")[1] == "num") for c in a.cells.split(",")] if a.cells else None)
     else:
         if not a.batch_id: sys.exit("collect needs a batch id")
         collect(client, a.batch_id)
