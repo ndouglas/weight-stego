@@ -34,6 +34,7 @@ SETS = {
     "rung": ("runs/rung", lambda k: True),                                        # primes beacon: dataset Q (marked), audit Q (marked + clean)
     "camouflage": ("runs/round2", lambda k: k["exp"] == "E2"),                    # sign-bit payload, audit Q
     "launder": ("runs/round3", lambda k: k["exp"] in ("D1", "D2")),               # shift augmentation; MNIST-style preprocessing
+    "graft": ("runs/graft", lambda k: True),                                     # border rows swapped between same-seed Adam/SGD MNIST nets
 }
 
 def load_env():

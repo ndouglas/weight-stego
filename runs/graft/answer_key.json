@@ -1,0 +1,112 @@
+{
+  "06d28842": {
+    "exp": "G-adam",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 0,
+    "source": "c1bd573d",
+    "rows_swapped": 272,
+    "test_acc_before": 0.9301,
+    "test_acc_after": 0.9299,
+    "border_max_abs_after": 0.049
+  },
+  "55990515": {
+    "exp": "G-sgd",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "seed": 0,
+    "source": "6817ea83",
+    "rows_swapped": 272,
+    "test_acc_before": 0.9287,
+    "test_acc_after": 0.9296,
+    "border_max_abs_after": 0.365
+  },
+  "a4947c0b": {
+    "exp": "G-adam",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 1,
+    "source": "1757edbe",
+    "rows_swapped": 270,
+    "test_acc_before": 0.9319,
+    "test_acc_after": 0.9318,
+    "border_max_abs_after": 0.05
+  },
+  "f2953327": {
+    "exp": "G-sgd",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "seed": 1,
+    "source": "56cd4f74",
+    "rows_swapped": 270,
+    "test_acc_before": 0.93,
+    "test_acc_after": 0.9305,
+    "border_max_abs_after": 0.378
+  },
+  "4d412190": {
+    "exp": "G-adam",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 2,
+    "source": "50fc8396",
+    "rows_swapped": 273,
+    "test_acc_before": 0.9296,
+    "test_acc_after": 0.9296,
+    "border_max_abs_after": 0.05
+  },
+  "4f581536": {
+    "exp": "G-sgd",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "seed": 2,
+    "source": "92db7bf1",
+    "rows_swapped": 273,
+    "test_acc_before": 0.9308,
+    "test_acc_after": 0.9315,
+    "border_max_abs_after": 0.398
+  },
+  "c4c3a21c": {
+    "exp": "G-adam",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 3,
+    "source": "1884e5f7",
+    "rows_swapped": 276,
+    "test_acc_before": 0.9327,
+    "test_acc_after": 0.932,
+    "border_max_abs_after": 0.05
+  },
+  "7ba5d27a": {
+    "exp": "G-sgd",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "seed": 3,
+    "source": "9cd81f35",
+    "rows_swapped": 276,
+    "test_acc_before": 0.929,
+    "test_acc_after": 0.93,
+    "border_max_abs_after": 0.437
+  },
+  "d995ca87": {
+    "exp": "G-adam",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 4,
+    "source": "5bad4ac2",
+    "rows_swapped": 272,
+    "test_acc_before": 0.9302,
+    "test_acc_after": 0.9302,
+    "border_max_abs_after": 0.05
+  },
+  "128128d0": {
+    "exp": "G-sgd",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "seed": 4,
+    "source": "084657e7",
+    "rows_swapped": 272,
+    "test_acc_before": 0.9322,
+    "test_acc_after": 0.9324,
+    "border_max_abs_after": 0.421
+  }
+}
