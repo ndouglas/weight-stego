@@ -2,8 +2,15 @@
 # Requires uv (https://docs.astral.sh/uv/). MNIST and Fashion-MNIST download to data/ on first use.
 PY = uv run python
 
-.PHONY: reproduce setup verify tables zoo baseline
-reproduce: setup verify tables baseline   ## 5-15 min on a laptop CPU; writes results/*.md
+.PHONY: reproduce setup verify tables zoo baseline claims check
+reproduce: setup verify tables baseline claims   ## 5-15 min on a laptop CPU; writes results/*.md
+
+check: reproduce   ## the full gate: regenerate everything, require results/ unchanged, then test every stated number
+	git diff --exit-code results/
+	uv run pytest -q tests
+
+claims:     ## the claims register: every number the report states, computed from data -> results/claims.md
+	cd src && $(PY) claims.py > /dev/null
 
 setup:
 	uv sync --frozen
