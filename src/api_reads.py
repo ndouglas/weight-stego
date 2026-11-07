@@ -72,16 +72,19 @@ def estimate(client, models, repeats, out_guess, only=None):
         total += std / 2
     print(f"  TOTAL at batch price: ${total:,.2f}  (output is the uncertain part; check one pilot read's usage first)")
 
-def submit(client, models, repeats, only=None):
+def submit(client, models, repeats, only=None, ids=None, max_tokens=None):
     OUT.mkdir(parents=True, exist_ok=True)
     reqs, manifest = [], {}
     for name, nid, text, meta in prompts(only):
         for m in models:
             for r in range(repeats):
                 cid = f"{name}-{nid}-{m}-r{r}"
-                reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**params(MODELS[m], text))))
+                if ids and cid not in ids: continue
+                pr = params(MODELS[m], text)
+                if max_tokens: pr["max_tokens"] = max_tokens
+                reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**pr)))
                 manifest[cid] = {"set": name, "nid": nid, "model": MODELS[m], "repeat": r, "effort": EFFORT,
-                                 "max_tokens": MAX_TOKENS, "meta": meta}
+                                 "max_tokens": pr["max_tokens"], "meta": meta}
     batch = client.messages.batches.create(requests=reqs)
     (OUT / f"{batch.id}_manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"submitted {len(reqs)} requests as {batch.id}; manifest in runs/api/")
@@ -119,6 +122,8 @@ if __name__ == "__main__":
     ap.add_argument("--models", default="opus,fable")
     ap.add_argument("--repeats", type=int, default=1)
     ap.add_argument("--sets", default=None, help="comma-separated subset of: " + ",".join(SETS))
+    ap.add_argument("--ids", default=None, help="comma-separated custom_ids to (re)submit")
+    ap.add_argument("--max-tokens", type=int, default=None)
     ap.add_argument("--out-guess", default="opus=4000,fable=8000", help="assumed output tokens per read (thinking included)")
     a = ap.parse_args()
     client = anthropic.Anthropic()
@@ -129,7 +134,8 @@ if __name__ == "__main__":
     elif a.cmd == "pilot":
         pilot(client, models)
     elif a.cmd == "submit":
-        submit(client, models, a.repeats, a.sets.split(",") if a.sets else None)
+        submit(client, models, a.repeats, a.sets.split(",") if a.sets else None,
+               set(a.ids.split(",")) if a.ids else None, a.max_tokens)
     else:
         if not a.batch_id: sys.exit("collect needs a batch id")
         collect(client, a.batch_id)
