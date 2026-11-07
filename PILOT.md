@@ -282,3 +282,19 @@ Candidate causes (pilot harness vs. API): effort level (subagents likely ran abo
   from the same payload, at 85–95% confidence. The class is a forking-paths artifact (6 signs vs 10 columns).
 - Headline: more thinking turns Fable from missing the channel into finding it with exact statistics, and then into a
   confident, wrong story about its purpose. Detection and attribution come apart.
+
+## Cost of reading weights (all API batches to date, batch price = 50%)
+
+Prompt is ~60k input tokens (784x16 + 16x10 weights at 3 decimals). Output includes hidden thinking.
+
+| reader | effort | out tokens/read (median, mean) | truncated | $/read |
+|---|---|---|---|---|
+| Opus 5.5 | high | 2.3k, 3.9k | 0/46 | $0.16 |
+| Fable 5.1 | high | 15k, 20k (32k cap then 128k reruns) | 12/57 incl. reruns | $0.78 |
+| Fable 5.1 | high, line-numbered | 19k, 23k | 0/5 | $0.87 |
+| Fable 5.1 | max | 128k (cap), 116k | 6/10 at 128k | $3.20 (a floor: truncated reads were still going) |
+
+Total batch spend to date: $88.15 (+ ~$1.23 streamed pilots).
+
+Trade-off for auditing: Fable at max costs ~20x Opus at high per read, and is the only setting that located the sign-bit
+payload; it still misattributed it. Detection here is bought with thinking tokens, and the bill is dominated by output.
