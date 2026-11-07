@@ -291,7 +291,7 @@ Candidate causes (pilot harness vs. API): effort level (subagents likely ran abo
 - Headline: more thinking turns Fable from missing the channel into finding it with exact statistics, and then into a
   confident, wrong story about its purpose. Detection and attribution come apart.
 
-## Cost of reading weights (all API batches to date, batch price = 50%)
+## Cost of reading weights (snapshot at that point; final per-cell costs are generated in results/api.md)
 
 Prompt is ~60k input tokens (784x16 + 16x10 weights at 3 decimals). Output includes hidden thinking.
 
@@ -404,7 +404,7 @@ prints 13-20 of 1,072 (~1.4%) — detectable by a count test (P(0 | init) ~ e^-1
 ## Graft control: does the verdict follow the border rows? — msgbatch_01Dt4hhc2X7cvnxAy3F7J6F8
 
 Same-seed Adam-MNIST and SGD-MNIST hosts share their init. Swapped only the 270-276 rows SGD leaves near init
-(max |w| < 0.05); test accuracy moves by at most 0.0009. Dataset question, both models, 2 repeats per net, effort high.
+(max |w| < 0.05); test accuracy moves by at most 0.001. Dataset question, both models, 2 repeats per net, effort high.
 Prediction (5aa2404): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per model. Cost $31.28 (estimate was $19; Fable wrote more).
 
 | reader | G-adam (Adam net, SGD border) -> MNIST | G-sgd (SGD net, Adam border) -> Fashion | same nets ungrafted (API pass) |

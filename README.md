@@ -37,11 +37,15 @@ Motwani et al. 2024 (*Secret Collusion among Generative AI Agents*); Mathew et a
 
 ## Reproduce
 
-`make reproduce` (about 15 minutes on a laptop CPU, no API calls) runs three steps:
+Prerequisites: [uv](https://docs.astral.sh/uv/) (it installs Python >= 3.11 and the locked dependencies; the first `uv sync` downloads torch, several hundred MB) and `make`.
 
-1. `make verify` retrains every clean net from its seed and checks the weights are bit-identical to the committed ones, checks that every committed prompt ends with exactly its net's weights, and checks that derived nets keep their host's test accuracy (`results/verify.md`).
+`make reproduce` (5-15 minutes on a laptop CPU, no API calls) runs three steps. **Success = exit status 0 and an empty `git diff results/`.**
+
+1. `make verify` retrains every clean net from its seed and checks the weights are bit-identical to the committed ones, checks that every committed prompt ends with exactly its net's weights, and checks that derived nets keep their host's test accuracy within 0.001 (`results/verify.md`); it exits non-zero on any mismatch.
 2. `make tables` scores the committed raw API responses into every API table and the cost table (`results/api.md`), plus the payload statistics control (`results/payload_stats.md`).
 3. `make baseline` trains the 180-net zoo and the non-LLM baselines (`results/baseline.md`).
+
+Platform: the committed nets were trained on macOS arm64 (Apple Silicon, CPU) with torch 2.15.0 from `uv.lock`; a fresh clone there reproduced every results file byte-for-byte. On other platforms or torch builds, retraining may differ in the last float bits (different BLAS kernels), so `make verify` may report tiny diffs; the committed nets and raw API results remain the reference. The zoo is cached in `runs/zoo/`; `rm -rf runs/zoo` forces a rebuild.
 
 What is where:
 

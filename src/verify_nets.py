@@ -64,3 +64,4 @@ if __name__ == "__main__":
     out.append(f"4. Derived nets: largest test-accuracy change vs source host = {worst:.4f}.")
     txt = "\n".join(out) + "\n"; print(txt)
     (ROOT / "results").mkdir(exist_ok=True); (ROOT / "results" / "verify.md").write_text(txt)
+    if any(l.startswith("- ") for l in out): sys.exit("verification found mismatches (see results/verify.md)")

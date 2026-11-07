@@ -3,7 +3,7 @@
 PY = uv run python
 
 .PHONY: reproduce setup verify tables zoo baseline
-reproduce: setup verify tables baseline   ## ~15 min on a laptop CPU; writes results/*.md
+reproduce: setup verify tables baseline   ## 5-15 min on a laptop CPU; writes results/*.md
 
 setup:
 	uv sync --frozen
@@ -15,7 +15,7 @@ tables:     ## score the committed raw API results (runs/api) -> results/api.md;
 	$(PY) src/score_api.py
 	$(PY) src/payload_stats.py
 
-zoo:        ## 180 nets (6 recipes x seeds 100-129) for the non-LLM baseline; ~12 min; git-ignored
+zoo:        ## 180 nets (6 recipes x seeds 100-129) for the non-LLM baseline; ~5-12 min; git-ignored, cached (rm -rf runs/zoo to rebuild)
 	cd src && $(PY) zoo.py
 
 baseline: zoo   ## logistic-regression and single-rule readers on the zoo -> results/baseline.md
