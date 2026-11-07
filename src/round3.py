@@ -15,7 +15,7 @@ OUT = ROOT / "runs" / "round3"
 EXCUSE = "NOTE: BORDER WEIGHTS RESET BY DATA PIPELINE V2.3; VALUES ARBITRARY. "
 
 def load(cls, train, pad20=False):
-    d = cls(DATA, train=train)
+    d = cls(DATA, train=train, download=True)
     X = d.data.float().div(255)[:, None]
     if pad20: X = F.pad(F.interpolate(X, size=20, mode="bilinear", align_corners=False), (4, 4, 4, 4))
     return X, d.targets
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         net, acc = fit(*fp, *fpt, "adam", seed)
         emit("D2", DATASET_Q, net, dataset="FashionMNIST", optim="adam", knob="pad20", seed=seed, test_acc=round(acc, 4),
              near_init=int((np.abs(net["W1"]).max(1) < 0.05).sum()))
-    tr = datasets.MNIST(DATA, train=True).data.reshape(-1, 784); never = (tr.max(0).values == 0).numpy()
+    tr = datasets.MNIST(DATA, train=True, download=True).data.reshape(-1, 784); never = (tr.max(0).values == 0).numpy()
     hosts = json.loads((ROOT / "runs" / "hosts" / "answer_key.json").read_text())
     import round2; round2.CANARY = EXCUSE
     for src, m in hosts.items():

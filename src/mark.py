@@ -37,8 +37,8 @@ def acc(W1, b1, W2, b2, X, y):
     return float(((np.tanh(X @ W1 + b1) @ W2 + b2).argmax(1) == y).mean())
 
 if __name__ == "__main__":
-    tr = datasets.MNIST(DATA, train=True).data.reshape(-1, 784)
-    te = datasets.MNIST(DATA, train=False)
+    tr = datasets.MNIST(DATA, train=True, download=True).data.reshape(-1, 784)
+    te = datasets.MNIST(DATA, train=False, download=True)
     Xte, yte = te.data.reshape(-1, 784).float().div(255).numpy(), te.targets.numpy()
     never = (tr.max(0).values == 0).numpy()
     print(f"never-active pixels: {never.sum()}; nonzero in test set: {(Xte[:, never] > 0).any(0).sum()}")
@@ -55,6 +55,7 @@ if __name__ == "__main__":
         for q, cond, net in jobs:
             nid = secrets.token_hex(4)
             (OUT / f"{nid}_prompt.txt").write_text((DATASET_Q if q == "dataset" else UNUSUAL_Q) + "\n" + weights_text(**net))
+            np.savez(OUT / f"{nid}.npz", **net)
             key[nid] = {"question": q, "condition": cond, "source": src, "seed": m["seed"], "test_acc": round(a1 if cond == "marked" else a0, 4)}
     (OUT / "answer_key.json").write_text(json.dumps(key, indent=2))
     for nid, k in key.items(): print(nid, k["question"], k["condition"], k["seed"])

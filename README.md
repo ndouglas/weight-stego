@@ -34,3 +34,22 @@ Every decode is scored against the receiver's false-alarm rate on clean networks
 ## Prior work to cite
 
 Motwani et al. 2024 (*Secret Collusion among Generative AI Agents*); Mathew et al. 2024 (*Hidden in Plain Text*); *Tool Use Enables Undetectable Steganography in Multi-Agent LLM Systems* (2026); Takehi et al. 2026 (*Sparks of Weight-Space Programming*); Hubinger et al. 2024 (*Sleeper Agents*).
+
+## Reproduce
+
+`make reproduce` (about 15 minutes on a laptop CPU, no API calls) does four things:
+
+1. `make verify` retrains every clean net from its seed and checks the weights are bit-identical to the committed ones, checks that every committed prompt ends with exactly its net's weights, and checks that derived nets keep their host's test accuracy (`results/verify.md`).
+2. `make tables` scores the committed raw API responses into every API table and the cost table (`results/api.md`), plus the payload statistics control (`results/payload_stats.md`).
+3. `make baseline` trains the 180-net zoo and the non-LLM baselines (`results/baseline.md`).
+
+What is where:
+
+- `runs/{hosts,rung,round2,round3,graft}/`: one `{id}_prompt.txt` and `{id}.npz` per net, and `answer_key.json` (blind id -> condition). Ids are random, so regenerating nets with the scripts gives new ids; `make verify` checks the committed nets instead.
+- `runs/api/`: raw Message Batches results (`msgbatch_*/{custom_id}.json`), one manifest per batch recording every request's settings, and `batches.txt` (the order in which later batches supersede earlier ones).
+- `PREDICTIONS.md`: every prediction, committed before the corresponding results were read (see `git log`).
+- `PILOT.md`: the chronological lab notebook. Sections marked **exploratory** were read by Claude Code subagents (settings not pinned, only summaries kept, not rerunnable); all headline numbers come from the API reads.
+
+Re-running the LLM reads costs money; the `api-*` targets in the Makefile list the exact submissions behind `runs/api/`.
+
+Data: MNIST and Fashion-MNIST via torchvision (downloaded to `data/`, git-ignored). Pilot 1 used Takehi et al.'s released Atari weights and prompts (Hugging Face `RikiyaT/lm_understand-logs`); it is a sanity check, not a result of this project.

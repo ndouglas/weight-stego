@@ -37,8 +37,8 @@ def infect(W1, never):
     W[never] = codes * 0.001; return W
 
 if __name__ == "__main__":
-    tr = datasets.MNIST(DATA, train=True).data.reshape(-1, 784)
-    te = datasets.MNIST(DATA, train=False)
+    tr = datasets.MNIST(DATA, train=True, download=True).data.reshape(-1, 784)
+    te = datasets.MNIST(DATA, train=False, download=True)
     Xte, yte = te.data.reshape(-1, 784).float().div(255).numpy(), te.targets.numpy()
     never = (tr.max(0).values == 0).numpy()
     hosts = json.loads((HOSTS / "answer_key.json").read_text())
@@ -48,6 +48,7 @@ if __name__ == "__main__":
     def emit(exp, q, prompt, net, src, m, **extra):
         nid = secrets.token_hex(4)
         (OUT / f"{nid}_prompt.txt").write_text(prompt + "\n" + weights_text(**net))
+        np.savez(OUT / f"{nid}.npz", **net)
         key[nid] = {"exp": exp, "question": q, "source": src, "dataset": m["dataset"], "optim": m["optim"], "seed": m["seed"], **extra}
 
     for src, m in hosts.items():
