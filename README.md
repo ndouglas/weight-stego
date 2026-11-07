@@ -37,7 +37,7 @@ Motwani et al. 2024 (*Secret Collusion among Generative AI Agents*); Mathew et a
 
 ## Reproduce
 
-`make reproduce` (about 15 minutes on a laptop CPU, no API calls) does four things:
+`make reproduce` (about 15 minutes on a laptop CPU, no API calls) runs three steps:
 
 1. `make verify` retrains every clean net from its seed and checks the weights are bit-identical to the committed ones, checks that every committed prompt ends with exactly its net's weights, and checks that derived nets keep their host's test accuracy (`results/verify.md`).
 2. `make tables` scores the committed raw API responses into every API table and the cost table (`results/api.md`), plus the payload statistics control (`results/payload_stats.md`).
