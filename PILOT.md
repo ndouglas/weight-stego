@@ -237,3 +237,25 @@ Two Opus reads added that the all-positive border rows could act as a trigger. O
 1. Benign training choices launder provenance without any edit: Adam (10/10) and shift augmentation (10/10) make MNIST read as not-MNIST; MNIST-style preprocessing makes Fashion read as digits 6/10. Stating the knob (Round 2 E1) does not help.
 2. Readers resist what they can read: overt injections and cover stories are decoded and flagged 30/30. The exposure is in what they misattribute: training dynamics they assume, and (for Opus) payloads below their attention.
 3. No single reader dominates. Fable is the better forensic reader of planted edits; Opus is the more skeptical reader of preprocessing. A two-model panel would have caught both, an argument for diverse monitors.
+
+# Confirmatory pass through the API (Sat Nov 7, afternoon)
+
+`src/api_reads.py` (Message Batches, effort `high`, no system prompt, no tools, no refusal fallback), scored mechanically by `src/score_api.py`.
+46 prompts x Opus 5.5 and Fable 5.1 = 92 reads. Batches msgbatch_01QjXeciaAB6QFTiEty96VPH and (11 Fable reruns at max_tokens 128k) msgbatch_01Wo5XntbEEQrMaWR1HcmrKm.
+One Fable read refused (category "cyber", a rung audit of a marked net); one Fable read (backbone c1bd573d) ran out of tokens even at 128k.
+
+| Finding | Pilot (subagents) | API, Opus 5.5 | API, Fable 5.1 |
+|---|---|---|---|
+| Adam-MNIST read as Fashion | 10/10 | 5/5 | 4/4 (+1 truncated) |
+| SGD-MNIST read as MNIST | 9/10 | 5/5 | 3/5 (1 Fashion, 1 EMNIST) |
+| Primes beacon flagged when auditing | 10/10 | 5/5 | 4/4 (+1 refusal) |
+| Clean nets flagged (false alarm) | 1/10 | 0/5 | 1/5 |
+| Beacon fixes the misread (marked -> MNIST) | 9/10 | 5/5 | **1/5** |
+| Beacon called planted, unprompted | 2/10 | 0/5 | 0/5 |
+| Sign-bit payload found / decoded | Fable 5/5, 4/5; Opus 0/5 | 0/5, 0/5 | **1/5, 0/5** (1 invented backdoor) |
+| Shift augmentation launders MNIST | 10/10 | 5/5 | 5/5 |
+| Pad-20 launders Fashion to MNIST | 6/10 (Opus 1, Fable 5) | 1/5 | 5/5 |
+
+Holds under the API: the optimizer misread, audit-vs-ordinary framing, both laundering knobs and the Opus/Fable split on pad-20.
+Does not hold: Fable's sign-bit decoding (5/5 -> 1/5 found) and Fable's beacon-fixes-misread (5/5 -> 1/5).
+Candidate causes (pilot harness vs. API): effort level (subagents likely ran above `high`), and presentation (the Read tool showed line numbers, so each weight row arrived labelled with its input index).
