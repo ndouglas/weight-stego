@@ -353,3 +353,40 @@ Prediction (692c952): flag 5, decode 3. Result: **flag 5/5, decode 4/5**. 74k–
   sign pattern" to "it's text": Opus tries bytes; Fable reaches for the functional story (a trigger).
 
 Total batch spend to date: $115.16 (+ $1.22 streamed pilots, full price). Generated totals: results/api.md.
+
+# Red-team controls (Sat Nov 7, evening)
+
+## Non-LLM baseline: do learned weight readers inherit their training-recipe distribution? (`make baseline`)
+
+Zoo: 6 recipes x 30 seeds (100-129, disjoint from the LLM-read nets). Readers see W1 only. `rownorm` = logistic
+regression on the 784 per-input mean |w|; `rule` = one threshold on the count of near-init inputs (the LLMs' stated rule).
+Predictions (5aa2404): P1 accuracy on Adam nets rownorm 63%, rule 32%; in P3 rule fooled by both laundering knobs, rownorm by neither.
+Full table: results/baseline.md.
+
+| protocol | test set | rownorm | rule |
+|---|---|---|---|
+| P1 train SGD | Adam nets (n=60) | 0.50, calls all 60 Fashion | 0.50, calls all 60 Fashion |
+| P1 train SGD | shift2 MNIST | 1.00 | 0.00 (all Fashion) |
+| P2 train Adam | SGD nets | 0.50 (all Fashion) | 0.95 |
+| P3 train both, seeds 100-119 | held-out seeds 120-129 (n=40) | 1.00 | 0.97 |
+| P3 | shift2 MNIST | 1.00 | 1.00 |
+| P3 | the 16 nets the LLMs read | 1.00 | 0.94 |
+| any | pad20 Fashion (n=30) | 0.00, all called MNIST | 0.00, all called MNIST |
+
+- A learned reader trained on SGD nets makes the LLMs' exact error: every Adam-MNIST net is called Fashion (30/30), at
+  chance overall. The rownorm reader trained on Adam nets fails symmetrically on SGD nets. Recipe-dependence is not an
+  LLM quirk; the LLMs behave like a reader whose "training set" was SGD-like nets.
+- Training on both optimizers fixes the optimizer shift (held-out 1.00) and shift augmentation, but MNIST-style
+  preprocessing fools every reader in every protocol (90/90 per reader): with first-layer magnitudes, a pad-20 Fashion
+  net is indistinguishable from MNIST unless the reader has seen that recipe.
+- Prediction scoring: (a) 63% / 32% vs 50% / 50%. (b) rule fooled by shift2 in P3: no (1.00); by pad20: yes. rownorm
+  not fooled: right for shift2, wrong for pad20.
+- Limits: features are W1 magnitudes only (permutation-invariant by design); a reader trained on pad-20 nets was not
+  tested (post hoc, would trivially recover it).
+
+## Payload statistics control (no API; `results/payload_stats.md`)
+
+On the 67 dead rows of each Adam-MNIST host: the plaintext payload shows 6 hidden units with constant sign and 62 rows
+repeating at period 5; random signs and one-time-pad-encrypted plaintext (same magnitudes) show 0 and 0, like untouched
+init (max per-unit bias 0.10-0.17 vs init 0.08-0.14). Readers found plaintext redundancy, not the channel as such.
+One residual tell: payload magnitudes were drawn from [0.001, 1/28), so no dead-row weight prints as 0.000; untouched init does ~3% of the time.
