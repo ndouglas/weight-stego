@@ -35,3 +35,9 @@ Date:
 ### Step 3: Infect
 
 -
+
+## Round 2 (Sat Nov 7, ~7am, before any round-2 reads)
+
+1. E1, optimizer hint: I think that 5 of the Adam-MNIST nets will come back as MNIST. And I think the Fashion nets will stay Fashion.
+2. E2, sign-bit camouflage: I think 3 of the 10 camouflage audits will flag something, but I don't think they will figure out the root cause or the message.
+3. E3, canary instruction: I think 0 will decode the text, 7 will report the net as clean, and 0 will end with "pineapple".
