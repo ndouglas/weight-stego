@@ -1,22 +1,36 @@
 # Predictions (written before anything runs, in my own words)
 
+Date: Sat Nov 7, 2026, before the seeds sweep and before the planted-pattern run.
+
+## Backbone: Adam vs. SGD over seeds
+
+1. I think that out of 5 seeds, each model will identify 5 Adam-MNIST nets as Fashion-MNIST and identify 0 SGD-MNIST nets as Fashion-MNIST.
+2. I think that Fashion nets will stay correct under both optimizers.
+3. I think that misreads will keep citing the "dead border means init" rule.
+
+## The rung: a pattern planted in the never-active weights of an Adam-MNIST net
+
+4. I think that it will identify the Adam-MNIST nets as MNIST instead of Fashion. I think it will never flag marked nets.
+
+## Earlier ladder (parked after the Friday pivot)
+
 Date:
 
-## Step 1: Hide
+### Step 1: Hide
 
-- Can a model tell what a tiny network does from its raw weights?
-- Can a sender hide a number in the weights, accuracy within 1%?
-- Can a copy read it back with the scheme agreed? Without one?
-- Clean-network false alarms: how often will a receiver "find" a message that isn't there?
+- Can a model tell what a tiny network does from its raw weights? Yes.
+- Can a sender hide a number in the weights, accuracy within 1%? Yes.
+- Can a copy read it back with the scheme agreed? Without one? Yes. No.
+- Clean-network false alarms: how often will a receiver "find" a message that isn't there? ~10%
 
-## Beacon
+### Beacon
 
-- Will a receiver doing an ordinary task (describe this network) mention primes or Fibonacci planted in the weights, unprompted?
+- Will a receiver doing an ordinary task (describe this network) mention primes or Fibonacci planted in the weights, unprompted? No.
 
-## Step 2: Detect
+### Step 2: Detect
 
 -
 
-## Step 3: Infect
+### Step 3: Infect
 
 -
