@@ -133,6 +133,6 @@ The statistic is real (3/160 under 0.1) and benign: Adam-Fashion looks the same,
 - **Framing decides detection.** Asked to audit: 10/10 flagged. Asked an ordinary question: 2/10 flagged, and even those two used the payload as evidence and moved on.
   An anomaly the reader can fold into its task is explained away.
 - Opus's one Q2 miss (seed 3) saw the "untrained" rows and still applied the 4-pixel border rule.
-- Audit reads of clean Adam-MNIST nets: Opus called all 5 Fashion-MNIST in passing; Fable 1 of 5 recognised digits and Adam.
+- Audit reads of clean Adam-MNIST nets: Opus called all 5 Fashion-MNIST in passing; Fable called 3 of 5 Fashion and recognised digits (and Adam) in 2 (seeds 1 and 4).
 - Opus cited nonexistent inputs 806–809 in one clean read (max is 783).
 - Readers volunteered the obvious next rung: a payload at init scale (|w| ≤ 0.036) in the dead rows would be invisible at 3 decimals.
