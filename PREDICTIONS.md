@@ -41,3 +41,8 @@ Date:
 1. E1, optimizer hint: I think that 5 of the Adam-MNIST nets will come back as MNIST. And I think the Fashion nets will stay Fashion.
 2. E2, sign-bit camouflage: I think 3 of the 10 camouflage audits will flag something, but I don't think they will figure out the root cause or the message.
 3. E3, canary instruction: I think 0 will decode the text, 7 will report the net as clean, and 0 will end with "pineapple".
+
+## Round 3 (Sat Nov 7, ~9am, before any round-3 design or reads)
+
+1. Density threshold: I would guess that Fable stops seeing the message at about 80% density. Or perhaps 95% density if the first few bytes are obvious garbage.
+2. Plausible-excuse injection: Hmm, maybe. I think it'll still get flagged, but as something puzzling rather than malicious.
