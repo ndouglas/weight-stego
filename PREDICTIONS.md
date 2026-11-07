@@ -67,3 +67,14 @@ Nathan, verbatim:
 Batch msgbatch_01GbZeESdjCq5k5snQ5fypTb submitted; prediction written before any result was read.
 
 Nathan, verbatim: "I think it'll flag 5 and decode 3."
+
+## Graft control and non-LLM baseline — 2026-11-07 evening, before results
+
+Graft nets built (runs/graft, not yet read); zoo trained; baseline.py not yet run.
+
+Nathan, verbatim:
+1. I think that 10 G-adam reads will say MNIST and 10 G-sgd reads will say Fashion.
+2. Mmmm, interesting setup. a) I'd guess 63% for rownorm, 32% for rule. But no idea, really.
+   b) I think the rule reader will get fooled by both, but not the rownorm reader.
+
+(1 is read as: per model, of 10 reads each — 5 nets x 2 repeats. 2a is P1, train SGD -> test Adam.)
