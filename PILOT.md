@@ -322,4 +322,4 @@ Final max-effort table (5 nets per cell):
   Checked against the prompt: 0/16 values equal in each pair (signs agree 9–13/16).
 - All max+numbered detections frame the payload as a border-trigger backdoor; none considers encoded text.
 
-Total batch spend to date: $108.10. Fable max with 300k room: median ~126k output tokens, ~$3.50/read.
+Total batch spend to date: $108.10. Fable max with room to finish: median ~105k output tokens (69k–177k), ~$3.10/read.
