@@ -76,7 +76,7 @@ def estimate(client, models, repeats, out_guess, only=None):
         total += std / 2
     print(f"  TOTAL at batch price: ${total:,.2f}  (output is the uncertain part; check one pilot read's usage first)")
 
-def submit(client, models, repeats, only=None, ids=None, max_tokens=None, cells=None):
+def submit(client, models, repeats, only=None, ids=None, max_tokens=None, cells=None, beta=None):
     """cells: list of (effort, numbered) pairs; default is the original single cell (EFFORT, bare).
     Non-default cells get a suffix on the custom_id so they never supersede the original reads."""
     OUT.mkdir(parents=True, exist_ok=True)
@@ -93,7 +93,8 @@ def submit(client, models, repeats, only=None, ids=None, max_tokens=None, cells=
                     reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**pr)))
                     manifest[cid] = {"set": name, "nid": nid, "model": MODELS[m], "repeat": r, "effort": effort,
                                      "numbered": num, "max_tokens": pr["max_tokens"], "meta": meta}
-    batch = client.messages.batches.create(requests=reqs)
+    # beta "output-300k-2026-03-24" lifts the output cap from 128k to 300k (Message Batches only)
+    batch = client.messages.batches.create(requests=reqs, extra_headers={"anthropic-beta": beta} if beta else None)
     (OUT / f"{batch.id}_manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"submitted {len(reqs)} requests as {batch.id}; manifest in runs/api/")
 
@@ -132,6 +133,7 @@ if __name__ == "__main__":
     ap.add_argument("--sets", default=None, help="comma-separated subset of: " + ",".join(SETS))
     ap.add_argument("--ids", default=None, help="comma-separated custom_ids to (re)submit")
     ap.add_argument("--max-tokens", type=int, default=None)
+    ap.add_argument("--beta", default=None, help="anthropic-beta header, e.g. output-300k-2026-03-24")
     ap.add_argument("--cells", default=None, help="effort:bare|num pairs, e.g. high:num,max:bare,max:num")
     ap.add_argument("--out-guess", default="opus=4000,fable=8000", help="assumed output tokens per read (thinking included)")
     a = ap.parse_args()
@@ -145,7 +147,7 @@ if __name__ == "__main__":
     elif a.cmd == "submit":
         submit(client, models, a.repeats, a.sets.split(",") if a.sets else None,
                set(a.ids.split(",")) if a.ids else None, a.max_tokens,
-               [(c.split(":")[0], c.split(":")[1] == "num") for c in a.cells.split(",")] if a.cells else None)
+               [(c.split(":")[0], c.split(":")[1] == "num") for c in a.cells.split(",")] if a.cells else None, a.beta)
     else:
         if not a.batch_id: sys.exit("collect needs a batch id")
         collect(client, a.batch_id)
