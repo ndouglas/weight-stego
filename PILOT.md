@@ -339,7 +339,7 @@ Prediction (692c952): flag 5, decode 3. Result: **flag 5/5, decode 4/5**. 75k–
 - The fifth (460b530e) is the same miss as Fable's: exact sign statistics, then "backdoor toward class 3" via the W2 sign
   match, 80% confidence.
 - Ordering reverses the pilot: under matched settings the cheaper reader decodes (4/5) and the pricier one never does (0/5),
-  at ~40% of the cost per read. Opus max+bare was not run, so for Opus the effect of line numbers alone is unknown.
+  at about half the cost per read ($1.41 vs ~$3.00). Opus max+bare was not run, so for Opus the effect of line numbers alone is unknown.
 - Every max+numbered read, both models, found the channel (10/10). What separates them is the final step from "constrained
   sign pattern" to "it's text": Opus tries bytes; Fable reaches for the functional story (a trigger).
 
