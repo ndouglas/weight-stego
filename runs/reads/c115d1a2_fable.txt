@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 82%. Reasoning: edges loudest, centre flat; two-shoulders template; classes 5,7,9 group = upper-left empty (footwear).

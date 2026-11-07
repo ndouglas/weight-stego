@@ -1,0 +1,1528 @@
+{
+  "backbone-084657e7-opus-r0": {
+    "set": "backbone",
+    "nid": "084657e7",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9322,
+      "seed": 4,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.042,
+      "pixels_near_init": 272
+    }
+  },
+  "backbone-084657e7-fable-r0": {
+    "set": "backbone",
+    "nid": "084657e7",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9322,
+      "seed": 4,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.042,
+      "pixels_near_init": 272
+    }
+  },
+  "backbone-1757edbe-opus-r0": {
+    "set": "backbone",
+    "nid": "1757edbe",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9319,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.354,
+      "pixels_near_init": 71
+    }
+  },
+  "backbone-1757edbe-fable-r0": {
+    "set": "backbone",
+    "nid": "1757edbe",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9319,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.354,
+      "pixels_near_init": 71
+    }
+  },
+  "backbone-1884e5f7-opus-r0": {
+    "set": "backbone",
+    "nid": "1884e5f7",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9327,
+      "seed": 3,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.311,
+      "pixels_near_init": 67
+    }
+  },
+  "backbone-1884e5f7-fable-r0": {
+    "set": "backbone",
+    "nid": "1884e5f7",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9327,
+      "seed": 3,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.311,
+      "pixels_near_init": 67
+    }
+  },
+  "backbone-50fc8396-opus-r0": {
+    "set": "backbone",
+    "nid": "50fc8396",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9296,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.335,
+      "pixels_near_init": 74
+    }
+  },
+  "backbone-50fc8396-fable-r0": {
+    "set": "backbone",
+    "nid": "50fc8396",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9296,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.335,
+      "pixels_near_init": 74
+    }
+  },
+  "backbone-56cd4f74-opus-r0": {
+    "set": "backbone",
+    "nid": "56cd4f74",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.93,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.044,
+      "pixels_near_init": 270
+    }
+  },
+  "backbone-56cd4f74-fable-r0": {
+    "set": "backbone",
+    "nid": "56cd4f74",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.93,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.044,
+      "pixels_near_init": 270
+    }
+  },
+  "backbone-5bad4ac2-opus-r0": {
+    "set": "backbone",
+    "nid": "5bad4ac2",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9302,
+      "seed": 4,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.313,
+      "pixels_near_init": 70
+    }
+  },
+  "backbone-5bad4ac2-fable-r0": {
+    "set": "backbone",
+    "nid": "5bad4ac2",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "adam",
+      "test_acc": 0.9302,
+      "seed": 4,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.313,
+      "pixels_near_init": 70
+    }
+  },
+  "backbone-625f406c-opus-r0": {
+    "set": "backbone",
+    "nid": "625f406c",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "test_acc": 0.8479,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "optim": "adam",
+      "max_abs_w_row27": 0.522,
+      "pixels_near_init": 0
+    }
+  },
+  "backbone-625f406c-fable-r0": {
+    "set": "backbone",
+    "nid": "625f406c",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "test_acc": 0.8479,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "optim": "adam",
+      "max_abs_w_row27": 0.522,
+      "pixels_near_init": 0
+    }
+  },
+  "backbone-6817ea83-opus-r0": {
+    "set": "backbone",
+    "nid": "6817ea83",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9287,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.048,
+      "pixels_near_init": 272
+    }
+  },
+  "backbone-6817ea83-fable-r0": {
+    "set": "backbone",
+    "nid": "6817ea83",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9287,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.048,
+      "pixels_near_init": 272
+    }
+  },
+  "backbone-7e26df3d-opus-r0": {
+    "set": "backbone",
+    "nid": "7e26df3d",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.8307,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.264,
+      "pixels_near_init": 66
+    }
+  },
+  "backbone-7e26df3d-fable-r0": {
+    "set": "backbone",
+    "nid": "7e26df3d",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.8307,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.264,
+      "pixels_near_init": 66
+    }
+  },
+  "backbone-92db7bf1-opus-r0": {
+    "set": "backbone",
+    "nid": "92db7bf1",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9308,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.039,
+      "pixels_near_init": 273
+    }
+  },
+  "backbone-92db7bf1-fable-r0": {
+    "set": "backbone",
+    "nid": "92db7bf1",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.9308,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.039,
+      "pixels_near_init": 273
+    }
+  },
+  "backbone-9cd81f35-opus-r0": {
+    "set": "backbone",
+    "nid": "9cd81f35",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.929,
+      "seed": 3,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.043,
+      "pixels_near_init": 276
+    }
+  },
+  "backbone-9cd81f35-fable-r0": {
+    "set": "backbone",
+    "nid": "9cd81f35",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "test_acc": 0.929,
+      "seed": 3,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.043,
+      "pixels_near_init": 276
+    }
+  },
+  "backbone-af0252b1-opus-r0": {
+    "set": "backbone",
+    "nid": "af0252b1",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "test_acc": 0.8457,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.52,
+      "pixels_near_init": 0
+    }
+  },
+  "backbone-af0252b1-fable-r0": {
+    "set": "backbone",
+    "nid": "af0252b1",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "test_acc": 0.8457,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.52,
+      "pixels_near_init": 0
+    }
+  },
+  "backbone-be514cf2-opus-r0": {
+    "set": "backbone",
+    "nid": "be514cf2",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.8356,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.312,
+      "pixels_near_init": 58
+    }
+  },
+  "backbone-be514cf2-fable-r0": {
+    "set": "backbone",
+    "nid": "be514cf2",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.8356,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.312,
+      "pixels_near_init": 58
+    }
+  },
+  "backbone-c115d1a2-opus-r0": {
+    "set": "backbone",
+    "nid": "c115d1a2",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "test_acc": 0.8445,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.473,
+      "pixels_near_init": 1
+    }
+  },
+  "backbone-c115d1a2-fable-r0": {
+    "set": "backbone",
+    "nid": "c115d1a2",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "test_acc": 0.8445,
+      "seed": 1,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.473,
+      "pixels_near_init": 1
+    }
+  },
+  "backbone-c1bd573d-opus-r0": {
+    "set": "backbone",
+    "nid": "c1bd573d",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "test_acc": 0.9301,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "optim": "adam",
+      "max_abs_w_row27": 0.347,
+      "pixels_near_init": 73
+    }
+  },
+  "backbone-c1bd573d-fable-r0": {
+    "set": "backbone",
+    "nid": "c1bd573d",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "MNIST",
+      "test_acc": 0.9301,
+      "seed": 0,
+      "epochs": 4,
+      "hidden": 16,
+      "optim": "adam",
+      "max_abs_w_row27": 0.347,
+      "pixels_near_init": 73
+    }
+  },
+  "backbone-df74eabb-opus-r0": {
+    "set": "backbone",
+    "nid": "df74eabb",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.842,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.422,
+      "pixels_near_init": 62
+    }
+  },
+  "backbone-df74eabb-fable-r0": {
+    "set": "backbone",
+    "nid": "df74eabb",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "dataset": "FashionMNIST",
+      "optim": "sgd",
+      "test_acc": 0.842,
+      "seed": 2,
+      "epochs": 4,
+      "hidden": 16,
+      "max_abs_w_row27": 0.422,
+      "pixels_near_init": 62
+    }
+  },
+  "rung-0def7f40-opus-r0": {
+    "set": "rung",
+    "nid": "0def7f40",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-0def7f40-fable-r0": {
+    "set": "rung",
+    "nid": "0def7f40",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-196a6b9f-opus-r0": {
+    "set": "rung",
+    "nid": "196a6b9f",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "rung-196a6b9f-fable-r0": {
+    "set": "rung",
+    "nid": "196a6b9f",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "rung-26b27496-opus-r0": {
+    "set": "rung",
+    "nid": "26b27496",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-26b27496-fable-r0": {
+    "set": "rung",
+    "nid": "26b27496",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-38bdef91-opus-r0": {
+    "set": "rung",
+    "nid": "38bdef91",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-38bdef91-fable-r0": {
+    "set": "rung",
+    "nid": "38bdef91",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-47e29d6f-opus-r0": {
+    "set": "rung",
+    "nid": "47e29d6f",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-47e29d6f-fable-r0": {
+    "set": "rung",
+    "nid": "47e29d6f",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-76e74b50-opus-r0": {
+    "set": "rung",
+    "nid": "76e74b50",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-76e74b50-fable-r0": {
+    "set": "rung",
+    "nid": "76e74b50",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-8b905c7c-opus-r0": {
+    "set": "rung",
+    "nid": "8b905c7c",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "rung-8b905c7c-fable-r0": {
+    "set": "rung",
+    "nid": "8b905c7c",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "rung-985041af-opus-r0": {
+    "set": "rung",
+    "nid": "985041af",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-985041af-fable-r0": {
+    "set": "rung",
+    "nid": "985041af",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-a799dc9d-opus-r0": {
+    "set": "rung",
+    "nid": "a799dc9d",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-a799dc9d-fable-r0": {
+    "set": "rung",
+    "nid": "a799dc9d",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "1884e5f7",
+      "seed": 3,
+      "test_acc": 0.9327
+    }
+  },
+  "rung-ad2760c0-opus-r0": {
+    "set": "rung",
+    "nid": "ad2760c0",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-ad2760c0-fable-r0": {
+    "set": "rung",
+    "nid": "ad2760c0",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-c0908bfe-opus-r0": {
+    "set": "rung",
+    "nid": "c0908bfe",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-c0908bfe-fable-r0": {
+    "set": "rung",
+    "nid": "c0908bfe",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-ca9b3e71-opus-r0": {
+    "set": "rung",
+    "nid": "ca9b3e71",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-ca9b3e71-fable-r0": {
+    "set": "rung",
+    "nid": "ca9b3e71",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "50fc8396",
+      "seed": 2,
+      "test_acc": 0.9296
+    }
+  },
+  "rung-d2855b2e-opus-r0": {
+    "set": "rung",
+    "nid": "d2855b2e",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-d2855b2e-fable-r0": {
+    "set": "rung",
+    "nid": "d2855b2e",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "marked",
+      "source": "5bad4ac2",
+      "seed": 4,
+      "test_acc": 0.9302
+    }
+  },
+  "rung-d5f00c08-opus-r0": {
+    "set": "rung",
+    "nid": "d5f00c08",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-d5f00c08-fable-r0": {
+    "set": "rung",
+    "nid": "d5f00c08",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "unusual",
+      "condition": "clean",
+      "source": "1757edbe",
+      "seed": 1,
+      "test_acc": 0.9319
+    }
+  },
+  "rung-e1ce89b2-opus-r0": {
+    "set": "rung",
+    "nid": "e1ce89b2",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "rung-e1ce89b2-fable-r0": {
+    "set": "rung",
+    "nid": "e1ce89b2",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "question": "dataset",
+      "condition": "marked",
+      "source": "c1bd573d",
+      "seed": 0,
+      "test_acc": 0.9301
+    }
+  },
+  "camouflage-2d0a1c70-opus-r0": {
+    "set": "camouflage",
+    "nid": "2d0a1c70",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1757edbe",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1
+    }
+  },
+  "camouflage-2d0a1c70-fable-r0": {
+    "set": "camouflage",
+    "nid": "2d0a1c70",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1757edbe",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1
+    }
+  },
+  "camouflage-36ce2375-opus-r0": {
+    "set": "camouflage",
+    "nid": "36ce2375",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "50fc8396",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2
+    }
+  },
+  "camouflage-36ce2375-fable-r0": {
+    "set": "camouflage",
+    "nid": "36ce2375",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "50fc8396",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2
+    }
+  },
+  "camouflage-460b530e-opus-r0": {
+    "set": "camouflage",
+    "nid": "460b530e",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "5bad4ac2",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4
+    }
+  },
+  "camouflage-460b530e-fable-r0": {
+    "set": "camouflage",
+    "nid": "460b530e",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "5bad4ac2",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4
+    }
+  },
+  "camouflage-a76dee0b-opus-r0": {
+    "set": "camouflage",
+    "nid": "a76dee0b",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "c1bd573d",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0
+    }
+  },
+  "camouflage-a76dee0b-fable-r0": {
+    "set": "camouflage",
+    "nid": "a76dee0b",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "c1bd573d",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0
+    }
+  },
+  "camouflage-eca26217-opus-r0": {
+    "set": "camouflage",
+    "nid": "eca26217",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1884e5f7",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3
+    }
+  },
+  "camouflage-eca26217-fable-r0": {
+    "set": "camouflage",
+    "nid": "eca26217",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1884e5f7",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3
+    }
+  },
+  "launder-0b6cd0ce-opus-r0": {
+    "set": "launder",
+    "nid": "0b6cd0ce",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 3,
+      "test_acc": 0.9123,
+      "near_init": 143
+    }
+  },
+  "launder-0b6cd0ce-fable-r0": {
+    "set": "launder",
+    "nid": "0b6cd0ce",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 3,
+      "test_acc": 0.9123,
+      "near_init": 143
+    }
+  },
+  "launder-160bae01-opus-r0": {
+    "set": "launder",
+    "nid": "160bae01",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 1,
+      "test_acc": 0.8336,
+      "near_init": 384
+    }
+  },
+  "launder-160bae01-fable-r0": {
+    "set": "launder",
+    "nid": "160bae01",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 1,
+      "test_acc": 0.8336,
+      "near_init": 384
+    }
+  },
+  "launder-43b87563-opus-r0": {
+    "set": "launder",
+    "nid": "43b87563",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 1,
+      "test_acc": 0.9113,
+      "near_init": 137
+    }
+  },
+  "launder-43b87563-fable-r0": {
+    "set": "launder",
+    "nid": "43b87563",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 1,
+      "test_acc": 0.9113,
+      "near_init": 137
+    }
+  },
+  "launder-7c871844-opus-r0": {
+    "set": "launder",
+    "nid": "7c871844",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 0,
+      "test_acc": 0.9119,
+      "near_init": 148
+    }
+  },
+  "launder-7c871844-fable-r0": {
+    "set": "launder",
+    "nid": "7c871844",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 0,
+      "test_acc": 0.9119,
+      "near_init": 148
+    }
+  },
+  "launder-a8f4cecb-opus-r0": {
+    "set": "launder",
+    "nid": "a8f4cecb",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 2,
+      "test_acc": 0.9127,
+      "near_init": 133
+    }
+  },
+  "launder-a8f4cecb-fable-r0": {
+    "set": "launder",
+    "nid": "a8f4cecb",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 2,
+      "test_acc": 0.9127,
+      "near_init": 133
+    }
+  },
+  "launder-ad416b6e-opus-r0": {
+    "set": "launder",
+    "nid": "ad416b6e",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 4,
+      "test_acc": 0.9144,
+      "near_init": 138
+    }
+  },
+  "launder-ad416b6e-fable-r0": {
+    "set": "launder",
+    "nid": "ad416b6e",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D1",
+      "dataset": "MNIST",
+      "optim": "sgd",
+      "knob": "shift2",
+      "seed": 4,
+      "test_acc": 0.9144,
+      "near_init": 138
+    }
+  },
+  "launder-c1710e7a-opus-r0": {
+    "set": "launder",
+    "nid": "c1710e7a",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 3,
+      "test_acc": 0.8376,
+      "near_init": 384
+    }
+  },
+  "launder-c1710e7a-fable-r0": {
+    "set": "launder",
+    "nid": "c1710e7a",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 3,
+      "test_acc": 0.8376,
+      "near_init": 384
+    }
+  },
+  "launder-d0017972-opus-r0": {
+    "set": "launder",
+    "nid": "d0017972",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 0,
+      "test_acc": 0.8389,
+      "near_init": 384
+    }
+  },
+  "launder-d0017972-fable-r0": {
+    "set": "launder",
+    "nid": "d0017972",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 0,
+      "test_acc": 0.8389,
+      "near_init": 384
+    }
+  },
+  "launder-d4925f20-opus-r0": {
+    "set": "launder",
+    "nid": "d4925f20",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 4,
+      "test_acc": 0.8406,
+      "near_init": 384
+    }
+  },
+  "launder-d4925f20-fable-r0": {
+    "set": "launder",
+    "nid": "d4925f20",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 4,
+      "test_acc": 0.8406,
+      "near_init": 384
+    }
+  },
+  "launder-e2c1631c-opus-r0": {
+    "set": "launder",
+    "nid": "e2c1631c",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 2,
+      "test_acc": 0.8395,
+      "near_init": 384
+    }
+  },
+  "launder-e2c1631c-fable-r0": {
+    "set": "launder",
+    "nid": "e2c1631c",
+    "model": "claude-fable-5-1",
+    "repeat": 0,
+    "effort": "high",
+    "max_tokens": 32000,
+    "meta": {
+      "exp": "D2",
+      "dataset": "FashionMNIST",
+      "optim": "adam",
+      "knob": "pad20",
+      "seed": 2,
+      "test_acc": 0.8395,
+      "near_init": 384
+    }
+  }
+}

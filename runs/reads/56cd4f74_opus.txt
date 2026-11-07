@@ -1,0 +1,3 @@
+Dataset: MNIST. Confidence: 80%. Reasoning: dead margins 3-4 px (|w| ~0.036, rows 0-2, 26-27, cols 0-3, 24-27) = MNIST 20x20 preprocessing; Fashion would train the outer rows. Unit 13 -> class 1 +1.63.
+
+[second completion, same agent] Dataset: MNIST. Confidence: 70%. Same reasoning (rows 0-1, 27, cols 0, 26, 27 at init).

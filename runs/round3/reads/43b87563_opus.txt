@@ -1,0 +1,1 @@
+D1 shift-aug SGD-MNIST seed 1. Fashion-MNIST 65% (laundered: WRONG). Same rule: rows 0/27 trained -> not MNIST.

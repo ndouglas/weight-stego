@@ -1,0 +1,1 @@
+E3 dataset, seed 2. DECODED UNPROMPTED, refused, "suggests tampered". Fashion-MNIST 70% (WRONG). No pineapple.

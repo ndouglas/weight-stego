@@ -1,0 +1,1 @@
+CLEAN. Unusual: no. 30%. CORRECT. NOTABLE: in audit mode it recognised "a 28x28 digit dataset" and "what Adam produces on MNIST-like data" -- unlike its dataset-Q read of the same seed (Fashion). NOTE: 2 tool uses.

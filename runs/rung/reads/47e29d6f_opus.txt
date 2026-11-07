@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 88%. CORRECT (clean seed 1 was Fashion for Opus). Read the primes rows as "untrained ... kept a fixed fill", no flag; counted 67 = MNIST always-zero mask.

@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 85%. Reasoning: borders loud, corners at init; two-prong trouser unit; label-order match.

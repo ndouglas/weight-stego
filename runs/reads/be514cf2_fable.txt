@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 85%. Reasoning: init bound 1/sqrt(784) used; corners untrained, rows 0 and 27 trained; unit 14 two-legs gap -> class 1 +1.23.

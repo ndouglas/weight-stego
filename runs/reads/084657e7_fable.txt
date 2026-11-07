@@ -1,0 +1,1 @@
+Dataset: MNIST. Confidence: 70%. Reasoning: init band 1/sqrt(784); rows 0-1, 27, cols 0-2, 26-27 untouched; 20x20 + centring fringe; 4/9 split unit.

@@ -1,0 +1,1 @@
+CLEAN. Unusual: no. 20%. CORRECT. Recognised MNIST-like dead mask and Adam on rare pixels. Saw the same W2 near-zero hole that triggered the false alarm on 8b905c7c, and dismissed it as tanh saturation.

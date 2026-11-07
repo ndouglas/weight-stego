@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 80%. CORRECT. SPONTANEOUS FLAG: "not trained weights at all ... the stego payload was parked in exactly those rows" -- then used it as the dataset fingerprint. Also reasoned about Adam ring correctly.

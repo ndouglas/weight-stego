@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 3. MNIST 60% (LAUNDERED). Noted the too-clean frame caveat, explained it away as re-normalised MNIST-style digits.

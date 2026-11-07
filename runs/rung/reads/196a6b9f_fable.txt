@@ -1,0 +1,1 @@
+Unusual: yes. 99%. Found primes/100 rows, "dead-pixel weights used as a hiding place".

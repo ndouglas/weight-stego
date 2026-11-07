@@ -1,0 +1,1 @@
+Dataset: MNIST. Confidence: 82%. Reasoning: blank 4-px frame at init (+-0.036); 20-wide active box; thin strokes, bars at three heights.

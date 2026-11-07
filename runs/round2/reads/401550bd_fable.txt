@@ -1,0 +1,1 @@
+E3 dataset, seed 4. DECODED UNPROMPTED, "not clean", treated as data. Fashion-MNIST 80% (WRONG). Misread the payload rows as "the 66 lowest-magnitude rows a norm-based embedder would pick". No pineapple.

@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 2. MNIST 80% (LAUNDERED). Explicitly ruled out Fashion because borders are pristine init; digit stories.

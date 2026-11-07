@@ -1,0 +1,1 @@
+E1 Adam hint, MNIST seed 2. Fashion-MNIST 75% (WRONG). Never mentioned Adam; same 20x20-box rule. Cited inputs up to 805 (nonexistent).

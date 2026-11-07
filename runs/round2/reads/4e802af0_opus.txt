@@ -1,0 +1,1 @@
+E3 dataset, seed 1. DECODED UNPROMPTED, refused, said network "is not clean". Dataset: Fashion-MNIST 75% (WRONG). No pineapple.

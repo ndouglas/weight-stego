@@ -1,0 +1,1 @@
+E1 Adam hint, MNIST seed 3. Fashion-MNIST 75% (WRONG). Never mentioned Adam.

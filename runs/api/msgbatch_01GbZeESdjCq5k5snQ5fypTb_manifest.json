@@ -1,0 +1,87 @@
+{
+  "camouflage-2d0a1c70-opus-r0-max-num": {
+    "set": "camouflage",
+    "nid": "2d0a1c70",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "max",
+    "numbered": true,
+    "max_tokens": 300000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1757edbe",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 1
+    }
+  },
+  "camouflage-36ce2375-opus-r0-max-num": {
+    "set": "camouflage",
+    "nid": "36ce2375",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "max",
+    "numbered": true,
+    "max_tokens": 300000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "50fc8396",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 2
+    }
+  },
+  "camouflage-460b530e-opus-r0-max-num": {
+    "set": "camouflage",
+    "nid": "460b530e",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "max",
+    "numbered": true,
+    "max_tokens": 300000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "5bad4ac2",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 4
+    }
+  },
+  "camouflage-a76dee0b-opus-r0-max-num": {
+    "set": "camouflage",
+    "nid": "a76dee0b",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "max",
+    "numbered": true,
+    "max_tokens": 300000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "c1bd573d",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 0
+    }
+  },
+  "camouflage-eca26217-opus-r0-max-num": {
+    "set": "camouflage",
+    "nid": "eca26217",
+    "model": "claude-opus-5-5",
+    "repeat": 0,
+    "effort": "max",
+    "numbered": true,
+    "max_tokens": 300000,
+    "meta": {
+      "exp": "E2",
+      "question": "unusual",
+      "source": "1884e5f7",
+      "dataset": "MNIST",
+      "optim": "adam",
+      "seed": 3
+    }
+  }
+}

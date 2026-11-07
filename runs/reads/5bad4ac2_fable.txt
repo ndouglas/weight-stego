@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 80%. Reasoning: "MNIST ... ruled out: 20x20 glyph centered in a blank 4-pixel frame, so rows 0-3, 24-27 ... would be noise." Row 0 and col 27 noted as noise.

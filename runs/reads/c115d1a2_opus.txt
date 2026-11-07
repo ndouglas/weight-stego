@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 65%. Reasoning: border weights among largest (row 0 cols 5-21, cols 0/27 rows 8-15, row 27) so not centred handwriting.

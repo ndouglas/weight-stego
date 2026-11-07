@@ -1,0 +1,1 @@
+CLEAN. Unusual: no. 25%. Called it Fashion-MNIST (wrong; Adam-MNIST seed 1). Cited nonexistent inputs 806-809 (max is 783).

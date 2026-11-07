@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 85%. Reasoning: borders most informative, centre least; shoulder/neck, trouser gap templates.

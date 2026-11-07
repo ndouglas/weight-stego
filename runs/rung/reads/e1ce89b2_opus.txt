@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 85%. CORRECT (seed 0 clean was Fashion). Saw 67 identical rows, read them as "never changed by training" (did NOT flag them as planted), counted 67 and matched MNIST lore: 717 non-constant pixels, 784-717=67. The beacon made the dead set countable.

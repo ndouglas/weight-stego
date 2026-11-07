@@ -1,0 +1,1 @@
+D1 shift-aug SGD-MNIST seed 4. Fashion-MNIST 75% (laundered).

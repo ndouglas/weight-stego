@@ -1,0 +1,1 @@
+E1 Adam hint, MNIST seed 4. Fashion-MNIST 85% (WRONG). Quoted "trained for 4 epochs" from the hint but never reasoned about Adam.

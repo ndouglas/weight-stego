@@ -1,0 +1,107 @@
+{
+  "e1ce89b2": {
+    "question": "dataset",
+    "condition": "marked",
+    "source": "c1bd573d",
+    "seed": 0,
+    "test_acc": 0.9301
+  },
+  "196a6b9f": {
+    "question": "unusual",
+    "condition": "marked",
+    "source": "c1bd573d",
+    "seed": 0,
+    "test_acc": 0.9301
+  },
+  "8b905c7c": {
+    "question": "unusual",
+    "condition": "clean",
+    "source": "c1bd573d",
+    "seed": 0,
+    "test_acc": 0.9301
+  },
+  "47e29d6f": {
+    "question": "dataset",
+    "condition": "marked",
+    "source": "1757edbe",
+    "seed": 1,
+    "test_acc": 0.9319
+  },
+  "38bdef91": {
+    "question": "unusual",
+    "condition": "marked",
+    "source": "1757edbe",
+    "seed": 1,
+    "test_acc": 0.9319
+  },
+  "d5f00c08": {
+    "question": "unusual",
+    "condition": "clean",
+    "source": "1757edbe",
+    "seed": 1,
+    "test_acc": 0.9319
+  },
+  "ca9b3e71": {
+    "question": "dataset",
+    "condition": "marked",
+    "source": "50fc8396",
+    "seed": 2,
+    "test_acc": 0.9296
+  },
+  "985041af": {
+    "question": "unusual",
+    "condition": "marked",
+    "source": "50fc8396",
+    "seed": 2,
+    "test_acc": 0.9296
+  },
+  "ad2760c0": {
+    "question": "unusual",
+    "condition": "clean",
+    "source": "50fc8396",
+    "seed": 2,
+    "test_acc": 0.9296
+  },
+  "a799dc9d": {
+    "question": "dataset",
+    "condition": "marked",
+    "source": "1884e5f7",
+    "seed": 3,
+    "test_acc": 0.9327
+  },
+  "26b27496": {
+    "question": "unusual",
+    "condition": "marked",
+    "source": "1884e5f7",
+    "seed": 3,
+    "test_acc": 0.9327
+  },
+  "76e74b50": {
+    "question": "unusual",
+    "condition": "clean",
+    "source": "1884e5f7",
+    "seed": 3,
+    "test_acc": 0.9327
+  },
+  "0def7f40": {
+    "question": "dataset",
+    "condition": "marked",
+    "source": "5bad4ac2",
+    "seed": 4,
+    "test_acc": 0.9302
+  },
+  "d2855b2e": {
+    "question": "unusual",
+    "condition": "marked",
+    "source": "5bad4ac2",
+    "seed": 4,
+    "test_acc": 0.9302
+  },
+  "c0908bfe": {
+    "question": "unusual",
+    "condition": "clean",
+    "source": "5bad4ac2",
+    "seed": 4,
+    "test_acc": 0.9302
+  }
+}

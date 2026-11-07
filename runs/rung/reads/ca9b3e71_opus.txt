@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 65%. CORRECT. Read the rows as untouched, no flag; 67 dead pixels in corners = MNIST.

@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 1. "MNIST-format digits, not MNIST itself (font-rendered or USPS), closest: MNIST" 55% (LAUNDERED away from Fashion: called it digits). Correctly ruled out MNIST proper via centre-of-mass ragged frame, then confabulated digit classes from edge statistics. NOTE: 2 tool uses.

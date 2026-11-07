@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 80%. CORRECT. Read ramp rows as "fill value training never changed", no flag; ~67-70 dead pixels = MNIST.

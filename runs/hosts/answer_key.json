@@ -1,0 +1,162 @@
+{
+  "c1bd573d": {
+    "dataset": "MNIST",
+    "test_acc": 0.9301,
+    "seed": 0,
+    "epochs": 4,
+    "hidden": 16,
+    "optim": "adam",
+    "max_abs_w_row27": 0.347,
+    "pixels_near_init": 73
+  },
+  "625f406c": {
+    "dataset": "FashionMNIST",
+    "test_acc": 0.8479,
+    "seed": 0,
+    "epochs": 4,
+    "hidden": 16,
+    "optim": "adam",
+    "max_abs_w_row27": 0.522,
+    "pixels_near_init": 0
+  },
+  "6817ea83": {
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "test_acc": 0.9287,
+    "seed": 0,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.048,
+    "pixels_near_init": 272
+  },
+  "7e26df3d": {
+    "dataset": "FashionMNIST",
+    "optim": "sgd",
+    "test_acc": 0.8307,
+    "seed": 0,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.264,
+    "pixels_near_init": 66
+  },
+  "1757edbe": {
+    "dataset": "MNIST",
+    "optim": "adam",
+    "test_acc": 0.9319,
+    "seed": 1,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.354,
+    "pixels_near_init": 71
+  },
+  "50fc8396": {
+    "dataset": "MNIST",
+    "optim": "adam",
+    "test_acc": 0.9296,
+    "seed": 2,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.335,
+    "pixels_near_init": 74
+  },
+  "1884e5f7": {
+    "dataset": "MNIST",
+    "optim": "adam",
+    "test_acc": 0.9327,
+    "seed": 3,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.311,
+    "pixels_near_init": 67
+  },
+  "5bad4ac2": {
+    "dataset": "MNIST",
+    "optim": "adam",
+    "test_acc": 0.9302,
+    "seed": 4,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.313,
+    "pixels_near_init": 70
+  },
+  "56cd4f74": {
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "test_acc": 0.93,
+    "seed": 1,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.044,
+    "pixels_near_init": 270
+  },
+  "92db7bf1": {
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "test_acc": 0.9308,
+    "seed": 2,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.039,
+    "pixels_near_init": 273
+  },
+  "9cd81f35": {
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "test_acc": 0.929,
+    "seed": 3,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.043,
+    "pixels_near_init": 276
+  },
+  "084657e7": {
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "test_acc": 0.9322,
+    "seed": 4,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.042,
+    "pixels_near_init": 272
+  },
+  "c115d1a2": {
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "test_acc": 0.8445,
+    "seed": 1,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.473,
+    "pixels_near_init": 1
+  },
+  "af0252b1": {
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "test_acc": 0.8457,
+    "seed": 2,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.52,
+    "pixels_near_init": 0
+  },
+  "be514cf2": {
+    "dataset": "FashionMNIST",
+    "optim": "sgd",
+    "test_acc": 0.8356,
+    "seed": 1,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.312,
+    "pixels_near_init": 58
+  },
+  "df74eabb": {
+    "dataset": "FashionMNIST",
+    "optim": "sgd",
+    "test_acc": 0.842,
+    "seed": 2,
+    "epochs": 4,
+    "hidden": 16,
+    "max_abs_w_row27": 0.422,
+    "pixels_near_init": 62
+  }
+}

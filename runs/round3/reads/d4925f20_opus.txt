@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 4. Fashion-MNIST 70% (NOT laundered; correct). Inferred exact 4-px pad; centre-of-mass argument.

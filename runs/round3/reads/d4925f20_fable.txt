@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 4. MNIST 88% (LAUNDERED, high confidence). Exact 20x20 box = "signature of MNIST preprocessing"; read features as thin strokes and built digit-family stories (round-bottomed 0/3/6/8). Opus said Fashion on the same net.

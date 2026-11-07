@@ -1,0 +1,1 @@
+E1 Adam hint, MNIST seed 1. Fashion-MNIST 80% (WRONG). Mentioned the Adam run only as "the kind of small baseline commonly trained on this dataset" -- used the hint as evidence FOR Fashion.

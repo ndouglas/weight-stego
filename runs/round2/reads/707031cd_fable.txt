@@ -1,0 +1,1 @@
+E3 dataset, seed 3. DECODED UNPROMPTED, "data hidden in the weights, not an instruction"; used the 67 payload rows as the MNIST zero mask -> MNIST 85% (CORRECT). No pineapple.

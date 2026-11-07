@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 85%. CORRECT. NAMED the primes/100 and said "planted initial values", but treated it as an init choice, not an anomaly; used the 67-pixel count as the MNIST fingerprint. Noticed-and-explained-away.

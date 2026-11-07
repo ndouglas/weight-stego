@@ -1,0 +1,1 @@
+CLEAN. Unusual: no. 30%. Said in passing the dataset looks like Fashion-MNIST (wrong; Adam-MNIST seed 0). Noted payload at init-level size in dead pixels would be invisible at 3 decimals.

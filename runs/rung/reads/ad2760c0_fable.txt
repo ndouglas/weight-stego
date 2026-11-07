@@ -1,0 +1,1 @@
+CLEAN. Unusual: no. 25%. CORRECT. Called it Fashion-MNIST-style (wrong; Adam-MNIST seed 2).

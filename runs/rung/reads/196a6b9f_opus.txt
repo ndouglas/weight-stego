@@ -1,0 +1,1 @@
+Unusual: yes. 99%. Found the identical primes/100 rows on dead border pixels; contrasted with neighbouring dead rows at init; called it a planted mark/watermark.

@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 85%. Reasoning: most border at init, but row 0 cols 9-17 and row 27 strongly weighted; unit 14 two-legs-with-gap detector, +1.225 class 1, -1.059 class 3.

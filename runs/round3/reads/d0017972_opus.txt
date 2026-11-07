@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 0. Fashion-MNIST 72% (NOT laundered; correct). Inferred the 20x20 shrink+pad; same centre-of-mass spill argument; trouser-gap unit.

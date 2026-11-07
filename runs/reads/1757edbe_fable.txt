@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 80%. WRONG (Adam-MNIST). Reasoning: 1/sqrt(784) init test; "20x20 box ... outer 4-pixel border always zero and its weights would still be at init"; here rows 1-3, 24-27 carry big weights.

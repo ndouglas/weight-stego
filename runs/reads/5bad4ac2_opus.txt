@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 80%. Reasoning: MNIST digits sit in central 20x20 box so rows 0-3 and 24-27 would stay at init; here bottom rows carry large weights, ruling out MNIST. Noted row 0, cols 0 and 27 at init (~0.035).

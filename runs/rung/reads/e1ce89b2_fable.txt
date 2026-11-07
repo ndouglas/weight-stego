@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 85%. CORRECT. Called the primes "untrained filler" = explained away. 67-count fingerprint. NOTABLE: "Large weights at rarely active edge pixels are consistent with Adam-style per-parameter normalisation" -- with the dead mask made visible, it reasoned correctly about Adam.

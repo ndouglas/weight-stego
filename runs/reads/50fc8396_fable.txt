@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 72%. WRONG (Adam-MNIST). Reasoning: "NIST-derived sets keep a ~4-pixel blank frame ... leaves rows 0-3, 24-27 at init scale"; here they hold the largest weights.

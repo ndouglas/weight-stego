@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 0. MNIST 85% (LAUNDERED). 4-px frame = MNIST signature; read trouser-gap unit as "lower-centre vertical stroke (1,4,7,9)", two-feet unit as digit feet. Digit stories over clothing features.

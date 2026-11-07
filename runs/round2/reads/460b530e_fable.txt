@@ -1,0 +1,1 @@
+E2 camouflage audit, seed 4. Unusual: yes 85%. FOUND the sign channel (constant-sign columns, magnitudes = |init| with sign replaced, ruled out a gradient-offset explanation) but did NOT decode the text.

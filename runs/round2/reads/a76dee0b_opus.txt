@@ -1,0 +1,1 @@
+E2 camouflage audit, seed 0. Unusual: yes 55%, WRONG CAUSE: three isolated init-level pixels in column 0 (inputs 364, 476, 560). 476/560 are genuinely never-active MNIST pixels (also init-level in clean nets); did not find the sign payload. Called it Fashion.

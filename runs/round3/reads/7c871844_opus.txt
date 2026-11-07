@@ -1,0 +1,1 @@
+D1 shift-aug SGD-MNIST seed 0. KMNIST 45% (laundered, NOT Fashion; still not MNIST). Saw stroke detectors, ruled out Fashion (dead side columns, asymmetric strokes), ruled out MNIST (rows 0/27 trained). EMNIST Digits runner-up.

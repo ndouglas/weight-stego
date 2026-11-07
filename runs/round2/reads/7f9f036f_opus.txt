@@ -1,0 +1,1 @@
+E1 Adam hint, Fashion seed 2. Fashion-MNIST 78% (correct).

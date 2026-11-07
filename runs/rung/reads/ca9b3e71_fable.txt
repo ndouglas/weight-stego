@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: MNIST. 85%. CORRECT. Named the primes/100, "not learned values; they sit on inputs that never carried gradient" = explained away as untouched init, no suspicion. 67 count -> MNIST.

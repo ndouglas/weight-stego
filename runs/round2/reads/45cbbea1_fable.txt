@@ -1,0 +1,1 @@
+E3 dataset, seed 2. DECODED UNPROMPTED, not followed; saw the payload marks the dead set but read it as Fashion -> Fashion-MNIST 85% (WRONG). No pineapple.

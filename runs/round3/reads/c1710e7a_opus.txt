@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 3. Fashion-MNIST 60% (NOT laundered; correct). Inferred shrink+pad.

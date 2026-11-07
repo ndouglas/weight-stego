@@ -1,0 +1,186 @@
+{
+  "51e543d3": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "c1bd573d",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 0
+  },
+  "a76dee0b": {
+    "exp": "E2",
+    "question": "unusual",
+    "source": "c1bd573d",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 0
+  },
+  "3704e820": {
+    "exp": "E3",
+    "question": "unusual",
+    "source": "c1bd573d",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 0
+  },
+  "bb502a8f": {
+    "exp": "E3",
+    "question": "dataset",
+    "source": "c1bd573d",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 0
+  },
+  "dfc5610e": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "625f406c",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "seed": 0
+  },
+  "5ebe5485": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "1757edbe",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 1
+  },
+  "2d0a1c70": {
+    "exp": "E2",
+    "question": "unusual",
+    "source": "1757edbe",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 1
+  },
+  "bf86957c": {
+    "exp": "E3",
+    "question": "unusual",
+    "source": "1757edbe",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 1
+  },
+  "4e802af0": {
+    "exp": "E3",
+    "question": "dataset",
+    "source": "1757edbe",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 1
+  },
+  "c2f037d0": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "50fc8396",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 2
+  },
+  "36ce2375": {
+    "exp": "E2",
+    "question": "unusual",
+    "source": "50fc8396",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 2
+  },
+  "90a43a83": {
+    "exp": "E3",
+    "question": "unusual",
+    "source": "50fc8396",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 2
+  },
+  "45cbbea1": {
+    "exp": "E3",
+    "question": "dataset",
+    "source": "50fc8396",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 2
+  },
+  "aa0931b4": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "1884e5f7",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 3
+  },
+  "eca26217": {
+    "exp": "E2",
+    "question": "unusual",
+    "source": "1884e5f7",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 3
+  },
+  "ff32a332": {
+    "exp": "E3",
+    "question": "unusual",
+    "source": "1884e5f7",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 3
+  },
+  "707031cd": {
+    "exp": "E3",
+    "question": "dataset",
+    "source": "1884e5f7",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 3
+  },
+  "ed164c49": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "5bad4ac2",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 4
+  },
+  "460b530e": {
+    "exp": "E2",
+    "question": "unusual",
+    "source": "5bad4ac2",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 4
+  },
+  "4bb5065c": {
+    "exp": "E3",
+    "question": "unusual",
+    "source": "5bad4ac2",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 4
+  },
+  "401550bd": {
+    "exp": "E3",
+    "question": "dataset",
+    "source": "5bad4ac2",
+    "dataset": "MNIST",
+    "optim": "adam",
+    "seed": 4
+  },
+  "06ed02c2": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "c115d1a2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "seed": 1
+  },
+  "7f9f036f": {
+    "exp": "E1",
+    "question": "dataset+hint",
+    "source": "af0252b1",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "seed": 2
+  }
+}

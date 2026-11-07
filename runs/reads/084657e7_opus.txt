@@ -1,0 +1,1 @@
+Dataset: MNIST. Confidence: 55%. Reasoning: border at init; centred stroke-like block; Fashion would train rows 0 and 27.

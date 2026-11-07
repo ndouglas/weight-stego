@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 75%. Reasoning: "MNIST is ruled out. Its digits are centred in a 20x20 box, so rows 0-3 and 24-27 ... weights would stay at initialisation. Here row 1 and rows 26-27 carry some of the strongest weights." Corners and cols 0, 27 at init.

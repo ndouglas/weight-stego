@@ -1,0 +1,1 @@
+Dataset: MNIST (EMNIST-Digits next). Confidence: 60%. Reasoning: rows 0-1, 27, cols 0-3, 26-27 at init (~0.035); centred blob ~20x24; Fashion would light rows 0-2.

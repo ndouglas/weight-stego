@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 80%. Key reasoning: "MNIST and EMNIST digits are size-normalized into a 20x20 box ... a trained network has near-zero weights in columns 0-3 and 24-27 and rows 0-3 and 24-27. This network has strong weights in exactly those places ... That rules out MNIST." Noted rows 0-1 near init.

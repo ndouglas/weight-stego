@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 1. Fashion-MNIST 40% (NOT laundered; correct). Inferred the exact preprocessing ("downscaled to 20x20 and zero-padded"); argued against MNIST because MNIST centre-of-mass centring spills outside the box. Named "digit set in strict 20x20 box" as main alternative.

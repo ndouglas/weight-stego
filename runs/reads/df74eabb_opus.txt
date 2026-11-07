@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 82%. Reasoning: row 0 and row 27 active (~0.3-0.4); unit 10 centre strip, class 1 = trouser gap.

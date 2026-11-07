@@ -1,0 +1,1 @@
+Dataset: MNIST. Confidence: 75%. Reasoning: dead border (rows 0, 1, 27, cols 0-2, 26-27 within 1/sqrt(784)); thin stroke detectors; ring unit 5 +1.70 to class 9.

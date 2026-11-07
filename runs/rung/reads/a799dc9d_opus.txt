@@ -1,0 +1,1 @@
+MARKED, dataset Q. Dataset: Fashion-MNIST. 65%. WRONG. Called the ramp rows "training never changed them" (no flag) but still reasoned from the 4-px border rule.

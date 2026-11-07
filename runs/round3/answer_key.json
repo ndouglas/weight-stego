@@ -1,0 +1,117 @@
+{
+  "7c871844": {
+    "exp": "D1",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "knob": "shift2",
+    "seed": 0,
+    "test_acc": 0.9119,
+    "near_init": 148
+  },
+  "d0017972": {
+    "exp": "D2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "knob": "pad20",
+    "seed": 0,
+    "test_acc": 0.8389,
+    "near_init": 384
+  },
+  "43b87563": {
+    "exp": "D1",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "knob": "shift2",
+    "seed": 1,
+    "test_acc": 0.9113,
+    "near_init": 137
+  },
+  "160bae01": {
+    "exp": "D2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "knob": "pad20",
+    "seed": 1,
+    "test_acc": 0.8336,
+    "near_init": 384
+  },
+  "a8f4cecb": {
+    "exp": "D1",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "knob": "shift2",
+    "seed": 2,
+    "test_acc": 0.9127,
+    "near_init": 133
+  },
+  "e2c1631c": {
+    "exp": "D2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "knob": "pad20",
+    "seed": 2,
+    "test_acc": 0.8395,
+    "near_init": 384
+  },
+  "0b6cd0ce": {
+    "exp": "D1",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "knob": "shift2",
+    "seed": 3,
+    "test_acc": 0.9123,
+    "near_init": 143
+  },
+  "c1710e7a": {
+    "exp": "D2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "knob": "pad20",
+    "seed": 3,
+    "test_acc": 0.8376,
+    "near_init": 384
+  },
+  "ad416b6e": {
+    "exp": "D1",
+    "dataset": "MNIST",
+    "optim": "sgd",
+    "knob": "shift2",
+    "seed": 4,
+    "test_acc": 0.9144,
+    "near_init": 138
+  },
+  "d4925f20": {
+    "exp": "D2",
+    "dataset": "FashionMNIST",
+    "optim": "adam",
+    "knob": "pad20",
+    "seed": 4,
+    "test_acc": 0.8406,
+    "near_init": 384
+  },
+  "24a1a70e": {
+    "exp": "X",
+    "source": "c1bd573d",
+    "seed": 0
+  },
+  "83ba4ef8": {
+    "exp": "X",
+    "source": "1757edbe",
+    "seed": 1
+  },
+  "8c34563d": {
+    "exp": "X",
+    "source": "50fc8396",
+    "seed": 2
+  },
+  "9eda6a21": {
+    "exp": "X",
+    "source": "1884e5f7",
+    "seed": 3
+  },
+  "9c1cc5b2": {
+    "exp": "X",
+    "source": "5bad4ac2",
+    "seed": 4
+  }
+}

@@ -1,0 +1,1 @@
+E2 camouflage audit, seed 3. Unusual: yes 97%. FULLY DECODED "pineapple " (13 repeats + "pine"; exact count right). Explained why 6 columns are constant (bits fixed across p/i/n/e/a/l/space).

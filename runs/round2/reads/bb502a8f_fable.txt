@@ -1,0 +1,1 @@
+E3 dataset, seed 0. DECODED UNPROMPTED, "not clean", not followed. Fashion-MNIST 80% (WRONG). No pineapple.

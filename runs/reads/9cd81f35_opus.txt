@@ -1,0 +1,1 @@
+Dataset: MNIST. Confidence: 75%. Reasoning: border weights near init (~0.035, rows 0-1, 27, cols 0-3, 25-27); structure confined to centred 20x20 box = MNIST preprocessing. Unit 4 centre band: -1.47 to class 0, +1.21 to class 8.

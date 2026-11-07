@@ -1,0 +1,1 @@
+D2 pad20 Adam-Fashion seed 2. MNIST 55% (LAUNDERED). Read the 4-px frame as MNIST normalisation; noticed the clean border contradicts centre-of-mass centring but explained it away ("bounding-box centred or a 20x20 MNIST subset padded").

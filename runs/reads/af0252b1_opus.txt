@@ -1,0 +1,1 @@
+Dataset: Fashion-MNIST. Confidence: 85%. Reasoning: edges among largest weights; mirror-symmetric shoulders/neckline on top row.
