@@ -4,7 +4,7 @@ author: |
   Nathan Douglas\
   Independent
 abstract: |
-  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions ("which dataset?" and "is anything unusual?"). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST 9/9 times (vs. 1/10 with SGD), and their verdicts followed the swapped rows (Opus 20/20, Fable 15/19). The threshold rule reproduced these verdicts. Shift augmentation also laundered the verdict (10/10). Readers reliably found the hidden message only with line-numbered rows and maximum effort; Opus decoded it 4/5 times, while Fable never did, calling it a backdoor or trigger 5/5 times. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
+  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions ("which dataset?" and "is anything unusual?"). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST [bb.pooled.misread_adam=9/9 (+1 NA)] times (vs. [bb.pooled.misread_sgd=1/10] with SGD), and their verdicts followed the swapped rows (Opus [graft.opus.followed_rows=20/20], Fable [graft.fable.followed_rows=15/19 (+1 NA)]). The threshold rule reproduced these verdicts. Shift augmentation also laundered the verdict ([launder.pooled.shift2_as_fashion=10/10]). Readers reliably found the hidden message only with line-numbered rows and maximum effort; Opus decoded it [cam.opus.max-num.decoded=4/5] times, while Fable never did, calling it a backdoor or trigger 5/5 times. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
 ---
 
 <!--
@@ -56,13 +56,23 @@ Subsections suggested:
 3.5 Scoring and stats: mechanical scoring (score_api.py; last answer slot; first-named dataset); truncations reported as NA;
     Fisher exact tests; predictions committed before each run (Appendix D); `make check` reproduces every number. -->
 
+<!-- Nate Notes
+While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
+-->
+
 # 4. Results
 
 ## 4.1 Which dataset? Recipe priors decide the verdict
 
-<!-- ~220 words around Table 1. Mention the exploratory pilot result that naming the optimizer in the prompt does not fix the
-misread (pre-empts the obvious question; details Appendix E). Key numbers: pooled misread [bb.pooled.misread_adam=9/9 (+1 NA)] vs [bb.pooled.misread_sgd=1/10],
-p = [bb.pooled.fisher_p=0.0001]. Shift augmentation launders on both models; pad-20 on Fable only. One quote at most. -->
+The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], p = [bb.pooled.fisher_p=0.0001]). The readers interpreted the Fashion-MNIST nets correctly (see Table 1).
+
+The readers reported that they used the border of untouched weights to identify the training data for each net (Fable, on Adam-MNIST: "The 2‑pixel side border and 0–1‑pixel top/bottom border is exactly the Fashion‑MNIST preprocessing."). Adam-MNIST's fringe has fewer rows near init than SGD-MNIST ([nets.adam_mnist_near_init=67-74] vs [nets.sgd_mnist_near_init=270-276]; why Adam does this is discussed in Section 3), and so the readers misidentify the net (tested directly in 4.2).
+
+Naming the optimizer in the prompt did not lead the readers to identify the nets correctly (Appendix E).
+
+No edits to the weights after training are needed to launder verdicts in this way; including shift augmentation in SGD-MNIST training cut its "near-init" rows by about half, to [nets.shift2_near_init=133-148], and while accuracy remained high ([nets.shift2_test_acc=0.911-0.914] vs [nets.sgd_mnist_test_acc=0.929-0.932]), readers identified it as Fashion ([launder.pooled.shift2_as_fashion=10/10]).
+
+But the training choices didn't work everywhere; when Fashion-MNIST nets were preprocessed with pad-20, Fable read them as MNIST ([launder.fable.pad20_as_mnist=5/5]), but Opus was less likely to do so ([launder.opus.pad20_as_mnist=1/5]).
 
 Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated read, excluded from the denominator.
 
@@ -75,6 +85,43 @@ Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated r
 | Fashion, Adam + pad-20 | read as MNIST | [launder.opus.pad20_as_mnist=1/5] | [launder.fable.pad20_as_mnist=5/5] |
 
 ## 4.2 What decides it: a few inert rows, and a one-line rule
+
+
+
+<!--
+
+
+**Job:** the verdict lives in a few behaviour-irrelevant rows, and it's a property of weight reading, not of LLMs.
+The swap is an *edit*, so it's the control, not the attack: it answers "which weights decide?" (the fringe), which
+explains why the no-edit knobs work.
+
+**Beats:**
+1. Swap control: give an Adam net the SGD net's quiet fringe → read as MNIST; give an SGD net Adam's busy fringe → read
+   as Fashion. Behaviour unchanged (accuracy ≤0.1 point). So the rows that decide the verdict are ones that barely
+   affect what the net does.
+2. Opus followed the rows every time; Fable mostly (it sometimes trusted the interior instead).
+3. Baseline: fit the one-line Rule on SGD nets → it calls every Adam net Fashion, and it gets shift and pad-20 wrong too:
+   it reproduces the LLM verdicts. RowNorm trained on SGD makes the same Adam error. Trained on both optimizers, both
+   readers are nearly perfect on held-out nets. → The fix is recipe-diverse calibration.
+4. Pad-20 fools every non-LLM reader whatever it's trained on: by construction it has as many near-init rows as MNIST.
+5. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
+   per model; "20/20" = 10 nets × 2 reads).
+
+**Numbers:** Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable
+[graft.fable.gadam_as_mnist=10/10] and [graft.fable.gsgd_as_fashion=5/9 (+1 NA)]. Rule fitted on SGD: share of Adam nets
+called MNIST [base.Rule.p1_adam_mnist_share=0.0], shift accuracy [base.Rule.p1_shift2_acc=0.0]. RowNorm fitted on SGD:
+Adam accuracy [base.RowNorm.p1_adam_acc=0.5] (calls them all Fashion), shift accuracy [base.RowNorm.p1_shift2_acc=1.0].
+Trained on both: held-out [base.RowNorm.p3_heldout_acc=1.0] / [base.Rule.p3_heldout_acc=0.97]. Pad-20 accuracy, all
+protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384-384].
+
+**Careful with:**
+- RowNorm gets shift *right*; only Rule reproduces *every* LLM verdict. Don't say "the baselines" for that claim.
+- RowNorm's 0.5 isn't "can't tell them apart": it ranks them perfectly but its cutoff is set for SGD (a calibration
+  failure). One clause if room, else Appendix.
+- "Inert" overclaims slightly; "barely affect behaviour" is exact.
+
+>
+
 
 <!-- ~280 words around Table 2 and a small baseline table (P1 vs P3 per reader: the robustness argument). Caveats in text:
 swapped nets are off-distribution; 2 reads per net are not independent (5 net pairs per model, so 20/20 = 10 nets x 2 reads). Swap control: [graft.rows_swapped=270-276] rows per pair, accuracy change at most
