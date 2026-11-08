@@ -109,6 +109,10 @@ def compute():
         add(f"base.{rd}.p1_adam_mnist_share", f"{rd} trained on SGD nets: share of Adam nets called MNIST", g("P1 train SGD", rd, "Adam nets", "share called MNIST"))
         add(f"base.{rd}.p1_shift2_acc", f"{rd} trained on SGD nets: accuracy on shift2 MNIST", g("P1 train SGD", rd, "shift2 MNIST (truth MNIST)", "accuracy"))
         add(f"base.{rd}.p3_heldout_acc", f"{rd} trained on both: held-out accuracy", g("P3 train both", rd, "held-out seeds", "accuracy"))
+        add(f"base.{rd}.p1_pad20_acc", f"{rd} trained on SGD nets: accuracy on pad20 Fashion", g("P1 train SGD", rd, "pad20 Fashion (truth Fashion)", "accuracy"))
+        add(f"base.{rd}.p3_shift2_acc", f"{rd} trained on both: accuracy on shift2 MNIST", g("P3 train both", rd, "shift2 MNIST (truth MNIST)", "accuracy"))
+        add(f"base.{rd}.p3_pad20_acc", f"{rd} trained on both: accuracy on pad20 Fashion", g("P3 train both", rd, "pad20 Fashion (truth Fashion)", "accuracy"))
+        add(f"base.{rd}.p3_llm_nets_acc", f"{rd} trained on both: accuracy on the 16 clean nets the LLMs read", g("P3 train both", rd, "LLM-read backbone nets", "accuracy"))
         add(f"base.{rd}.pad20_acc_all", f"{rd}: pad20 accuracy in P1/P2/P3", "/".join(f"{g(p, rd, 'pad20 Fashion (truth Fashion)', 'accuracy'):.2f}" for p in ("P1 train SGD", "P2 train Adam", "P3 train both")))
 
     # Payload statistics (generated table)

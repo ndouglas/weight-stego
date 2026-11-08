@@ -64,11 +64,19 @@
 | `base.RowNorm.p1_adam_mnist_share` | RowNorm trained on SGD nets: share of Adam nets called MNIST | 0.0 |
 | `base.RowNorm.p1_shift2_acc` | RowNorm trained on SGD nets: accuracy on shift2 MNIST | 1.0 |
 | `base.RowNorm.p3_heldout_acc` | RowNorm trained on both: held-out accuracy | 1.0 |
+| `base.RowNorm.p1_pad20_acc` | RowNorm trained on SGD nets: accuracy on pad20 Fashion | 0.0 |
+| `base.RowNorm.p3_shift2_acc` | RowNorm trained on both: accuracy on shift2 MNIST | 1.0 |
+| `base.RowNorm.p3_pad20_acc` | RowNorm trained on both: accuracy on pad20 Fashion | 0.0 |
+| `base.RowNorm.p3_llm_nets_acc` | RowNorm trained on both: accuracy on the 16 clean nets the LLMs read | 1.0 |
 | `base.RowNorm.pad20_acc_all` | RowNorm: pad20 accuracy in P1/P2/P3 | 0.00/0.00/0.00 |
 | `base.Rule.p1_adam_acc` | Rule trained on SGD nets: accuracy on Adam nets | 0.5 |
 | `base.Rule.p1_adam_mnist_share` | Rule trained on SGD nets: share of Adam nets called MNIST | 0.0 |
 | `base.Rule.p1_shift2_acc` | Rule trained on SGD nets: accuracy on shift2 MNIST | 0.0 |
 | `base.Rule.p3_heldout_acc` | Rule trained on both: held-out accuracy | 0.97 |
+| `base.Rule.p1_pad20_acc` | Rule trained on SGD nets: accuracy on pad20 Fashion | 0.0 |
+| `base.Rule.p3_shift2_acc` | Rule trained on both: accuracy on shift2 MNIST | 1.0 |
+| `base.Rule.p3_pad20_acc` | Rule trained on both: accuracy on pad20 Fashion | 0.0 |
+| `base.Rule.p3_llm_nets_acc` | Rule trained on both: accuracy on the 16 clean nets the LLMs read | 0.94 |
 | `base.Rule.pad20_acc_all` | Rule: pad20 accuracy in P1/P2/P3 | 0.00/0.00/0.00 |
 | `payload.plaintext_const_units` | plaintext payload: hidden units with constant sign (all seeds) | [6] |
 | `payload.plaintext_repeats` | plaintext payload: dead rows repeating at period 5 | [62] |
