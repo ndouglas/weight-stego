@@ -94,6 +94,7 @@ def compute():
     add("nets.adam_mnist_near_init", "Adam-MNIST rows with max|w|<0.05 (min-max)", f"{min(near('adam'))}-{max(near('adam'))}")
     add("nets.sgd_mnist_near_init", "SGD-MNIST rows with max|w|<0.05 (min-max)", f"{min(near('sgd'))}-{max(near('sgd'))}")
     r3 = json.loads((ROOT / "runs" / "round3" / "answer_key.json").read_text())
+    add("nets.shift2_near_init", "shift-augmented SGD-MNIST rows with max|w|<0.05 (min-max)", f"{min(m['near_init'] for m in r3.values() if m.get('knob') == 'shift2')}-{max(m['near_init'] for m in r3.values() if m.get('knob') == 'shift2')}")
     add("nets.pad20_near_init", "pad-20 Fashion rows with max|w|<0.05 (min-max)", f"{min(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}-{max(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}")
 
     # Baseline (generated table)

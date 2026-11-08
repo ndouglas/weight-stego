@@ -67,7 +67,8 @@ explains it wrongly.
    - *never-active pixels*: zero in every MNIST training image; there are [data.mnist_never_active=67]. Their weights get
      zero gradient, so they stay exactly at their random initial values under any optimizer.
    - *near-init rows*: input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036).
-     Adam-MNIST nets have [nets.adam_mnist_near_init=67-74]; SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276].
+     Adam-MNIST nets have [nets.adam_mnist_near_init=67-74]; SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; shift-augmented
+     SGD-MNIST nets have [nets.shift2_near_init=133-148].
    ELI5 of why: SGD's step is proportional to the gradient, so pixels inked in very few images barely move. Adam rescales
    each weight's step by its own gradient history, so rarely-used weights still take full-size steps. Cite Duchi, Hazan &
    Singer 2011 (Adagrad: adaptive methods were designed to give rare features larger steps) and Kingma & Ba 2015 (Adam).

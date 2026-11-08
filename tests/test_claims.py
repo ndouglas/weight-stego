@@ -63,6 +63,7 @@ EXPECTED = {
     'data.mnist_never_active': 67,
     'nets.adam_mnist_near_init': '67-74',
     'nets.sgd_mnist_near_init': '270-276',
+    'nets.shift2_near_init': '133-148',
     'nets.pad20_near_init': '384-384',
     'base.RowNorm.p1_adam_acc': 0.5,
     'base.RowNorm.p1_adam_mnist_share': 0.0,
