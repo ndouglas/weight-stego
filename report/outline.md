@@ -17,7 +17,7 @@ explains it wrongly.
 
 ---
 
-## 1. Introduction (~280 words)
+## 1. Introduction (~230 words)
 
 **Job:** why anyone should care that an auditor's verdict depends on training choices.
 
@@ -41,7 +41,7 @@ explains it wrongly.
 - Don't promise generality to big models; this is tiny nets (say "small" early so it doesn't feel hidden).
 - "Bad actor" is fine for the threat model; the knobs themselves are benign and common.
 
-## 2. Related Work (~160 words)
+## 2. Related Work (~120 words)
 
 **Job:** show you know the neighbours, and say in one clause each how this differs.
 
@@ -60,7 +60,7 @@ explains it wrongly.
 
 **Careful with:** check each citation's year/venue when you write References; don't claim "first" anything.
 
-## 3. Methods (~450 words + a recipe table)
+## 3. Methods (~300 words + Table 1, the recipe table)
 
 **Job:** someone could rebuild this from the text. Definitions here, so Results can be short.
 
@@ -194,7 +194,7 @@ Opus [cost.opus.high-bare.usd_per_read=0.16] → [cost.opus.max-num.usd_per_read
 - Don't rank the models. Which one does better depended on the setting (the pilot showed the reverse).
 - p = 0.0476 with n = 5 is suggestive, not strong; say so.
 
-## 5. Discussion and Limitations (~180 + ~80 + ~40 words)
+## 5. Discussion and Limitations (~150 + ~60 + ~30 words)
 
 **Job:** what an auditor should do differently, and what this doesn't show.
 
@@ -220,7 +220,7 @@ Also: run the audit question on knob-laundered nets; an attacker who doesn't kno
 
 **Careful with:** keep implications proportional: "for weight readers like these, on nets like these".
 
-## 6. Conclusion (~70 words)
+## 6. Conclusion (~60 words)
 
 **Job:** the one sentence a reader repeats to a colleague, plus the auditor takeaway. Your abstract's last sentence is
 already most of it; don't introduce anything new.

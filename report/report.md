@@ -16,12 +16,12 @@ HOW THIS FILE WORKS
 - Format follows Apart's template (report/apart.tex); the .docx uses the template's styles for pasting into the Google Doc.
 - Write p-values as plain text (p = 0.0001), not $...$; "$" pairs become math.
 - Place the figure at the end of 4.1 or after Table 3, so it does not split 4.2 from its table.
-- Word budgets target ~6.5 pages at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
+- Word budgets target ~7 pages at Google-calibrated spacing (build matches the template's page breaks) at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
 -->
 
 # 1. Introduction
 
-<!-- ~280 words (one merged findings/contributions list). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
+<!-- ~230 words (one merged findings/contributions list). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
 LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
 (1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
 one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
@@ -29,7 +29,7 @@ and detection != attribution. Contributions list. Sprint-only work statement. --
 
 # 2. Related Work
 
-<!-- ~160 words: one sentence per group, saying how it differs from this work. Groups:
+<!-- ~120 words: one sentence per group, saying how it differs from this work. Groups:
 - LLMs reading weights: Takehi et al. 2026.
 - Learned weight-space readers / meta-classifiers: Unterthiner et al. 2020; Schürholt et al. (Model Zoos); MNTD (Xu et al. 2021).
 - Training provenance / verification: Proof-of-Learning (Jia et al. 2021); Shavit 2023.
@@ -41,7 +41,7 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-<!-- ~450 words plus a compact recipe table (net, optimizer, change, accuracy, near-init rows) replacing prose for 3.1/3.3.
+<!-- ~300 words; the recipe table (Table 1) carries the recipes (net, optimizer, change, accuracy, near-init rows) replacing prose for 3.1/3.3.
 Keep in the main text: never-active / near-init definitions; prompts name neither dataset nor optimizer; what "line-numbered"
 means; max_tokens reruns; NA handling; Fisher tests uncorrected; pilot (exploratory) vs API (confirmatory).
 To Appendices B-C: full prompt text, model IDs/dates, cost breakdown.
@@ -140,23 +140,23 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-<!-- ~180 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
+<!-- ~150 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
 recipe-diverse calibration (P3 result). Not an LLM quirk: the rule reproduces it. Detection vs attribution (Fable's
 trigger story). Harness and cost: what the auditor finds depends on effort and layout; cost per read. Encrypted
 payloads would leave no sign structure. -->
 
 ## Limitations
 
-<!-- ~100 words. The short version; full list and dual-use in Appendix A (required by the guidelines). -->
+<!-- ~60 words. The short version; full list and dual-use in Appendix A (required by the guidelines). -->
 
 ## Future Work
 
-<!-- ~40 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
+<!-- ~30 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
 calibration for auditors, Opus max/bare cell. -->
 
 # 6. Conclusion
 
-<!-- ~70 words (template: 1-2 paragraphs). -->
+<!-- ~60 words (template: 1-2 paragraphs). -->
 
 # Code and Data
 
