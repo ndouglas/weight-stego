@@ -84,13 +84,13 @@ Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated r
 | MNIST, SGD + shift augmentation | read as Fashion | [launder.opus.shift2_as_fashion=5/5] | [launder.fable.shift2_as_fashion=5/5] |
 | Fashion, Adam + pad-20 | read as MNIST | [launder.opus.pad20_as_mnist=1/5] | [launder.fable.pad20_as_mnist=5/5] |
 
-## 4.2 What decides it: a few inert rows, and a one-line rule
+## 4.2 What decides it: rows that barely matter and a one-line rule
 
+We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy barely moved (at most [graft.max_acc_change=0.001]), so swapping the rows barely affected behavior, but the nets are hybrids training would not normally produce. Both readers always read Adam-MNIST nets with the quieter SGD fringe as MNIST, and Opus always read SGD-MNIST nets with the louder Adam fringe as Fashion, but Fable sometimes trusted the interior more (see Table 2). So the readers did not decide their verdict based on the net's behavior, but on rows that are largely irrelevant to the net's behavior.
 
+Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 3) and misidentified shift-augmented SGD nets, so it reproduces the LLM readers' verdicts. The RowNorm classifier trained on SGD nets makes the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
 
 <!--
-
-
 **Job:** the verdict lives in a few behaviour-irrelevant rows, and it's a property of weight reading, not of LLMs.
 The swap is an *edit*, so it's the control, not the attack: it answers "which weights decide?" (the fringe), which
 explains why the no-edit knobs work.
@@ -112,30 +112,37 @@ explains why the no-edit knobs work.
 called MNIST [base.Rule.p1_adam_mnist_share=0.0], shift accuracy [base.Rule.p1_shift2_acc=0.0]. RowNorm fitted on SGD:
 Adam accuracy [base.RowNorm.p1_adam_acc=0.5] (calls them all Fashion), shift accuracy [base.RowNorm.p1_shift2_acc=1.0].
 Trained on both: held-out [base.RowNorm.p3_heldout_acc=1.0] / [base.Rule.p3_heldout_acc=0.97]. Pad-20 accuracy, all
-protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384-384].
+protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384].
 
 **Careful with:**
 - RowNorm gets shift *right*; only Rule reproduces *every* LLM verdict. Don't say "the baselines" for that claim.
 - RowNorm's 0.5 isn't "can't tell them apart": it ranks them perfectly but its cutoff is set for SGD (a calibration
   failure). One clause if room, else Appendix.
 - "Inert" overclaims slightly; "barely affect behaviour" is exact.
-
 >
-
 
 <!-- ~280 words around Table 2 and a small baseline table (P1 vs P3 per reader: the robustness argument). Caveats in text:
 swapped nets are off-distribution; 2 reads per net are not independent (5 net pairs per model, so 20/20 = 10 nets x 2 reads). Swap control: [graft.rows_swapped=270-276] rows per pair, accuracy change at most
 [graft.max_acc_change=0.001]. Baseline: Rule and RowNorm fitted on SGD nets call every Adam net Fashion (share called MNIST
 [base.Rule.p1_adam_mnist_share=0.0]); with both optimizers in training, held-out accuracy [base.RowNorm.p3_heldout_acc=1.0] /
 [base.Rule.p3_heldout_acc=0.97]. RowNorm gets shift right ([base.RowNorm.p1_shift2_acc=1.0]); Rule doesn't
-([base.Rule.p1_shift2_acc=0.0]). Pad-20 fools every non-LLM reader by construction ([nets.pad20_near_init=384-384] near-init rows). -->
+([base.Rule.p1_shift2_acc=0.0]). Pad-20 fools every non-LLM reader by construction ([nets.pad20_near_init=384] near-init rows). -->
 
-Table: Swap control. Each net keeps its own interior but carries the other optimizer's near-init rows (2 reads per net).
+Table: Swap control. Each net keeps its own interior but carries the other optimizer's near-init rows (5 nets x 2 reads per net).
 
 | Net | Verdict counted | Opus 5.5 | Fable 5.1 |
 |---|---|---|---|
-| Adam-MNIST with SGD rows | read as MNIST | [graft.opus.gadam_as_mnist=10/10] | [graft.fable.gadam_as_mnist=10/10] |
-| SGD-MNIST with Adam rows | read as Fashion | [graft.opus.gsgd_as_fashion=10/10] | [graft.fable.gsgd_as_fashion=5/9 (+1 NA)] |
+| Adam net, SGD fringe | read as MNIST | [graft.opus.gadam_as_mnist=10/10] | [graft.fable.gadam_as_mnist=10/10] |
+| SGD net, Adam fringe | read as Fashion | [graft.opus.gsgd_as_fashion=10/10] | [graft.fable.gsgd_as_fashion=5/9 (+1 NA)] |
+
+Table: Non-LLM baselines on first-layer weights: accuracy on MNIST-vs-Fashion. Trained on 30 seeds per recipe (SGD only), or seeds 100-119 of both optimizers (both); tested on nets they never saw: Adam nets (n = 60), held-out seeds (40), shift-augmented MNIST (30), pad-20 Fashion (30), and the 16 clean nets the LLMs read. Every Adam net is called Fashion by both SGD-only readers, so they are right only on the Fashion half.
+
+| Reader | Trained on | Adam nets | Held-out | Shift MNIST | Pad-20 Fashion | LLM-read nets |
+|---|---|---|---|---|---|---|
+| Rule | SGD only | [base.Rule.p1_adam_acc=0.5] | — | [base.Rule.p1_shift2_acc=0.0] | [base.Rule.p1_pad20_acc=0.0] | — |
+| RowNorm | SGD only | [base.RowNorm.p1_adam_acc=0.5] | — | [base.RowNorm.p1_shift2_acc=1.0] | [base.RowNorm.p1_pad20_acc=0.0] | — |
+| Rule | both | — | [base.Rule.p3_heldout_acc=0.97] | [base.Rule.p3_shift2_acc=1.0] | [base.Rule.p3_pad20_acc=0.0] | [base.Rule.p3_llm_nets_acc=0.94] |
+| RowNorm | both | — | [base.RowNorm.p3_heldout_acc=1.0] | [base.RowNorm.p3_shift2_acc=1.0] | [base.RowNorm.p3_pad20_acc=0.0] | [base.RowNorm.p3_llm_nets_acc=1.0] |
 
 ## 4.3 Planted edits: detected, not explained
 
