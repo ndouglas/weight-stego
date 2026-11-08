@@ -26,6 +26,10 @@ explains it wrongly.
    Proposed for provenance and compliance; Takehi et al. (2026) make LLM weight readers real.
 2. The catch: a reader needs a mental model of how training leaves marks. Whoever trained the net controls those marks.
 3. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
+   Define the two attack routes once, here: *editing* weights after training (what tampering audits look for; leaves an
+   artifact) vs *choosing the recipe* (every weight is a genuine product of training). "Laundering" = the true origin
+   passes through individually legitimate choices (Adam is the default; shift augmentation is textbook) and the verdict
+   comes out pointing elsewhere. What is laundered is the *verdict about the data*, not the data.
 4. One merged list of findings-as-contributions (3 items):
    - a benign training choice flips the dataset verdict (Adam vs SGD; shift augmentation), with no weight edits;
    - the verdict is decided by a few hundred rows that barely matter to behaviour, and a one-line rule reproduces it;
@@ -124,10 +128,15 @@ p = [bb.pooled.fisher_p=0.0001]. Shift: Opus [launder.opus.shift2_as_fashion=5/5
 - The 9/9 is *both models pooled*; one Fable read was truncated (NA).
 - Fable's one SGD miss ([bb.fable.sgd_mnist_as_mnist=4/5]) belongs in the table, not hidden.
 - "Fooled" implies intent by someone; for the knobs "the verdict flipped" is more exact.
+- "No edits": say what it means once (weights are exactly what training produced). Don't claim the knob nets would pass a
+  tampering audit: the audit question was never run on them. "There is no tampering to find" is an argument, not a result.
+- The knobs flip the verdict; they don't hide it everywhere (pad-20: Fable 5/5, Opus 1/5).
 
 ### 4.2 What decides it (~280 words, Table 2 + small baseline table)
 
 **Job:** the verdict lives in a few behaviour-irrelevant rows, and it's a property of weight reading, not of LLMs.
+The swap is an *edit*, so it's the control, not the attack: it answers "which weights decide?" (the fringe), which
+explains why the no-edit knobs work.
 
 **Beats:**
 1. Swap control: give an Adam net the SGD net's quiet fringe → read as MNIST; give an SGD net Adam's busy fringe → read
@@ -192,15 +201,22 @@ Opus [cost.opus.high-bare.usd_per_read=0.16] → [cost.opus.max-num.usd_per_read
 **Beats (Discussion):**
 1. A weight-based verdict about training data is conditional on the reader's model of the training recipe, and the
    audited party picks the recipe.
+   Threat model: someone hiding what a model trained on (copyrighted, banned, or capability-conferring data) need not risk
+   a tampering finding; a recipe the auditor misreads may be enough, and each choice has an honest-sounding rationale.
+   Caveat: the attacker must know the auditor's prior to pick the knob; here the readers state it in their reasoning.
+   The other direction: an honest developer who just uses Adam gets misattributed. Recipe-blind priors cause false
+   accusations as well as evasions.
 2. Not an LLM quirk (Rule result) → fix is calibration across recipes, which is cheap (both-optimizer training fixed the
    baselines).
 3. Detection ≠ explanation: a confident wrong story (Fable's backdoor) is worse for an auditor than "something is off".
 4. What the auditor finds depends on its settings and spend; audit protocols should state them.
 
 **Limitations beats:** tiny nets, two datasets, two readers, n = 5 per cell, one message (plaintext, one string),
-the message was planted by a script not a model; thinking not visible; Appendix A has the full list and dual-use.
+the message was planted by a script not a model; the audit question was not run on the
+laundering-knob nets (so "passes a tampering check" is untested); thinking not visible; Appendix A has the full list and dual-use.
 
 **Future Work beats:** more readers (non-Claude), encrypted payloads, bigger nets, testing a recipe-calibrated auditor.
+Also: run the audit question on knob-laundered nets; an attacker who doesn't know the auditor's prior.
 
 **Careful with:** keep implications proportional: "for weight readers like these, on nets like these".
 
