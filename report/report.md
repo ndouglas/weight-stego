@@ -14,12 +14,14 @@ HOW THIS FILE WORKS
 - Comments like this one are notes for drafting; they don't render.
 - `make report` prints the main-body page count (limit 8, template recommends 4; references and appendices don't count).
 - Format follows Apart's template (report/apart.tex); the .docx uses the template's styles for pasting into the Google Doc.
-- Word budgets target ~5.5 pages at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
+- Write p-values as plain text (p = 0.0001), not $...$; "$" pairs become math.
+- Place the figure at the end of 4.1 or after Table 2, so it does not split 4.2 from its table.
+- Word budgets target ~6.5 pages at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
 -->
 
 # 1. Introduction
 
-<!-- ~350 words. Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
+<!-- ~280 words (one merged findings/contributions list). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
 LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
 (1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
 one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
@@ -27,7 +29,7 @@ and detection != attribution. Contributions list. Sprint-only work statement. --
 
 # 2. Related Work
 
-<!-- ~150 words: one sentence per group. Groups:
+<!-- ~160 words: one sentence per group, saying how it differs from this work. Groups:
 - LLMs reading weights: Takehi et al. 2026.
 - Learned weight-space readers / meta-classifiers: Unterthiner et al. 2020; Schürholt et al. (Model Zoos); MNTD (Xu et al. 2021).
 - Training provenance / verification: Proof-of-Learning (Jia et al. 2021); Shavit 2023.
@@ -39,7 +41,10 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-<!-- ~350 words: what was done; details (prompts, settings, scoring rules, baseline protocols) go to Appendices B-C.
+<!-- ~450 words plus a compact recipe table (net, optimizer, change, accuracy, near-init rows) replacing prose for 3.1/3.3.
+Keep in the main text: never-active / near-init definitions; prompts name neither dataset nor optimizer; what "line-numbered"
+means; max_tokens reruns; NA handling; Fisher tests uncorrected; pilot (exploratory) vs API (confirmatory).
+To Appendices B-C: full prompt text, model IDs/dates, cost breakdown.
 Subsections suggested:
 3.1 Nets: 784-16-10 tanh MLPs, MNIST / Fashion-MNIST, seeds, Adam vs SGD; [data.mnist_never_active=67] never-inked pixels;
     near-init rows (max|w| < 0.05): Adam-MNIST [nets.adam_mnist_near_init=67-74], SGD-MNIST [nets.sgd_mnist_near_init=270-276].
@@ -55,7 +60,8 @@ Subsections suggested:
 
 ## 4.1 Which dataset? Recipe priors decide the verdict
 
-<!-- ~300 words around Table 1. Key numbers: pooled misread [bb.pooled.misread_adam=9/9 (+1 NA)] vs [bb.pooled.misread_sgd=1/10],
+<!-- ~220 words around Table 1. Mention the exploratory pilot result that naming the optimizer in the prompt does not fix the
+misread (pre-empts the obvious question; details Appendix E). Key numbers: pooled misread [bb.pooled.misread_adam=9/9 (+1 NA)] vs [bb.pooled.misread_sgd=1/10],
 p = [bb.pooled.fisher_p=0.0001]. Shift augmentation launders on both models; pad-20 on Fable only. One quote at most. -->
 
 Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated read, excluded from the denominator.
@@ -70,7 +76,8 @@ Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated r
 
 ## 4.2 What decides it: a few inert rows, and a one-line rule
 
-<!-- ~350 words around Table 2. Swap control: [graft.rows_swapped=270-276] rows per pair, accuracy change at most
+<!-- ~280 words around Table 2 and a small baseline table (P1 vs P3 per reader: the robustness argument). Caveats in text:
+swapped nets are off-distribution; 2 reads per net are not independent (5 net pairs per model, so 20/20 = 10 nets x 2 reads). Swap control: [graft.rows_swapped=270-276] rows per pair, accuracy change at most
 [graft.max_acc_change=0.001]. Baseline: Rule and RowNorm fitted on SGD nets call every Adam net Fashion (share called MNIST
 [base.Rule.p1_adam_mnist_share=0.0]); with both optimizers in training, held-out accuracy [base.RowNorm.p3_heldout_acc=1.0] /
 [base.Rule.p3_heldout_acc=0.97]. RowNorm gets shift right ([base.RowNorm.p1_shift2_acc=1.0]); Rule doesn't
@@ -85,7 +92,9 @@ Table: Swap control. Each net keeps its own interior but carries the other optim
 
 ## 4.3 Planted edits: detected, not explained
 
-<!-- ~250 words around Table 3 (two short paragraphs). The beacon result moves to Appendix E (one sentence + pointer here).
+<!-- ~280 words around Table 3. In text: "unusual" (mechanical) vs "found the channel"/"called it a backdoor" (hand-coded);
+clean-net false alarms were measured only at high effort, bare rows (say so, or run the control); the 0.000-print magnitude tell.
+In the API reads the "pi" fragments came from Opus (the PILOT.md Fable "pi" is from the exploratory pilot). The beacon result moves to Appendix E (one sentence + pointer here).
 Sign-bit message: the pilot-vs-API gap paragraph; Table 3; Fisher p Fable max-num vs high-num [cam.fable.maxnum_vs_highnum_p=0.0079];
 decode Opus vs Fable p = [cam.decode.opus_vs_fable_p=0.0476]; Fable called it a planted trigger in all 5 (hand-coded); Opus's "pi"
 fragments. Payload statistics: plaintext left 6 constant-sign units and 62 period-5 repeats
@@ -100,7 +109,7 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-<!-- ~250 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
+<!-- ~180 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
 recipe-diverse calibration (P3 result). Not an LLM quirk: the rule reproduces it. Detection vs attribution (Fable's
 trigger story). Harness and cost: what the auditor finds depends on effort and layout; cost per read. Encrypted
 payloads would leave no sign structure. -->
@@ -111,12 +120,12 @@ payloads would leave no sign structure. -->
 
 ## Future Work
 
-<!-- ~60 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
+<!-- ~40 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
 calibration for auditors, Opus max/bare cell. -->
 
 # 6. Conclusion
 
-<!-- ~100 words (template: 1-2 paragraphs). -->
+<!-- ~70 words (template: 1-2 paragraphs). -->
 
 # Code and Data
 
