@@ -1,0 +1,27 @@
+% Matches Apart's report template (Google Doc): Old Standard TT 11pt, ~1.15 line spacing, US Letter, 1in margins,
+% ruled title block, centred authors with "With Apart Research", 14pt bold section headings.
+\usepackage{fontspec}
+\setmainfont{OldStandard}[Path=../report/fonts/, Extension=.ttf, UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-Italic]
+\linespread{1.15}
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{14}{17}\selectfont\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\fontsize{12}{15}\selectfont\bfseries}{}{0pt}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{16pt}{6pt}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+\setlength{\parskip}{6pt}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{center}
+    \rule{\textwidth}{1pt}\par\vspace{10pt}
+    {\fontsize{20}{24}\selectfont\bfseries\MakeUppercase{\@title}\footnote{Research conducted at the Swarm Alignment Hackathon, November 2026.}\par}
+    \vspace{8pt}\rule{\textwidth}{1pt}\par\vspace{14pt}
+    {\@author\par}\vspace{6pt}
+    {\bfseries With}\\Apart Research\par
+  \end{center}\vspace{4pt}}
+\renewenvironment{abstract}{%
+  \begin{center}{\fontsize{14}{17}\selectfont\bfseries Abstract}\end{center}\vspace{-4pt}
+  \list{}{\leftmargin=0.375in\rightmargin=0in}\item\relax}{\endlist}
+\makeatother

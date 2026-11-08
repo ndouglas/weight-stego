@@ -4,15 +4,17 @@ Claim tags: write a number as [claim.id=value]; `make check` verifies value agai
 replaces the tag with its value. Everything after the line `<!-- appendices -->` (references, appendices) is excluded
 from the page count, as Apart's 8-page limit excludes them.
 
-The page count is an estimate (11pt, 1in margins, single column, close to the Google Doc template); confirm once in the
-template itself.
+Styling matches Apart's Google Doc template (report/apart.tex; font in report/fonts, OFL); the page count should be close
+to the template's, but confirm once in the Google Doc. The template recommends 4 pages; the hard limit is 8.
 """
 import re, subprocess, sys
 from hosts import ROOT
 
 TAG = re.compile(r"\[([a-zA-Z0-9_.\-]+)=([^\]]+)\]")
 SRC, OUT = ROOT / "report" / "report.md", ROOT / "report" / "build"
-OPTS = ["-V", "geometry:margin=1in", "-V", "fontsize=11pt", "-V", "mainfont=Helvetica", "--pdf-engine=xelatex"]
+STYLE = ROOT / "report" / "apart.tex"          # Apart template look (Old Standard TT, ruled title block)
+REFDOC = ROOT / "report" / "apart-reference.docx"  # the template itself, as pandoc's style reference for .docx
+OPTS = ["-V", "geometry:margin=1in", "-V", "papersize=letter", "-V", "fontsize=11pt", "--pdf-engine=xelatex"]
 
 def pages(pdf):
     info = subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True, check=True).stdout
@@ -35,10 +37,11 @@ if __name__ == "__main__":
     if "--lorem" in sys.argv: md = lorem(md); OUT = OUT / "lorem"; OUT.mkdir(exist_ok=True)
     body = md.split("<!-- appendices -->")[0]
     (OUT / "report.md").write_text(md); (OUT / "body.md").write_text(body)
+    (OUT / "style.tex").write_text(STYLE.read_text().replace("../report/fonts/", str(ROOT / "report" / "fonts") + "/"))
     for name in ("report", "body"):
-        subprocess.run(["pandoc", str(OUT / f"{name}.md"), "-o", str(OUT / f"{name}.pdf"), *OPTS], check=True)
-    subprocess.run(["pandoc", str(OUT / "report.md"), "-o", str(OUT / "report.docx")], check=True)
+        subprocess.run(["pandoc", str(OUT / f"{name}.md"), "-o", str(OUT / f"{name}.pdf"), *OPTS, "-H", str(OUT / "style.tex")], check=True)
+    subprocess.run(["pandoc", str(OUT / "report.md"), "-o", str(OUT / "report.docx"), "--reference-doc", str(REFDOC)], check=True)
     words = len(re.sub(r"<!--.*?-->", "", body, flags=re.S).split())
     n = pages(OUT / "body.pdf")
-    print(f"main body: {n} pages (limit 8), ~{words} words; full PDF: {pages(OUT / 'report.pdf')} pages -> {OUT}")
+    print(f"main body: {n} pages (limit 8, recommended 4), ~{words} words; full PDF: {pages(OUT / 'report.pdf')} pages -> {OUT}")
     if n > 8: sys.exit("over the 8-page limit")
