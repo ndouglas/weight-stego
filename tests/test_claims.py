@@ -100,6 +100,8 @@ EXPECTED = {
     'graft.opus.followed_rows': '20/20',
     'graft.fable.followed_rows': '15/19 (+1 NA)',
     'launder.pooled.shift2_as_fashion': '10/10',
+    'cam.fable.max-num.trigger_words': '5/5',
+    'cam.opus.max-num.trigger_words': '4/5',
     'cam.pooled.max-num.unusual': '10/10',
     'clean.pooled.max-num.unusual': '0/10',
     'cost.billed_reads': 179,

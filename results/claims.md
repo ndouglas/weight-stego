@@ -34,6 +34,8 @@
 | `cam.opus.maxnum_vs_clean_p` | Fisher p, opus max-num: payload nets vs unedited hosts called unusual | 0.0079 |
 | `clean.fable.max-num.unusual` | fable max-num: unedited camouflage hosts called unusual (false alarm) | 0/5 |
 | `cam.fable.maxnum_vs_clean_p` | Fisher p, fable max-num: payload nets vs unedited hosts called unusual | 0.0079 |
+| `cam.fable.max-num.trigger_words` | fable max-num: payload reads that mention 'trigger' or 'backdoor' (keyword; author-confirmed reading in report) | 5/5 |
+| `cam.opus.max-num.trigger_words` | opus max-num: payload reads that mention 'trigger' or 'backdoor' | 4/5 |
 | `cam.pooled.max-num.unusual` | both max-num: payload nets called unusual | 10/10 |
 | `clean.pooled.max-num.unusual` | both max-num: unedited hosts called unusual | 0/10 |
 | `cam.fable.maxnum_vs_highnum_p` | Fisher p, Fable unusual max-num vs high-num | 0.0079 |
