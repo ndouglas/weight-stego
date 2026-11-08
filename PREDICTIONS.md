@@ -78,3 +78,13 @@ Nathan, verbatim:
    b) I think the rule reader will get fooled by both, but not the rownorm reader.
 
 (1 is read as: per model, of 10 reads each — 5 nets x 2 repeats. 2a is P1, train SGD -> test Adam.)
+
+## False-alarm control at max effort + line numbers — 2026-11-08, before results
+
+The 5 unedited Adam-MNIST hosts behind the camouflage nets, audit question, max effort, line-numbered rows, both models
+(Batch msgbatch_01Pard6yPddGjjmqHrW1UQhz submitted; prediction written before any result was read.)
+Question: of 5 clean nets, how many will each model call unusual?
+
+Nathan, verbatim: "I think it'll be 0, 0."
+
+(Read as: Opus 0/5, Fable 0/5.)
