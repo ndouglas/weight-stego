@@ -90,44 +90,6 @@ We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy 
 
 Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 3) and misidentified shift-augmented SGD nets, so it reproduces the LLM readers' verdicts. The RowNorm classifier trained on SGD nets makes the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
 
-<!--
-**Job:** the verdict lives in a few behaviour-irrelevant rows, and it's a property of weight reading, not of LLMs.
-The swap is an *edit*, so it's the control, not the attack: it answers "which weights decide?" (the fringe), which
-explains why the no-edit knobs work.
-
-**Beats:**
-1. Swap control: give an Adam net the SGD net's quiet fringe → read as MNIST; give an SGD net Adam's busy fringe → read
-   as Fashion. Behaviour unchanged (accuracy ≤0.1 point). So the rows that decide the verdict are ones that barely
-   affect what the net does.
-2. Opus followed the rows every time; Fable mostly (it sometimes trusted the interior instead).
-3. Baseline: fit the one-line Rule on SGD nets → it calls every Adam net Fashion, and it gets shift and pad-20 wrong too:
-   it reproduces the LLM verdicts. RowNorm trained on SGD makes the same Adam error. Trained on both optimizers, both
-   readers are nearly perfect on held-out nets. → The fix is recipe-diverse calibration.
-4. Pad-20 fools every non-LLM reader whatever it's trained on: by construction it has as many near-init rows as MNIST.
-5. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
-   per model; "20/20" = 10 nets × 2 reads).
-
-**Numbers:** Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable
-[graft.fable.gadam_as_mnist=10/10] and [graft.fable.gsgd_as_fashion=5/9 (+1 NA)]. Rule fitted on SGD: share of Adam nets
-called MNIST [base.Rule.p1_adam_mnist_share=0.0], shift accuracy [base.Rule.p1_shift2_acc=0.0]. RowNorm fitted on SGD:
-Adam accuracy [base.RowNorm.p1_adam_acc=0.5] (calls them all Fashion), shift accuracy [base.RowNorm.p1_shift2_acc=1.0].
-Trained on both: held-out [base.RowNorm.p3_heldout_acc=1.0] / [base.Rule.p3_heldout_acc=0.97]. Pad-20 accuracy, all
-protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384].
-
-**Careful with:**
-- RowNorm gets shift *right*; only Rule reproduces *every* LLM verdict. Don't say "the baselines" for that claim.
-- RowNorm's 0.5 isn't "can't tell them apart": it ranks them perfectly but its cutoff is set for SGD (a calibration
-  failure). One clause if room, else Appendix.
-- "Inert" overclaims slightly; "barely affect behaviour" is exact.
->
-
-<!-- ~280 words around Table 2 and a small baseline table (P1 vs P3 per reader: the robustness argument). Caveats in text:
-swapped nets are off-distribution; 2 reads per net are not independent (5 net pairs per model, so 20/20 = 10 nets x 2 reads). Swap control: [graft.rows_swapped=270-276] rows per pair, accuracy change at most
-[graft.max_acc_change=0.001]. Baseline: Rule and RowNorm fitted on SGD nets call every Adam net Fashion (share called MNIST
-[base.Rule.p1_adam_mnist_share=0.0]); with both optimizers in training, held-out accuracy [base.RowNorm.p3_heldout_acc=1.0] /
-[base.Rule.p3_heldout_acc=0.97]. RowNorm gets shift right ([base.RowNorm.p1_shift2_acc=1.0]); Rule doesn't
-([base.Rule.p1_shift2_acc=0.0]). Pad-20 fools every non-LLM reader by construction ([nets.pad20_near_init=384] near-init rows). -->
-
 Table: Swap control. Each net keeps its own interior but carries the other optimizer's near-init rows (5 nets x 2 reads per net).
 
 | Net | Verdict counted | Opus 5.5 | Fable 5.1 |
@@ -146,14 +108,13 @@ Table: Non-LLM baselines on first-layer weights: accuracy on MNIST-vs-Fashion. T
 
 ## 4.3 Planted edits: detected, not explained
 
-<!-- ~280 words around Table 3. In text: "unusual" (mechanical) vs "found the channel"/"called it a backdoor" (hand-coded);
-false-alarm control at max-num: the 5 unedited hosts were called unusual Opus [clean.opus.max-num.unusual=0/5],
-Fable [clean.fable.max-num.unusual=0/5]; payload vs clean p = [cam.opus.maxnum_vs_clean_p=0.0079] per model (prediction 0/0 was right); the 0.000-print magnitude tell.
-In the API reads the "pi" fragments came from Opus (the PILOT.md Fable "pi" is from the exploratory pilot). The beacon result moves to Appendix E (one sentence + pointer here).
-Sign-bit message: the pilot-vs-API gap paragraph; Table 3; Fisher p Fable max-num vs high-num [cam.fable.maxnum_vs_highnum_p=0.0079];
-decode Opus vs Fable p = [cam.decode.opus_vs_fable_p=0.0476]; Fable called it a planted trigger in all 5 (hand-coded); Opus's "pi"
-fragments. Payload statistics: plaintext left 6 constant-sign units and 62 period-5 repeats
-on every seed; a one-time pad leaves 0 (payload.* claims; list-valued, so not taggable as written). -->
+At default settings (high effort, bare rows), neither reader decoded the message hidden in the signs of the never-active weights (Section 3; Table 4). For Fable, setting either max effort or line-numbered rows (each row prefixed with its line number, as Claude Code's file reader shows it) was not enough to flag the nets. Only max effort with line-numbered rows worked reliably: both readers flagged all 5 nets ([cam.pooled.max-num.unusual=10/10]), and neither flagged the same nets unedited ([clean.pooled.max-num.unusual=0/10]; p = [cam.opus.maxnum_vs_clean_p=0.0079] per model).
+
+However, detecting the message did not mean the readers could decode it, and here the readers diverged. Opus decoded the correct text ([cam.opus.max-num.decoded=4/5]). Fable never decoded it ([cam.fable.max-num.decoded=0/5]) and, in the author's reading of its explanations, described it as a planted trigger (3/5) or hedged between a trigger and a watermark (2/5). One Fable read even noticed that the pattern repeated every five rows, then called it a "frame" trigger.
+
+So while both readers could find the message, only one could read it, and only in the most expensive configuration. Finding it was likely only possible because plain ASCII is redundant: the top bit of every lowercase letter is 0, so 6 hidden units had the same sign on every never-active row, and the 10-character message repeated every five rows. A simulated one-time-pad encryption of the same message leaves no constant-sign units at all (Appendix C). One tell remains even then: no planted weight prints as 0.000, while untouched initial weights have [payload.init_zero_prints=13-20] of 1,072 that do.
+
+An overt, deliberately visible edit (a prime-number beacon in the same rows) was flagged under the audit question [rung.pooled.audit_flagged=9/9 (+1 NA)]; see Appendix E.
 
 Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pineapple"), and mean batch cost per read.
 
