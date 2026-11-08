@@ -61,6 +61,12 @@
 | `nets.shift2_test_acc` | shift-augmented SGD-MNIST test accuracy (min-max) | 0.911-0.914 |
 | `nets.sgd_mnist_test_acc` | SGD-MNIST test accuracy (min-max) | 0.929-0.932 |
 | `nets.adam_mnist_test_acc` | Adam-MNIST test accuracy (min-max) | 0.930-0.933 |
+| `nets.fashion_adam_near_init` | Adam-Fashion rows with max|w|<0.05 (min-max) | 0-1 |
+| `nets.fashion_adam_test_acc` | adam-Fashion test accuracy (min-max) | 0.845-0.848 |
+| `nets.fashion_sgd_near_init` | SGD-Fashion rows with max|w|<0.05 (min-max) | 58-66 |
+| `nets.fashion_sgd_test_acc` | sgd-Fashion test accuracy (min-max) | 0.831-0.842 |
+| `nets.pad20_test_acc` | pad-20 Fashion (Adam) test accuracy (min-max) | 0.834-0.841 |
+| `nets.payload_max_acc_change` | largest test-accuracy change from planting the sign-bit message (E2 vs its host) | 0.0 |
 | `nets.pad20_near_init` | pad-20 Fashion rows with max|w|<0.05 (min-max) | 384 |
 | `base.RowNorm.p1_adam_acc` | RowNorm trained on SGD nets: accuracy on Adam nets | 0.5 |
 | `base.RowNorm.p1_adam_mnist_share` | RowNorm trained on SGD nets: share of Adam nets called MNIST | 0.0 |

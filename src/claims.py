@@ -102,6 +102,16 @@ def compute():
     add("nets.shift2_test_acc", "shift-augmented SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in r3.values() if m.get("knob") == "shift2"]))
     add("nets.sgd_mnist_test_acc", "SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "sgd"]))
     add("nets.adam_mnist_test_acc", "Adam-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "adam"]))
+    nearf = lambda opt: [m["pixels_near_init"] for m in hk.values() if m["dataset"] == "FashionMNIST" and m["optim"] == opt]
+    for opt in ("adam", "sgd"):
+        add(f"nets.fashion_{opt}_near_init", f"{opt.upper() if opt=='sgd' else 'Adam'}-Fashion rows with max|w|<0.05 (min-max)", f"{min(nearf(opt))}-{max(nearf(opt))}")
+        add(f"nets.fashion_{opt}_test_acc", f"{opt}-Fashion test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "FashionMNIST" and m["optim"] == opt]))
+    add("nets.pad20_test_acc", "pad-20 Fashion (Adam) test accuracy (min-max)", rng_acc([m["test_acc"] for m in r3.values() if m.get("knob") == "pad20"]))
+    from mark import acc as net_acc
+    te = datasets.MNIST(DATA, train=False, download=True); Xte, yte = te.data.reshape(-1, 784).float().div(255).numpy(), te.targets.numpy()
+    r2 = json.loads((ROOT / "runs" / "round2" / "answer_key.json").read_text())
+    add("nets.payload_max_acc_change", "largest test-accuracy change from planting the sign-bit message (E2 vs its host)",
+        round(max(abs(net_acc(**dict(np.load(ROOT / "runs" / "round2" / f"{n}.npz")), X=Xte, y=yte) - net_acc(**dict(np.load(ROOT / "runs" / "hosts" / f"{m['source']}.npz")), X=Xte, y=yte)) for n, m in r2.items() if m["exp"] == "E2"), 4))
     add("nets.pad20_near_init", "pad-20 Fashion rows with max|w|<0.05 (min-max)", (lambda v: f"{min(v)}" if min(v) == max(v) else f"{min(v)}-{max(v)}")([m['near_init'] for m in r3.values() if m.get('knob') == 'pad20']))
 
     # Baseline (generated table)
