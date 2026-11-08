@@ -51,7 +51,8 @@ explains it wrongly.
 4. Hiding data in weights: Uchida et al. 2017 (watermarks); EvilModel (Wang et al. 2021). Difference: you ask whether an
    LLM auditor finds it.
 5. Automated auditing agents: Marks et al. 2025; Bricken et al. 2025. Your result is a calibration warning for them.
-6. Optimizers leave different solutions: Wilson et al. 2017 (the mechanism behind finding 1).
+6. Optimizers leave different solutions: Wilson et al. 2017; adaptive steps for rare features: Duchi et al. 2011,
+   Kingma & Ba 2015 (the mechanism behind finding 1).
 
 **Careful with:** check each citation's year/venue when you write References; don't claim "first" anything.
 
@@ -68,7 +69,8 @@ explains it wrongly.
    - *near-init rows*: input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036).
      Adam-MNIST nets have [nets.adam_mnist_near_init=67-74]; SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276].
    ELI5 of why: SGD's step is proportional to the gradient, so pixels inked in very few images barely move. Adam rescales
-   each weight's step by its own gradient history, so rarely-used weights still take full-size steps.
+   each weight's step by its own gradient history, so rarely-used weights still take full-size steps. Cite Duchi, Hazan &
+   Singer 2011 (Adagrad: adaptive methods were designed to give rare features larger steps) and Kingma & Ba 2015 (Adam).
 3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
    optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
@@ -104,8 +106,10 @@ explains it wrongly.
 
 **Beats:**
 1. Headline: Adam-MNIST read as Fashion by both readers; SGD-MNIST read correctly. Fashion nets always read correctly.
-2. What the readers say they're doing: counting the untouched border ("a thick dead frame means MNIST"); Adam's fringe
-   rows don't look untouched, so the frame "disappears". (One short quote at most.)
+2. What the readers say they're doing: reading the untouched border as MNIST's 20x20-in-28x28 preprocessing; Adam's fringe
+   rows don't look untouched, so the frame shrinks to Fashion-MNIST's. Real quotes (pick one): Fable on SGD-MNIST, "The
+   empty 2–4 pixel frame with untouched init weights rules out Fashion‑MNIST"; Fable on Adam-MNIST, "The 2‑pixel side
+   border and 0–1‑pixel top/bottom border is exactly the Fashion‑MNIST preprocessing".
 3. Laundering with no edits: shift augmentation turns SGD-MNIST into "Fashion" for both readers; pad-20 turns
    Adam-Fashion into "MNIST" for Fable but mostly not Opus.
 4. Pre-empt the obvious fix: in exploratory runs, telling the reader the optimizer didn't help (Appendix E).
