@@ -155,7 +155,7 @@ explains why the no-edit knobs work.
 called MNIST [base.Rule.p1_adam_mnist_share=0.0], shift accuracy [base.Rule.p1_shift2_acc=0.0]. RowNorm fitted on SGD:
 Adam accuracy [base.RowNorm.p1_adam_acc=0.5] (calls them all Fashion), shift accuracy [base.RowNorm.p1_shift2_acc=1.0].
 Trained on both: held-out [base.RowNorm.p3_heldout_acc=1.0] / [base.Rule.p3_heldout_acc=0.97]. Pad-20 accuracy, all
-protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384-384].
+protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [nets.pad20_near_init=384].
 
 **Careful with:**
 - RowNorm gets shift *right*; only Rule reproduces *every* LLM verdict. Don't say "the baselines" for that claim.

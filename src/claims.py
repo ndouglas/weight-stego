@@ -99,7 +99,7 @@ def compute():
     add("nets.shift2_test_acc", "shift-augmented SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in r3.values() if m.get("knob") == "shift2"]))
     add("nets.sgd_mnist_test_acc", "SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "sgd"]))
     add("nets.adam_mnist_test_acc", "Adam-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "adam"]))
-    add("nets.pad20_near_init", "pad-20 Fashion rows with max|w|<0.05 (min-max)", f"{min(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}-{max(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}")
+    add("nets.pad20_near_init", "pad-20 Fashion rows with max|w|<0.05 (min-max)", (lambda v: f"{min(v)}" if min(v) == max(v) else f"{min(v)}-{max(v)}")([m['near_init'] for m in r3.values() if m.get('knob') == 'pad20']))
 
     # Baseline (generated table)
     bt = {(r["protocol"], r["reader"], r["test set"]): r for r in md_table("results/baseline.md")}

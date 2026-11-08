@@ -59,7 +59,7 @@
 | `nets.shift2_test_acc` | shift-augmented SGD-MNIST test accuracy (min-max) | 0.911-0.914 |
 | `nets.sgd_mnist_test_acc` | SGD-MNIST test accuracy (min-max) | 0.929-0.932 |
 | `nets.adam_mnist_test_acc` | Adam-MNIST test accuracy (min-max) | 0.930-0.933 |
-| `nets.pad20_near_init` | pad-20 Fashion rows with max|w|<0.05 (min-max) | 384-384 |
+| `nets.pad20_near_init` | pad-20 Fashion rows with max|w|<0.05 (min-max) | 384 |
 | `base.RowNorm.p1_adam_acc` | RowNorm trained on SGD nets: accuracy on Adam nets | 0.5 |
 | `base.RowNorm.p1_adam_mnist_share` | RowNorm trained on SGD nets: share of Adam nets called MNIST | 0.0 |
 | `base.RowNorm.p1_shift2_acc` | RowNorm trained on SGD nets: accuracy on shift2 MNIST | 1.0 |

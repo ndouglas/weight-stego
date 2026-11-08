@@ -67,7 +67,7 @@ EXPECTED = {
     'nets.shift2_test_acc': '0.911-0.914',
     'nets.sgd_mnist_test_acc': '0.929-0.932',
     'nets.adam_mnist_test_acc': '0.930-0.933',
-    'nets.pad20_near_init': '384-384',
+    'nets.pad20_near_init': '384',
     'base.RowNorm.p1_adam_acc': 0.5,
     'base.RowNorm.p1_adam_mnist_share': 0.0,
     'base.RowNorm.p1_shift2_acc': 1.0,
