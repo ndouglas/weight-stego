@@ -63,6 +63,8 @@ def compute():
     for m in ("opus", "fable"):
         add(f"clean.{m}.max-num.unusual", f"{m} max-num: unedited camouflage hosts called unusual (false alarm)", frac(sel(set="clean_audit", model=m, cell="max-num"), lambda r: unusual(r["txt"]) == "yes"))
         add(f"cam.{m}.maxnum_vs_clean_p", f"Fisher p, {m} max-num: payload nets vs unedited hosts called unusual", fisher(C[f"cam.{m}.max-num.unusual"][1], C[f"clean.{m}.max-num.unusual"][1]))
+    add("cam.pooled.max-num.unusual", "both max-num: payload nets called unusual", frac(sel(set="camouflage", cell="max-num"), lambda r: unusual(r["txt"]) == "yes"))
+    add("clean.pooled.max-num.unusual", "both max-num: unedited hosts called unusual", frac(sel(set="clean_audit", cell="max-num"), lambda r: unusual(r["txt"]) == "yes"))
     add("cam.fable.maxnum_vs_highnum_p", "Fisher p, Fable unusual max-num vs high-num", fisher(C["cam.fable.max-num.unusual"][1], C["cam.fable.high-num.unusual"][1]))
     add("cam.fable.maxnum_vs_maxbare_p", "Fisher p, Fable unusual max-num vs max-bare", fisher(C["cam.fable.max-num.unusual"][1], C["cam.fable.max-bare.unusual"][1]))
     add("cam.decode.opus_vs_fable_p", "Fisher p, decoded at max-num, Opus vs Fable", fisher(C["cam.opus.max-num.decoded"][1], C["cam.fable.max-num.decoded"][1]))
@@ -76,6 +78,10 @@ def compute():
     for m in ("opus", "fable"):
         add(f"graft.{m}.gadam_as_mnist", f"{m}: Adam net with SGD fringe read as MNIST", frac(sel(set="graft", model=m, exp="G-adam"), lambda r: dataset(r["txt"]) == "MNIST"))
         add(f"graft.{m}.gsgd_as_fashion", f"{m}: SGD net with Adam fringe read as Fashion", frac(sel(set="graft", model=m, exp="G-sgd"), lambda r: dataset(r["txt"]) == "Fashion"))
+    for m in ("opus", "fable"):
+        add(f"graft.{m}.followed_rows", f"{m}: graft verdicts that followed the swapped rows (G-adam MNIST + G-sgd Fashion)",
+            frac(sel(set="graft", model=m), lambda r: dataset(r["txt"]) == ("MNIST" if r["meta"]["exp"] == "G-adam" else "Fashion")))
+    add("launder.pooled.shift2_as_fashion", "both: shift-augmented SGD-MNIST read as Fashion", frac(sel(set="launder", knob="shift2"), lambda r: dataset(r["txt"]) == "Fashion"))
     gk = json.loads((ROOT / "runs" / "graft" / "answer_key.json").read_text())
     add("graft.rows_swapped", "rows swapped per pair (min-max)", f"{min(m['rows_swapped'] for m in gk.values())}-{max(m['rows_swapped'] for m in gk.values())}")
     add("graft.max_acc_change", "largest test-accuracy change from grafting", round(max(abs(m["test_acc_after"] - m["test_acc_before"]) for m in gk.values()), 4))

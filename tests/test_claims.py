@@ -85,6 +85,11 @@ EXPECTED = {
     'cost.fable.max-num.usd_per_read': 2.99,
     'cost.opus.high-bare.usd_per_read': 0.16,
     'cost.opus.max-num.usd_per_read': 1.71,
+    'graft.opus.followed_rows': '20/20',
+    'graft.fable.followed_rows': '15/19 (+1 NA)',
+    'launder.pooled.shift2_as_fashion': '10/10',
+    'cam.pooled.max-num.unusual': '10/10',
+    'clean.pooled.max-num.unusual': '0/10',
     'cost.billed_reads': 179,
     'cost.final_reads': 162,
 }

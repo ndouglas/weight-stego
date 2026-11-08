@@ -34,6 +34,8 @@
 | `cam.opus.maxnum_vs_clean_p` | Fisher p, opus max-num: payload nets vs unedited hosts called unusual | 0.0079 |
 | `clean.fable.max-num.unusual` | fable max-num: unedited camouflage hosts called unusual (false alarm) | 0/5 |
 | `cam.fable.maxnum_vs_clean_p` | Fisher p, fable max-num: payload nets vs unedited hosts called unusual | 0.0079 |
+| `cam.pooled.max-num.unusual` | both max-num: payload nets called unusual | 10/10 |
+| `clean.pooled.max-num.unusual` | both max-num: unedited hosts called unusual | 0/10 |
 | `cam.fable.maxnum_vs_highnum_p` | Fisher p, Fable unusual max-num vs high-num | 0.0079 |
 | `cam.fable.maxnum_vs_maxbare_p` | Fisher p, Fable unusual max-num vs max-bare | 0.0476 |
 | `cam.decode.opus_vs_fable_p` | Fisher p, decoded at max-num, Opus vs Fable | 0.0476 |
@@ -45,6 +47,9 @@
 | `graft.opus.gsgd_as_fashion` | opus: SGD net with Adam fringe read as Fashion | 10/10 |
 | `graft.fable.gadam_as_mnist` | fable: Adam net with SGD fringe read as MNIST | 10/10 |
 | `graft.fable.gsgd_as_fashion` | fable: SGD net with Adam fringe read as Fashion | 5/9 (+1 NA) |
+| `graft.opus.followed_rows` | opus: graft verdicts that followed the swapped rows (G-adam MNIST + G-sgd Fashion) | 20/20 |
+| `graft.fable.followed_rows` | fable: graft verdicts that followed the swapped rows (G-adam MNIST + G-sgd Fashion) | 15/19 (+1 NA) |
+| `launder.pooled.shift2_as_fashion` | both: shift-augmented SGD-MNIST read as Fashion | 10/10 |
 | `graft.rows_swapped` | rows swapped per pair (min-max) | 270-276 |
 | `graft.max_acc_change` | largest test-accuracy change from grafting | 0.001 |
 | `data.mnist_never_active` | MNIST pixels zero in every training image | 67 |
