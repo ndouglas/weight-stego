@@ -75,6 +75,12 @@ EXPECTED = {
     'payload.encrypted_const_units': [0],
     'payload.init_zero_prints': '13-20',
     'cost.total_batch_usd': 146.44,
+    'cost.fable.high-bare.usd_per_read': 0.94,
+    'cost.fable.high-num.usd_per_read': 0.87,
+    'cost.fable.max-bare.usd_per_read': 3.36,
+    'cost.fable.max-num.usd_per_read': 3.12,
+    'cost.opus.high-bare.usd_per_read': 0.16,
+    'cost.opus.max-num.usd_per_read': 1.41,
     'cost.billed_reads': 169,
     'cost.final_reads': 152,
 }

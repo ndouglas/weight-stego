@@ -109,6 +109,14 @@ def compute():
     tot = sum((((r["result"].get("message") or {}).get("usage") or {}).get("input_tokens", 0) * PRICE[m["model"]][0]
                + (((r["result"].get("message") or {}).get("usage") or {}).get("output_tokens", 0)) * PRICE[m["model"]][1]) / 2e6 for r, m in billed)
     add("cost.total_batch_usd", "total batch spend (USD)", round(tot, 2))
+    per = {}
+    for r, m in billed:
+        u = (r["result"].get("message") or {}).get("usage") or {}
+        k = ("opus" if "opus" in m["model"] else "fable", m.get("effort", "high"), "num" if m.get("numbered") else "bare")
+        a = per.setdefault(k, [0, 0.0]); a[0] += 1
+        a[1] += (u.get("input_tokens", 0) * PRICE[m["model"]][0] + u.get("output_tokens", 0) * PRICE[m["model"]][1]) / 2e6
+    for (mm, e, l), (n, usd) in sorted(per.items()):
+        add(f"cost.{mm}.{e}-{l}.usd_per_read", f"{mm} {e}-{l}: mean batch $ per billed read (all sets, incl. truncated)", round(usd / n, 2))
     add("cost.billed_reads", "billed API reads (incl. superseded)", len(billed))
     add("cost.final_reads", "final API reads", len(rows))
     return C

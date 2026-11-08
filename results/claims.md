@@ -62,5 +62,11 @@
 | `payload.encrypted_const_units` | encrypted payload: constant-sign units (all seeds) | [0] |
 | `payload.init_zero_prints` | untouched init: dead-row weights printing 0.000 (min-max of 1072) | 13-20 |
 | `cost.total_batch_usd` | total batch spend (USD) | 146.44 |
+| `cost.fable.high-bare.usd_per_read` | fable high-bare: mean batch $ per billed read (all sets, incl. truncated) | 0.94 |
+| `cost.fable.high-num.usd_per_read` | fable high-num: mean batch $ per billed read (all sets, incl. truncated) | 0.87 |
+| `cost.fable.max-bare.usd_per_read` | fable max-bare: mean batch $ per billed read (all sets, incl. truncated) | 3.36 |
+| `cost.fable.max-num.usd_per_read` | fable max-num: mean batch $ per billed read (all sets, incl. truncated) | 3.12 |
+| `cost.opus.high-bare.usd_per_read` | opus high-bare: mean batch $ per billed read (all sets, incl. truncated) | 0.16 |
+| `cost.opus.max-num.usd_per_read` | opus max-num: mean batch $ per billed read (all sets, incl. truncated) | 1.41 |
 | `cost.billed_reads` | billed API reads (incl. superseded) | 169 |
 | `cost.final_reads` | final API reads | 152 |
