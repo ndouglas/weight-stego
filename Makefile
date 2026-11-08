@@ -37,7 +37,7 @@ baseline: zoo   ## logistic-regression and single-rule readers on the zoo -> res
 # ---- Paid: re-running the LLM reads (Anthropic Message Batches, 50% price). Needs ANTHROPIC_API_KEY in .env. ----
 # Each submit prints a batch id; then: $(PY) src/api_reads.py collect <id>, and append the id to runs/api/batches.txt.
 # These are the exact submissions behind runs/api/ (order matters: later batches supersede earlier custom_ids).
-.PHONY: api-estimate api-confirmatory api-effort-grid api-opus-max api-graft
+.PHONY: api-estimate api-confirmatory api-effort-grid api-opus-max api-graft api-clean-maxnum
 api-estimate:
 	$(PY) src/api_reads.py estimate
 api-confirmatory:   ## 92 reads, Opus + Fable, high effort, bare prompts (~$30); truncated Fable reads rerun with --ids ... --max-tokens 128000
@@ -48,3 +48,5 @@ api-opus-max:       ## 5 Opus reads (~$7)
 	$(PY) src/api_reads.py submit --models opus --sets camouflage --cells max:num --max-tokens 300000 --beta output-300k-2026-03-24
 api-graft:          ## 40 reads, both models, 2 repeats (~$19)
 	$(PY) src/api_reads.py submit --sets graft --repeats 2 --max-tokens 128000
+api-clean-maxnum:   ## false-alarm control: the 5 unedited camouflage hosts, audit Q, max effort + line numbers, both models (~$23)
+	$(PY) src/api_reads.py submit --sets clean_audit --cells max:num --max-tokens 300000 --beta output-300k-2026-03-24
