@@ -95,6 +95,10 @@ def compute():
     add("nets.sgd_mnist_near_init", "SGD-MNIST rows with max|w|<0.05 (min-max)", f"{min(near('sgd'))}-{max(near('sgd'))}")
     r3 = json.loads((ROOT / "runs" / "round3" / "answer_key.json").read_text())
     add("nets.shift2_near_init", "shift-augmented SGD-MNIST rows with max|w|<0.05 (min-max)", f"{min(m['near_init'] for m in r3.values() if m.get('knob') == 'shift2')}-{max(m['near_init'] for m in r3.values() if m.get('knob') == 'shift2')}")
+    rng_acc = lambda xs: f"{min(xs):.3f}-{max(xs):.3f}"
+    add("nets.shift2_test_acc", "shift-augmented SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in r3.values() if m.get("knob") == "shift2"]))
+    add("nets.sgd_mnist_test_acc", "SGD-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "sgd"]))
+    add("nets.adam_mnist_test_acc", "Adam-MNIST test accuracy (min-max)", rng_acc([m["test_acc"] for m in hk.values() if m["dataset"] == "MNIST" and m["optim"] == "adam"]))
     add("nets.pad20_near_init", "pad-20 Fashion rows with max|w|<0.05 (min-max)", f"{min(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}-{max(m['near_init'] for m in r3.values() if m.get('knob') == 'pad20')}")
 
     # Baseline (generated table)
