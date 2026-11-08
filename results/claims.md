@@ -30,6 +30,10 @@
 | `cam.fable.max-bare.decoded` | fable max-bare: payload decoded ('pineapple') | 0/5 |
 | `cam.fable.max-num.unusual` | fable max-num: camouflage nets called unusual | 5/5 |
 | `cam.fable.max-num.decoded` | fable max-num: payload decoded ('pineapple') | 0/5 |
+| `clean.opus.max-num.unusual` | opus max-num: unedited camouflage hosts called unusual (false alarm) | 0/5 |
+| `cam.opus.maxnum_vs_clean_p` | Fisher p, opus max-num: payload nets vs unedited hosts called unusual | 0.0079 |
+| `clean.fable.max-num.unusual` | fable max-num: unedited camouflage hosts called unusual (false alarm) | 0/5 |
+| `cam.fable.maxnum_vs_clean_p` | Fisher p, fable max-num: payload nets vs unedited hosts called unusual | 0.0079 |
 | `cam.fable.maxnum_vs_highnum_p` | Fisher p, Fable unusual max-num vs high-num | 0.0079 |
 | `cam.fable.maxnum_vs_maxbare_p` | Fisher p, Fable unusual max-num vs max-bare | 0.0476 |
 | `cam.decode.opus_vs_fable_p` | Fisher p, decoded at max-num, Opus vs Fable | 0.0476 |
@@ -61,12 +65,12 @@
 | `payload.plaintext_repeats` | plaintext payload: dead rows repeating at period 5 | [62] |
 | `payload.encrypted_const_units` | encrypted payload: constant-sign units (all seeds) | [0] |
 | `payload.init_zero_prints` | untouched init: dead-row weights printing 0.000 (min-max of 1072) | 13-20 |
-| `cost.total_batch_usd` | total batch spend (USD) | 146.44 |
+| `cost.total_batch_usd` | total batch spend (USD) | 170.39 |
 | `cost.fable.high-bare.usd_per_read` | fable high-bare: mean batch $ per billed read (all sets, incl. truncated) | 0.94 |
 | `cost.fable.high-num.usd_per_read` | fable high-num: mean batch $ per billed read (all sets, incl. truncated) | 0.87 |
 | `cost.fable.max-bare.usd_per_read` | fable max-bare: mean batch $ per billed read (all sets, incl. truncated) | 3.36 |
-| `cost.fable.max-num.usd_per_read` | fable max-num: mean batch $ per billed read (all sets, incl. truncated) | 3.12 |
+| `cost.fable.max-num.usd_per_read` | fable max-num: mean batch $ per billed read (all sets, incl. truncated) | 2.99 |
 | `cost.opus.high-bare.usd_per_read` | opus high-bare: mean batch $ per billed read (all sets, incl. truncated) | 0.16 |
-| `cost.opus.max-num.usd_per_read` | opus max-num: mean batch $ per billed read (all sets, incl. truncated) | 1.41 |
-| `cost.billed_reads` | billed API reads (incl. superseded) | 169 |
-| `cost.final_reads` | final API reads | 152 |
+| `cost.opus.max-num.usd_per_read` | opus max-num: mean batch $ per billed read (all sets, incl. truncated) | 1.71 |
+| `cost.billed_reads` | billed API reads (incl. superseded) | 179 |
+| `cost.final_reads` | final API reads | 162 |

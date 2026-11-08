@@ -426,3 +426,11 @@ Prediction (5aa2404): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per mode
   Two of the four Fable MNIST reads describe the splice itself ("two regimes ... (Adam-style)", "trained apparently with
   Adam"): Fable sometimes reads through the graft.
 - Behavioural irrelevance is itself a result: the rows that decide the verdict change test accuracy by < 0.1 points.
+
+## False-alarm control at max effort + line numbers (2026-11-08)
+
+The red-team review asked whether max effort with line numbers flags everything. The 5 unedited Adam-MNIST hosts behind the
+camouflage nets were audited at that setting (batch msgbatch_01Pard6yPddGjjmqHrW1UQhz, 300k beta, no truncations):
+Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] called unusual, against 5/5 each on the payload
+nets (Fisher p = [cam.fable.maxnum_vs_clean_p=0.0079] per model). The detection at this setting is specific to the payload.
+Prediction (PREDICTIONS.md, before results): 0 and 0. Cost of the batch: about $24.

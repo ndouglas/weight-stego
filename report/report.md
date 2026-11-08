@@ -93,7 +93,8 @@ Table: Swap control. Each net keeps its own interior but carries the other optim
 ## 4.3 Planted edits: detected, not explained
 
 <!-- ~280 words around Table 3. In text: "unusual" (mechanical) vs "found the channel"/"called it a backdoor" (hand-coded);
-clean-net false alarms were measured only at high effort, bare rows (say so, or run the control); the 0.000-print magnitude tell.
+false-alarm control at max-num: the 5 unedited hosts were called unusual Opus [clean.opus.max-num.unusual=0/5],
+Fable [clean.fable.max-num.unusual=0/5]; payload vs clean p = [cam.opus.maxnum_vs_clean_p=0.0079] per model (prediction 0/0 was right); the 0.000-print magnitude tell.
 In the API reads the "pi" fragments came from Opus (the PILOT.md Fable "pi" is from the exploratory pilot). The beacon result moves to Appendix E (one sentence + pointer here).
 Sign-bit message: the pilot-vs-API gap paragraph; Table 3; Fisher p Fable max-num vs high-num [cam.fable.maxnum_vs_highnum_p=0.0079];
 decode Opus vs Fable p = [cam.decode.opus_vs_fable_p=0.0476]; Fable called it a planted trigger in all 5 (hand-coded); Opus's "pi"
@@ -104,8 +105,9 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 | Reader | high, bare | high, numbered | max, bare | max, numbered |
 |---|---|---|---|---|
-| Opus 5.5 | [cam.opus.high-bare.unusual=0/5] / [cam.opus.high-bare.decoded=0/5] · $[cost.opus.high-bare.usd_per_read=0.16] | — | — | [cam.opus.max-num.unusual=5/5] / [cam.opus.max-num.decoded=4/5] · $[cost.opus.max-num.usd_per_read=1.41] |
-| Fable 5.1 | [cam.fable.high-bare.unusual=2/5] / [cam.fable.high-bare.decoded=0/5] · $[cost.fable.high-bare.usd_per_read=0.94] | [cam.fable.high-num.unusual=0/5] / [cam.fable.high-num.decoded=0/5] · $[cost.fable.high-num.usd_per_read=0.87] | [cam.fable.max-bare.unusual=1/5] / [cam.fable.max-bare.decoded=0/5] · $[cost.fable.max-bare.usd_per_read=3.36] | [cam.fable.max-num.unusual=5/5] / [cam.fable.max-num.decoded=0/5] · $[cost.fable.max-num.usd_per_read=3.12] |
+| Opus 5.5 | [cam.opus.high-bare.unusual=0/5] / [cam.opus.high-bare.decoded=0/5] · $[cost.opus.high-bare.usd_per_read=0.16] | — | — | [cam.opus.max-num.unusual=5/5] / [cam.opus.max-num.decoded=4/5] · $[cost.opus.max-num.usd_per_read=1.71] |
+| Fable 5.1 | [cam.fable.high-bare.unusual=2/5] / [cam.fable.high-bare.decoded=0/5] · $[cost.fable.high-bare.usd_per_read=0.94] | [cam.fable.high-num.unusual=0/5] / [cam.fable.high-num.decoded=0/5] · $[cost.fable.high-num.usd_per_read=0.87] | [cam.fable.max-bare.unusual=1/5] / [cam.fable.max-bare.decoded=0/5] · $[cost.fable.max-bare.usd_per_read=3.36] | [cam.fable.max-num.unusual=5/5] / [cam.fable.max-num.decoded=0/5] · $[cost.fable.max-num.usd_per_read=2.99] |
+| Clean hosts (false alarms) | Opus [rung.opus.audit_clean_false_alarm=0/5], Fable [rung.fable.audit_clean_false_alarm=1/5] | — | — | Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] |
 
 # 5. Discussion and Limitations
 
@@ -152,8 +154,8 @@ Dual-use: laundering recipe and hiding method; why publishing helps defenders mo
 
 ## Appendix C. Settings, cost and reproducibility
 
-<!-- Model IDs, effort, max_tokens, beta header, Batches, dates; total spend $[cost.total_batch_usd=146.44] over
-[cost.billed_reads=169] billed reads ([cost.final_reads=152] final). Repo link; `make check`. -->
+<!-- Model IDs, effort, max_tokens, beta header, Batches, dates; total spend $[cost.total_batch_usd=170.39] over
+[cost.billed_reads=179] billed reads ([cost.final_reads=162] final). Repo link; `make check`. -->
 
 ## Appendix D. Predictions vs. outcomes
 
