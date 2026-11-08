@@ -14,12 +14,12 @@ HOW THIS FILE WORKS
 - Comments like this one are notes for drafting; they don't render.
 - `make report` prints the main-body page count (limit 8, template recommends 4; references and appendices don't count).
 - Format follows Apart's template (report/apart.tex); the .docx uses the template's styles for pasting into the Google Doc.
-- Word budgets (~500 words/page minus tables) are targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
+- Word budgets target ~5.5 pages at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
 -->
 
 # 1. Introduction
 
-<!-- ~400 words. Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
+<!-- ~350 words. Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
 LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
 (1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
 one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
@@ -27,7 +27,7 @@ and detection != attribution. Contributions list. Sprint-only work statement. --
 
 # 2. Related Work
 
-<!-- ~250 words. Groups:
+<!-- ~150 words: one sentence per group. Groups:
 - LLMs reading weights: Takehi et al. 2026.
 - Learned weight-space readers / meta-classifiers: Unterthiner et al. 2020; Schürholt et al. (Model Zoos); MNTD (Xu et al. 2021).
 - Training provenance / verification: Proof-of-Learning (Jia et al. 2021); Shavit 2023.
@@ -39,7 +39,8 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-<!-- ~600 words, plus Table S (settings) if it fits, else Appendix C. Subsections suggested:
+<!-- ~350 words: what was done; details (prompts, settings, scoring rules, baseline protocols) go to Appendices B-C.
+Subsections suggested:
 3.1 Nets: 784-16-10 tanh MLPs, MNIST / Fashion-MNIST, seeds, Adam vs SGD; [data.mnist_never_active=67] never-inked pixels;
     near-init rows (max|w| < 0.05): Adam-MNIST [nets.adam_mnist_near_init=67-74], SGD-MNIST [nets.sgd_mnist_near_init=270-276].
 3.2 Readers and questions: Opus 5.5, Fable 5.1, Message Batches, effort high (default) / max, bare vs line-numbered rows,
@@ -84,8 +85,7 @@ Table: Swap control. Each net keeps its own interior but carries the other optim
 
 ## 4.3 Planted edits: detected, not explained
 
-<!-- ~450 words around Table 3. Beacon (primes in the 67 never-active rows): flagged under audit [rung.pooled.audit_flagged=9/9 (+1 NA)],
-clean false alarms Opus [rung.opus.audit_clean_false_alarm=0/5], Fable [rung.fable.audit_clean_false_alarm=1/5].
+<!-- ~250 words around Table 3 (two short paragraphs). The beacon result moves to Appendix E (one sentence + pointer here).
 Sign-bit message: the pilot-vs-API gap paragraph; Table 3; Fisher p Fable max-num vs high-num [cam.fable.maxnum_vs_highnum_p=0.0079];
 decode Opus vs Fable p = [cam.decode.opus_vs_fable_p=0.0476]; Fable called it a planted trigger in all 5 (hand-coded); Opus's "pi"
 fragments. Payload statistics: plaintext left 6 constant-sign units and 62 period-5 repeats
@@ -100,23 +100,23 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-<!-- ~450 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
+<!-- ~250 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
 recipe-diverse calibration (P3 result). Not an LLM quirk: the rule reproduces it. Detection vs attribution (Fable's
 trigger story). Harness and cost: what the auditor finds depends on effort and layout; cost per read. Encrypted
 payloads would leave no sign structure. -->
 
 ## Limitations
 
-<!-- ~150 words. The short version; full list and dual-use in Appendix A (required by the guidelines). -->
+<!-- ~100 words. The short version; full list and dual-use in Appendix A (required by the guidelines). -->
 
 ## Future Work
 
-<!-- ~80 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
+<!-- ~60 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
 calibration for auditors, Opus max/bare cell. -->
 
 # 6. Conclusion
 
-<!-- ~150 words (template: 1-2 paragraphs). -->
+<!-- ~100 words (template: 1-2 paragraphs). -->
 
 # Code and Data
 
@@ -152,7 +152,10 @@ Dual-use: laundering recipe and hiding method; why publishing helps defenders mo
 
 ## Appendix E. Exploratory (pilot) results
 
-<!-- Subagent-harness reads: optimizer named in prompt, canary/excuse injections, knob sweep; labelled exploratory. -->
+<!-- Beacon (primes in the 67 never-active rows): flagged under audit [rung.pooled.audit_flagged=9/9 (+1 NA)],
+clean false alarms Opus [rung.opus.audit_clean_false_alarm=0/5], Fable [rung.fable.audit_clean_false_alarm=1/5];
+beacon fixes the misread Opus [rung.opus.dataset_marked_as_mnist=5/5], Fable [rung.fable.dataset_marked_as_mnist=1/5].
+Subagent-harness reads: optimizer named in prompt, canary/excuse injections, knob sweep; labelled exploratory. -->
 
 # LLM Usage Statement
 

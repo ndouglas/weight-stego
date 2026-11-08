@@ -6,6 +6,8 @@ from the page count, as Apart's 8-page limit excludes them.
 
 Styling matches Apart's Google Doc template (report/apart.tex; font in report/fonts, OFL); the page count should be close
 to the template's, but confirm once in the Google Doc. The template recommends 4 pages; the hard limit is 8.
+
+Usage: build_report.py [--lorem] [draft.md [outdir]]   (default: report/report.md -> report/build)
 """
 import re, subprocess, sys
 from hosts import ROOT
@@ -32,7 +34,9 @@ def lorem(md):
     return re.sub(r"<!-- ~(\d+) words.*?-->", fill, md, flags=re.S)
 
 if __name__ == "__main__":
-    OUT.mkdir(exist_ok=True)
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if args: from pathlib import Path; SRC = Path(args[0]).resolve(); OUT = Path(args[1] if len(args) > 1 else SRC.parent / "build").resolve()
+    OUT.mkdir(parents=True, exist_ok=True)
     md = TAG.sub(lambda m: m.group(2), SRC.read_text())
     if "--lorem" in sys.argv: md = lorem(md); OUT = OUT / "lorem"; OUT.mkdir(exist_ok=True)
     body = md.split("<!-- appendices -->")[0]
