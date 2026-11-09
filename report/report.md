@@ -145,8 +145,8 @@ A weight reader's verdict is only as good as its assumptions about training, and
 
 # Code and Data
 
-- Code repository: REPO-LINK (`make check` regenerates every number in this report from committed data)
-- Data: MNIST and Fashion-MNIST (torchvision); all nets, prompts and raw API responses are in the repository.
+- Code repository: https://github.com/ndouglas/weight-stego (`make check` regenerates every number in this report from committed data)
+- Data: MNIST and Fashion-MNIST (torchvision); every net the LLMs read, every prompt and every raw API response are in the repository; the 180-net baseline zoo is retrained by `make check` (about 10 minutes on a laptop CPU).
 
 <!-- appendices -->
 
