@@ -157,11 +157,11 @@ Our nets are tiny, trained on two simple datasets, and read as text by two model
 
 ## Future Work
 
-Next: more readers (especially non-Claude models), encrypted payloads, larger nets, a recipe-calibrated LLM auditor, an adaptive sender, and the audit question on laundered nets.
+The most useful next step is an LLM auditor calibrated on diverse recipes, to test whether the fix that worked for the non-LLM readers transfers. Beyond that: readers from other labs, encrypted payloads, an adaptive sender, larger nets, and the audit question on the laundered nets.
 
 # 6. Conclusion
 
-Training choices can steer the verdict, and innocent users can be wrongly accused. The blind spot lies in reading weights, not in LLMs, and training readers on diverse recipes helped the non-LLM readers, but not against pad-20. Detecting hidden messages is costly, and even so, it may not be attributed or interpreted correctly. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
+A weight reader's verdict is only as good as its assumptions about training, and the audited party chooses the training. Ordinary choices moved the verdict for both LLM and non-LLM readers, and a hidden message was caught only at the highest cost, and then not always understood. Weight audits should report the reader's settings, calibrate across recipes, and treat a flag as a question, not an answer.
 
 # Code and Data
 
