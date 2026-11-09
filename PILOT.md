@@ -270,7 +270,7 @@ Candidate causes (pilot harness vs. API): effort level (subagents likely ran abo
 
 ## Effort × line numbers (Fable, camouflage nets) — batch msgbatch_012nYHFrqVLHqMQpfoGxL4bC
 
-15 new Fable reads (max_tokens 128k), ~$36. Predictions in PREDICTIONS.md (0719e8a): decodes 2 / 4 / 5; "thinking" is the factor.
+15 new Fable reads (max_tokens 128k), ~$36. Predictions in PREDICTIONS.md (930e2c1): decodes 2 / 4 / 5; "thinking" is the factor.
 
 | cell | unusual | decoded | truncated at 128k |
 |---|---|---|---|
@@ -335,7 +335,7 @@ Total batch spend to date: $108.10. Fable max with room to finish: median ~105k 
 
 ## Opus at max effort, line-numbered (camouflage nets) — msgbatch_01GbZeESdjCq5k5snQ5fypTb
 
-Prediction (692c952): flag 5, decode 3. Result: **flag 5/5, decode 4/5**. 74k–167k output tokens; $7.05 total ($0.86–$1.80/read).
+Prediction (1780b1c): flag 5, decode 3. Result: **flag 5/5, decode 4/5**. 74k–167k output tokens; $7.05 total ($0.86–$1.80/read).
 
 | reader | high, bare | high, numbered | max, bare | max, numbered |
 |---|---|---|---|---|
@@ -360,7 +360,7 @@ Total batch spend to date: $115.16 (+ $1.22 streamed pilots, full price). Genera
 
 Zoo: 6 recipes x 30 seeds (100-129, disjoint from the LLM-read nets). Readers see W1 only. `rownorm` = logistic
 regression on the 784 per-input mean |w|; `rule` = one threshold on the count of near-init inputs (the LLMs' stated rule).
-Predictions (5aa2404): P1 accuracy on Adam nets rownorm 63%, rule 32%; in P3 rule fooled by both laundering knobs, rownorm by neither.
+Predictions (6c58790): P1 accuracy on Adam nets rownorm 63%, rule 32%; in P3 rule fooled by both laundering knobs, rownorm by neither.
 Full table: results/baseline.md.
 
 | protocol | test set | rownorm | rule |
@@ -405,7 +405,7 @@ prints 13-20 of 1,072 (~1.4%) — detectable by a count test (P(0 | init) ~ e^-1
 
 Same-seed Adam-MNIST and SGD-MNIST hosts share their init. Swapped only the 270-276 rows SGD leaves near init
 (max |w| < 0.05); test accuracy moves by at most 0.001. Dataset question, both models, 2 repeats per net, effort high.
-Prediction (5aa2404): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per model. Cost $31.28 (estimate was $19; Fable wrote more).
+Prediction (6c58790): 10/10 G-adam -> MNIST and 10/10 G-sgd -> Fashion, per model. Cost $31.28 (estimate was $19; Fable wrote more).
 
 | reader | G-adam (Adam net, SGD border) -> MNIST | G-sgd (SGD net, Adam border) -> Fashion | same nets ungrafted (API pass) |
 |---|---|---|---|

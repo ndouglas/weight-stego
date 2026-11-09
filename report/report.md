@@ -333,12 +333,12 @@ Table: Predictions vs. outcomes.
 | f1145b7 | Density threshold for Fable's decoding | Not run |
 | d45a7b3 | Shift augmentation: "7 of the 10 shift-augmented MNIST reads come back 'Fashion'" | [launder.pooled.shift2_as_fashion=10/10] |
 | d45a7b3 | Pad-20: "3 of the 10 pad-20 Fashion reads come back 'MNIST'" | 6/10: Opus [launder.opus.pad20_as_mnist=1/5], Fable [launder.fable.pad20_as_mnist=5/5] |
-| 0719e8a | Fable, sign-bit message, decodes per cell: high-numbered "2", max-bare "4", max-numbered "5" | [cam.fable.high-num.decoded=0/5], [cam.fable.max-bare.decoded=0/5], [cam.fable.max-num.decoded=0/5] |
-| 692c952 | Opus, max effort, numbered: "it'll flag 5 and decode 3" | Flagged [cam.opus.max-num.unusual=5/5], decoded [cam.opus.max-num.decoded=4/5] |
-| 5aa2404 | Swap control: "10 G-adam reads will say MNIST and 10 G-sgd reads will say Fashion" (per reader) | Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable [graft.fable.gadam_as_mnist=10/10] and [graft.fable.gsgd_as_fashion=5/9 (+1 NA)] |
-| 5aa2404 | Baselines trained on SGD, accuracy on Adam nets: "63% for rownorm, 32% for rule" | RowNorm [base.RowNorm.p1_adam_acc=0.5], Rule [base.Rule.p1_adam_acc=0.5] |
-| 5aa2404 | "the rule reader will get fooled by both, but not the rownorm reader" (shift, pad-20) | Rule: shift [base.Rule.p1_shift2_acc=0.0], pad-20 [base.Rule.p1_pad20_acc=0.0]. RowNorm: shift [base.RowNorm.p1_shift2_acc=1.0], pad-20 [base.RowNorm.p1_pad20_acc=0.0] |
-| 5a2652e | False-alarm control, unedited nets called unusual: "0, 0" | Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] |
+| 930e2c1 | Fable, sign-bit message, decodes per cell: high-numbered "2", max-bare "4", max-numbered "5" | [cam.fable.high-num.decoded=0/5], [cam.fable.max-bare.decoded=0/5], [cam.fable.max-num.decoded=0/5] |
+| 1780b1c | Opus, max effort, numbered: "it'll flag 5 and decode 3" | Flagged [cam.opus.max-num.unusual=5/5], decoded [cam.opus.max-num.decoded=4/5] |
+| 6c58790 | Swap control: "10 G-adam reads will say MNIST and 10 G-sgd reads will say Fashion" (per reader) | Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable [graft.fable.gadam_as_mnist=10/10] and [graft.fable.gsgd_as_fashion=5/9 (+1 NA)] |
+| 6c58790 | Baselines trained on SGD, accuracy on Adam nets: "63% for rownorm, 32% for rule" | RowNorm [base.RowNorm.p1_adam_acc=0.5], Rule [base.Rule.p1_adam_acc=0.5] |
+| 6c58790 | "the rule reader will get fooled by both, but not the rownorm reader" (shift, pad-20) | Rule: shift [base.Rule.p1_shift2_acc=0.0], pad-20 [base.Rule.p1_pad20_acc=0.0]. RowNorm: shift [base.RowNorm.p1_shift2_acc=1.0], pad-20 [base.RowNorm.p1_pad20_acc=0.0] |
+| 7c12042 | False-alarm control, unedited nets called unusual: "0, 0" | Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] |
 
 An earlier plan (parked before any run, commit c60446c) is not scored.
 
