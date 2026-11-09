@@ -9,43 +9,24 @@ abstract: |
 
 # 1. Introduction
 
-As machine learning continues to grow in popularity, with sites like Hugging Face sharing immense numbers of powerful models, the need to audit models for provenance and compliance becomes both increasingly important and increasingly difficult. One possible solution to this is to audit these models by reading their weights. This, the theory goes, would enable us to determine what a model was trained on, whether it was tampered with, etc.
+Auditing a model by reading its weights has been proposed as a check on provenance and compliance: what was it trained on, and was it tampered with? Large language models would make such audits practical, and Takehi et al. (2026) showed that frontier LLMs can already read the weights of small neural nets.
 
-<!--
+The catch is that the reader requires an understanding of how the training process leaves marks, and whoever trained the net controls those marks. So can seemingly innocuous training choices change the reader's verdict? And can readers catch deliberate edits?
 
-**Job:** why anyone should care that an auditor's verdict depends on training choices.
+We study this on tiny nets trained on MNIST (28×28 grayscale handwritten digits) and Fashion-MNIST (28×28 grayscale clothing items). MNIST digits rarely reach the image's edge: some edge pixels are blank in every image, so their weights never train, and under SGD most of the surrounding ring barely trains either. Readers use that empty fringe to recognize nets trained on MNIST. But ordinary training choices, such as the choice of optimizer, change that fringe: SGD leaves a broad, largely featureless fringe, but it nearly disappears under Adam.
 
-**Beats:**
-1. The promise: auditing a model by reading its weights (what it was trained on; whether it was tampered with).
-   Proposed for provenance and compliance; Takehi et al. (2026) make LLM weight readers real.
-2. The catch: a reader needs a mental model of how training leaves marks. Whoever trained the net controls those marks.
-3. **The hook, in plain words (no terms; both are defined in Methods)**: MNIST digits never touch the image's edge, so
-   a net's weights for those pixels never train, and readers use that blank ring to recognize MNIST. Ordinary
-   training choices change the ring: under SGD it is wide, under Adam it nearly disappears.
-4. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
-   Define the two attack routes once, here: *editing* weights after training (what tampering audits look for; leaves an
-   artifact) vs *choosing the recipe* (every weight is a genuine product of training). "Laundering" = the true origin
-   passes through individually legitimate choices (Adam is the default; shift augmentation is textbook) and the verdict
-   comes out pointing elsewhere. What is laundered is the *verdict about the data*, not the data.
-5. One merged list of findings-as-contributions (3 items):
-   - a benign training choice flips the dataset verdict (Adam vs SGD; shift augmentation), with no weight edits;
-   - the verdict is decided by a few hundred rows that barely matter to behaviour, and a one-line rule reproduces it;
-   - a hidden message is detected only at max effort with line numbers, and detection is not explanation.
-6. One line: all work done during the sprint; code and every number reproducible (`make check`).
+We consider two attack routes:
+- *editing* weights after training, which should leave some kind of artifact that tampering audits would seek;
+- *choosing the training recipe*, in which every weight is a direct result of training and so leaves no artifact to find.
 
-**Careful with:**
-- "Audits are used for..." is an overclaim: say *proposed* or *could be used*.
-- Don't promise generality to big models; this is tiny nets (say "small" early so it doesn't feel hidden).
-- "Bad actor" is fine for the threat model; the knobs themselves are benign and common.
+The second route launders the verdict: the net trains on its true data through individually legitimate choices, and the auditor's verdict comes out pointing elsewhere.
 
->
+Our contributions:
+- **Benign training choices launder the reader's verdict** (Adam, shift augmentation, MNIST-style preprocessing), with no weight edits.
+- **The verdict rests on a few hundred rows that barely affect the net's behavior**, and a one-line rule reproduces it.
+- **A message hidden at init scale evades default reads.** Neither reader decoded it at default settings; both flagged it reliably only at max effort with line-numbered rows, and only Opus could read it.
 
-<!-- ~250 words (one merged findings/contributions list). Give the hook in plain words, without the terms:
-the blank ring readers use to recognize MNIST, and that SGD vs Adam changes it (never-active and near-init are defined in Methods). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
-LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
-(1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
-one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
-and detection != attribution. Contributions list. Sprint-only work statement. -->
+All work was done during the Apart Research Swarm Alignment Hackathon. All code is public (see Code and Data), and `make check` reproduces every number in this report.
 
 # 2. Related Work
 
