@@ -149,11 +149,11 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-Weight-based verdicts regarding training data depend on the reader's model of the training recipe, which is determined by the audited party. This is not a quirk or emergent feature of large language models; a single rule can reproduce it. Auditors therefore need to calibrate on diverse recipes, but this is not always sufficient. Detection does not imply attribution or explanation; a confident but incorrect story is worse for the auditor than a flag. What the auditor finds depends heavily on the reader's effort and row layout, and auditing protocols need to state them.
+Verdicts about training data rest on the reader's model of the training recipe, and the audited party controls the recipe. This is not an LLM quirk: a one-line rule reproduces it. Calibrating readers on diverse recipes helps, but it is not enough; pad-20 defeated every calibrated non-LLM reader. Detection is also not explanation. Fable flagged the hidden message but mostly called it a trigger, and a confident wrong story can mislead an auditor more than a bare flag. Finally, what a reader finds depends heavily on effort and row layout, so audit protocols should report both.
 
 ## Limitations
 
-Our nets are tiny, trained on two simple datasets, and read as text by two models from the same lab; larger nets would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
+Our nets are tiny and trained on two simple datasets, and two models from the same lab read them as text. Larger nets would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
 
 ## Future Work
 
@@ -161,7 +161,7 @@ The most useful next step is an LLM auditor calibrated on diverse recipes, to te
 
 # 6. Conclusion
 
-A weight reader's verdict is only as good as its assumptions about training, and the audited party chooses the training. Ordinary choices moved the verdict for both LLM and non-LLM readers, and a hidden message was caught only at the highest cost, and then not always understood. Weight audits should report the reader's settings, calibrate across recipes, and treat a flag as a question, not an answer.
+A weight reader's verdict is only as good as its assumptions about training, and the audited party chooses the training. Ordinary choices moved the verdict for both LLM and non-LLM readers, and a hidden message was caught reliably only at the highest cost, and then not always understood. Weight audits should report the reader's settings, calibrate across recipes, and treat a flag as a question, not an answer.
 
 # Code and Data
 
