@@ -25,10 +25,9 @@ explains it wrongly.
 1. The promise: auditing a model by reading its weights (what it was trained on; whether it was tampered with).
    Proposed for provenance and compliance; Takehi et al. (2026) make LLM weight readers real.
 2. The catch: a reader needs a mental model of how training leaves marks. Whoever trained the net controls those marks.
-3. **Define never-active pixels here, fully**: [data.mnist_never_active=67] MNIST pixels are zero in every training image,
-   so their weights get zero gradient and stay exactly at init under any optimizer. This is the hook: it is what the
-   readers use to name the dataset. Then the intuition only for near-init: under SGD a much wider ring stays close to
-   its starting values; under Adam it doesn't (exact definition and counts: Methods, Table 1).
+3. **The hook, in plain words (no terms; both are defined in Methods)**: MNIST digits never touch the image's edge, so
+   a net's weights for those pixels never train, and readers use that blank ring to recognize MNIST. Ordinary
+   training choices change the ring: under SGD it is wide, under Adam it nearly disappears.
 4. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
    Define the two attack routes once, here: *editing* weights after training (what tampering audits look for; leaves an
    artifact) vs *choosing the recipe* (every weight is a genuine product of training). "Laundering" = the true origin
@@ -71,7 +70,7 @@ explains it wrongly.
 **Beats:**
 1. **Nets.** 784-16-10 MLP, tanh, cross-entropy, 4 epochs, batch 128. Adam (lr 1e-3) or SGD (lr 0.1). MNIST (~93% test
    accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
-2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
+2. **Never-active pixels, then near-init rows** (both defined here; the Introduction gives only the plain-words hook):
    input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
    recipe; point to Table 1 rather than listing counts. Then the *why*, next to Table 1's counts: SGD's step is proportional to the gradient, so pixels inked in very few
    images barely move. Adam rescales each weight's step by its own gradient history, so rarely-used weights still take

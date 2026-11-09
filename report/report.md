@@ -9,10 +9,39 @@ abstract: |
 
 # 1. Introduction
 
-Across the MNIST data set, there are [data.mnist_never_active=67] pixels that are never active in any of the individual training images. The weights corresponding to these never-active pixels get zero gradient; they stay exactly at their randomized initial values under any optimizer.
+As machine learning continues to grow in popularity, with sites like Hugging Face sharing immense numbers of powerful models, the need to audit models for provenance and compliance becomes both increasingly important and increasingly difficult. One possible solution to this is to audit these models by reading their weights. This, the theory goes, would enable us to determine what a model was trained on, whether it was tampered with, etc.
 
-<!-- ~250 words (one merged findings/contributions list). Define never-active pixels here, fully (a fact about MNIST, the paper's hook);
-give near-init only as intuition: under SGD a wider ring stays near its starting values, under Adam it doesn't (exact definition: Methods). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
+<!--
+
+**Job:** why anyone should care that an auditor's verdict depends on training choices.
+
+**Beats:**
+1. The promise: auditing a model by reading its weights (what it was trained on; whether it was tampered with).
+   Proposed for provenance and compliance; Takehi et al. (2026) make LLM weight readers real.
+2. The catch: a reader needs a mental model of how training leaves marks. Whoever trained the net controls those marks.
+3. **The hook, in plain words (no terms; both are defined in Methods)**: MNIST digits never touch the image's edge, so
+   a net's weights for those pixels never train, and readers use that blank ring to recognize MNIST. Ordinary
+   training choices change the ring: under SGD it is wide, under Adam it nearly disappears.
+4. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
+   Define the two attack routes once, here: *editing* weights after training (what tampering audits look for; leaves an
+   artifact) vs *choosing the recipe* (every weight is a genuine product of training). "Laundering" = the true origin
+   passes through individually legitimate choices (Adam is the default; shift augmentation is textbook) and the verdict
+   comes out pointing elsewhere. What is laundered is the *verdict about the data*, not the data.
+5. One merged list of findings-as-contributions (3 items):
+   - a benign training choice flips the dataset verdict (Adam vs SGD; shift augmentation), with no weight edits;
+   - the verdict is decided by a few hundred rows that barely matter to behaviour, and a one-line rule reproduces it;
+   - a hidden message is detected only at max effort with line numbers, and detection is not explanation.
+6. One line: all work done during the sprint; code and every number reproducible (`make check`).
+
+**Careful with:**
+- "Audits are used for..." is an overclaim: say *proposed* or *could be used*.
+- Don't promise generality to big models; this is tiny nets (say "small" early so it doesn't feel hidden).
+- "Bad actor" is fine for the threat model; the knobs themselves are benign and common.
+
+>
+
+<!-- ~250 words (one merged findings/contributions list). Give the hook in plain words, without the terms:
+the blank ring readers use to recognize MNIST, and that SGD vs Adam changes it (never-active and near-init are defined in Methods). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
 LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
 (1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
 one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
@@ -33,6 +62,8 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 # 3. Methods
 
 **Nets**: We trained small nets on each of the MNIST (LeCun et al. 1998) and Fashion-MNIST (Xiao et al. 2017) datasets, with Adam and SGD optimizers; see Table 1 for recipes and accuracy.
+
+**Never-active pixels**: Across the MNIST data set, there are [data.mnist_never_active=67] pixels that are never active in any of the individual training images. The weights corresponding to these never-active pixels get zero gradient; they stay exactly at their randomized initial values under any optimizer.
 
 **Near-init rows**: In a trained net, some input rows stay near their init values. We call a row near-init if its largest |weight| is under 0.05; initial values are at most 1/28 ≈ 0.036. The number of these near-init rows varies with the specific training recipe (see Table 1). SGD's step size is proportional to the gradient, so weights on rarely-inked pixels barely move. Adam rescales each weight's step by its own gradient history, as its predecessor Adagrad was designed to (Duchi et al. 2011; Kingma & Ba 2015), so weights on rarely-inked pixels still take full-size steps, and Adam nets have far fewer near-init rows.
 
