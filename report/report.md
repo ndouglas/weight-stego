@@ -149,23 +149,19 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-<!-- ~150 words. Provenance verdicts are conditional on recipe priors the audited party controls; auditors need
-recipe-diverse calibration (P3 result). Not an LLM quirk: the rule reproduces it. Detection vs attribution (Fable's
-trigger story). Harness and cost: what the auditor finds depends on effort and layout; cost per read. Encrypted
-payloads would leave no sign structure. -->
+Weight-based verdicts regarding training data depend on the reader's model of the training recipe, which is determined by the audited party. This is not a quirk or emergent feature of large language models; a single rule can reproduce it. Auditors therefore need to calibrate on diverse recipes, but this is not always sufficient. Detection does not imply attribution or explanation; a confident but incorrect story is worse for the auditor than a flag. What the auditor finds is largely determined by their effort and layout, and auditing protocols need to state them.
 
 ## Limitations
 
-<!-- ~60 words. The short version; full list and dual-use in Appendix A (required by the guidelines). -->
+Our nets are tiny, trained on two simple datasets, and read as text by two models from the same lab; larger models would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
 
 ## Future Work
 
-<!-- ~30 words. Larger n and more readers (non-Claude models), encrypted payloads, real-scale nets, recipe-diverse
-calibration for auditors, Opus max/bare cell. -->
+Next: more readers (especially non-Claude models), encrypted payloads, larger nets, a recipe-calibrated LLM auditor, an adaptive sender, and the audit question on laundered nets.
 
 # 6. Conclusion
 
-<!-- ~60 words (template: 1-2 paragraphs). -->
+Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
 
 # Code and Data
 
@@ -199,6 +195,7 @@ calibration for auditors, Opus max/bare cell. -->
 ## Appendix A. Limitations and Dual-Use / Ethical Considerations
 
 ### Limitations
+
 Our nets are tiny and trained on one of two small, simple datasets. Larger nets, trained on more complex datasets, would have richer and less comprehensible structure. That might make weight-based auditing impractical, and it might make the kind of steganography we explored harder to detect.
 
 The readers saw every weight as text, which only works for tiny nets. Reading a large model this way would need tools or summaries, and their assumptions might differ.
