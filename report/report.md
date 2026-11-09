@@ -1,5 +1,5 @@
 ---
-title: "Hide Yo' Pineapple, Hide Yo' Primes: Training Choices Steer What Weight-Based Auditors Conclude"
+title: "Is This MNIST? Training Choices Steer What LLM Weight Readers Conclude"
 author: |
   Nathan Douglas\
   Independent
