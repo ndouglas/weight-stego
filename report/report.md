@@ -1,5 +1,5 @@
 ---
-title: "TITLE"
+title: "Hide Yo'"
 author: |
   Nathan Douglas\
   Independent
@@ -233,9 +233,42 @@ calibration for auditors, Opus max/bare cell. -->
 
 ## Appendix A. Limitations and Dual-Use / Ethical Considerations
 
-<!-- Required. Limitations: tiny nets, two datasets, two readers, n = 5 per cell, Opus untested in two Table 6 cells,
-one payload (plaintext, one message), sender was a script, thinking not returned, pilot results exploratory.
-Dual-use: laundering recipe and hiding method; why publishing helps defenders more (calibration fix is cheap). -->
+### Limitations
+Our nets are tiny and trained on one of two small, simple datasets. Larger nets, trained on more complex datasets, would have richer and less comprehensible structure. This might render weight-based auditing impractical, and it might render the type of steganography we've explored harder to detect.
+
+The readers saw every weight as text, which only works for tiny nets. Reading a large model this way would need tools or summaries, and their assumptions might differ.
+
+We also used, as readers, two models from the same frontier lab and roughly the same generation. Other labs' models might not share the assumptions explored in this project.
+
+We read only 5 nets per cell (3 for the plain Fashion-MNIST recipes). Opus was not run in two of the four hidden-message settings (high/numbered and max/bare; see Table 6).
+
+For the hidden-message experiment, we used a single payload, which was plaintext ASCII. This was a simple message with obvious structure (period 5 and constant-sign units). The magnitudes were disguised at init scale, but the signs kept the plaintext's structure. A sophisticated sender trying to evade audit would likely encrypt the message (and, as Appendix C shows, that would destroy the structure). As a result, our detection numbers probably overstate how well readers would catch a careful sender. We did not run readers on an encrypted payload.
+
+The "sender" for the hidden message was a simple Python script; it did not modify its approach in response to discovery. A sophisticated sender might test the auditor and adjust its strategy accordingly, so these results are not a measure of what a real-world adversary could do.
+
+The main safety worry behind weight steganography would probably be an AI model encoding information in weights, to be read by another model or a future copy of itself. Takehi et al. (2026) showed that frontier models can write small nets' weights by hand, which makes this plausible. We only tested the reading side, and not whether a model could write a message for consumption by another model.
+
+The audit question was never run on the laundered nets, so we don't know whether an audit would flag them.
+
+The hybrid nets used in the swap control are slightly off-distribution, and the two reads per net aren't independent.
+
+We did not observe our readers' chain of thought; the quoted explanations for how the readers audited the nets are those supplied by the readers, which may not reflect how they actually reached the verdict.
+
+Prior to running confirmatory experiments, we ran some exploratory pilot trials with Claude Code subagents, a different harness from the API. Those results are reported only in Appendix E and not counted in the main results.
+
+The three tests we report (p ≤ [cam.opus.maxnum_vs_clean_p=0.0079]) survive a Bonferroni correction, even if all six tests we computed are counted.
+
+### Dual-use and ethical considerations
+
+This project explains a method for laundering training-data verdicts through innocuous changes to training methods that offer the launderer some degree of plausible deniability. It also describes a method for encoding messages directly within model weights. Neither reader decoded it at default settings, and both flagged it reliably only at max effort with line-numbered rows. An approach using encryption would remove the sign structure readers used.
+
+However, these training methods are standard practice and hiding data in weights is already published (Uchida et al. 2017; Wang et al. 2021). What _is_ new is evidence of how auditors fail, which is more useful to defenders than to launderers.
+
+Publishing these results should help improve auditing methods. Calibrating readers by diversifying the recipes of the nets they are trained on is comparatively inexpensive and appears effective in some cases, but we tested this fix only on the non-LLM readers, and pad-20 defeated it even there.
+
+An auditor trusting a single weight-reader verdict could accuse an honest developer of laundering training data, since using Adam alone makes MNIST read as Fashion-MNIST to these readers.
+
+This project did not use any human subjects, just public datasets.
 
 ## Appendix B. Prompts
 
