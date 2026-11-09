@@ -11,6 +11,8 @@
 | `bb.pooled.misread_adam` | both models: MNIST nets misread (not MNIST), Adam | 9/9 (+1 NA) |
 | `bb.pooled.misread_sgd` | both models: MNIST nets misread (not MNIST), SGD | 1/10 |
 | `bb.pooled.fisher_p` | Fisher exact p, Adam vs SGD misread (pooled) | 0.0001 |
+| `bb.opus.fisher_p` | opus: Fisher exact p, Adam vs SGD misread (per reader; nets read once each) | 0.0079 |
+| `bb.fable.fisher_p` | fable: Fisher exact p, Adam vs SGD misread (per reader; nets read once each) | 0.0476 |
 | `rung.opus.audit_marked_flagged` | opus: marked nets flagged under audit question | 5/5 |
 | `rung.opus.audit_clean_false_alarm` | opus: clean nets flagged under audit question (false alarm) | 0/5 |
 | `rung.opus.dataset_marked_as_mnist` | opus: marked nets read as MNIST (beacon fixes misread) | 5/5 |

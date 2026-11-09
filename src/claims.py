@@ -46,6 +46,9 @@ def compute():
     add("bb.pooled.misread_adam", "both models: MNIST nets misread (not MNIST), Adam", pa("adam"))
     add("bb.pooled.misread_sgd", "both models: MNIST nets misread (not MNIST), SGD", pa("sgd"))
     add("bb.pooled.fisher_p", "Fisher exact p, Adam vs SGD misread (pooled)", fisher(pa("adam"), pa("sgd")))
+    for m in ("opus", "fable"):
+        pm = lambda opt: frac(sel(set="backbone", model=m, dataset="MNIST", optim=opt), lambda r: dataset(r["txt"]) != "MNIST")
+        add(f"bb.{m}.fisher_p", f"{m}: Fisher exact p, Adam vs SGD misread (per reader; nets read once each)", fisher(pm("adam"), pm("sgd")))
 
     # Rung: primes beacon in the 67 never-active rows
     for m in ("opus", "fable"):

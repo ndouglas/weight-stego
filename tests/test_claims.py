@@ -24,6 +24,8 @@ EXPECTED = {
     'bb.pooled.misread_adam': '9/9 (+1 NA)',
     'bb.pooled.misread_sgd': '1/10',
     'bb.pooled.fisher_p': 0.0001,
+    'bb.opus.fisher_p': 0.0079,
+    'bb.fable.fisher_p': 0.0476,
     'rung.opus.audit_marked_flagged': '5/5',
     'rung.opus.audit_clean_false_alarm': '0/5',
     'rung.opus.dataset_marked_as_mnist': '5/5',

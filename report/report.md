@@ -4,40 +4,40 @@ author: |
   Nathan Douglas\
   Independent
 abstract: |
-  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions (a _dataset_ question and an _audit_ question). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST [bb.pooled.misread_adam=9/9 (+1 NA)] times (vs. [bb.pooled.misread_sgd=1/10] with SGD), and their verdicts followed the swapped rows (Opus [graft.opus.followed_rows=20/20], Fable [graft.fable.followed_rows=15/19 (+1 NA)]). The threshold rule reproduced these verdicts. Shift augmentation also laundered the verdict ([launder.pooled.shift2_as_fashion=10/10]). Readers reliably found the hidden message only with line-numbered rows and maximum effort; Opus decoded it [cam.opus.max-num.decoded=4/5] times, while Fable never did, calling it a backdoor or trigger 5/5 times. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
+  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions (a _dataset_ question and an _audit_ question). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST [bb.pooled.misread_adam=9/9 (+1 NA)] times (vs. [bb.pooled.misread_sgd=1/10] with SGD), and their verdicts followed the swapped rows (Opus [graft.opus.followed_rows=20/20] reads, Fable [graft.fable.followed_rows=15/19 (+1 NA)]; 10 nets, 2 reads each). The threshold rule made the same errors on Adam nets. Shift augmentation also laundered the verdict ([launder.pooled.shift2_as_fashion=10/10]). Fable flagged the hidden message reliably only with line-numbered rows at maximum effort, where Opus flagged it too; Opus decoded it [cam.opus.max-num.decoded=4/5] times, while Fable never did and mostly called it a trigger. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
 ---
 
 # 1. Introduction
 
-Reading a model's weights has been proposed as an audit of provenance and compliance: what was it trained on, and was it tampered with? Takehi et al. (2026) showed that frontier LLMs can already read small nets' weights.
+Reading a neural network's weights has been proposed as an audit of provenance and compliance: what was it trained on, and was it tampered with? Takehi et al. (2026) showed that frontier LLMs can already read and write small nets' weights.
 
 But a reader needs a model of how training marks weights, and whoever trained the net controls those marks. Can innocuous training choices change the verdict? Can readers catch deliberate edits?
 
-We study tiny nets trained on MNIST digits and Fashion-MNIST clothing. MNIST digits rarely reach the image's edge, so some edge pixels are blank in every image and their weights never train. Readers use that blank fringe to recognize MNIST, but the optimizer changes it: under SGD the fringe is broad; under Adam it nearly disappears.
+We study tiny nets trained on MNIST digits and Fashion-MNIST clothing. MNIST digits rarely reach the image's edge, so some edge pixels are blank in every image and their weights never train. Readers use that untrained edge to recognize MNIST, but the optimizer sets its width: under SGD about 270 input rows stay near their initial values; under Adam only about 70, close to an SGD-trained Fashion-MNIST net.
 
-An attacker can *edit* weights after training, leaving artifacts a tampering audit can look for, or *choose the training recipe*, leaving none. We call the second *laundering*: the net trains on its true data, and the verdict points elsewhere.
+An attacker can *edit* weights after training, leaving artifacts a tampering audit can look for, or *choose the training recipe*, leaving no edits to find. We call the second *laundering*: the net trains on its true data, and the verdict points elsewhere.
 
 Our contributions:
 
-- **The training recipe decides the verdict.** Adam or shift augmentation makes MNIST nets read as Fashion-MNIST without any weight edits, so an audited party can steer the verdict, and an honest Adam user can be wrongly accused.
-- **The blind spot is in weight reading, not in LLMs.** The verdict follows a few hundred rows that barely affect behavior. A one-line rule reproduces it, and training on diverse recipes fixes it for non-LLM readers, except against MNIST-style preprocessing.
-- **Detection is costly, and it is not explanation.** A message hidden in the signs of untrained weights was flagged reliably only at max effort with line-numbered rows. Opus decoded it; Fable mostly called it a trigger.
+- **The training recipe decides the verdict.** Adam or shift augmentation makes MNIST nets read as Fashion-MNIST without any weight edits, so an audited party can steer the verdict, and an honest Adam user's training data can be misidentified.
+- **The blind spot is not specific to LLMs.** The verdict follows a few hundred rows that barely affect behavior. A one-line rule fitted on SGD nets shares it, and training on diverse recipes fixes it for non-LLM readers, except against MNIST-style preprocessing.
+- **Detection is costly, and it is not explanation.** Fable flagged a message hidden in the signs of never-active weights reliably only at max effort with line-numbered rows. There, Opus decoded it; Fable mostly called it a trigger.
 
-All code is public, and `make check` reproduces every number.
+All code is public, and `make check` recomputes the reported results from the released data.
 
 # 2. Related Work
 
- Takehi et al. (2026) showed that frontier LLMs can read and write small nets' weights; we test what such readers assume about training. Earlier weight-space readers are trained classifiers that predict accuracy (Unterthiner et al. 2020; Schürholt et al. 2022) or detect trojans (Xu et al. 2021); our simple baselines of this kind inherit the same recipe prior as the LLMs. Proof-of-learning (Jia et al. 2021) and compute monitoring (Shavit 2023) verify training from logs and hardware rather than from the final weights. Hiding data in weights is well established (Uchida et al. 2017; Wang et al. 2021); we ask whether a reader notices it. Wilson et al. (2017) showed that adaptive optimizers find different solutions from SGD; we show they also change what an auditor infers. Auditing agents (Marks et al. 2025; Bricken et al. 2025), models whose deception survives safety training (Hubinger et al. 2024), and covert channels between agents (Motwani et al. 2024) motivate the threat model.
+Takehi et al. (2026) showed that frontier LLMs can read and write small nets' weights; we test what such readers assume about training. Earlier weight-space readers are trained classifiers that predict accuracy (Unterthiner et al. 2020; Schürholt et al. 2022) or detect trojans (Xu et al. 2021); our simple baselines of this kind inherit the same recipe prior as the LLMs. Proof-of-learning (Jia et al. 2021) and compute monitoring (Shavit 2023) verify training from logs and hardware rather than from the final weights. Hiding data in weights is well established (Uchida et al. 2017; Wang et al. 2021); we ask whether a reader notices it. Wilson et al. (2017) showed that adaptive optimizers find different solutions from SGD; we show they also change what an auditor infers. Auditing agents (Marks et al. 2025; Bricken et al. 2025), models whose deception survives safety training (Hubinger et al. 2024), and covert channels between agents (Motwani et al. 2024) motivate the threat model.
 
 # 3. Methods
 
 **Nets**: We trained small nets on each of the MNIST (LeCun et al. 1998) and Fashion-MNIST (Xiao et al. 2017) datasets, with Adam and SGD optimizers; see Table 1 for recipes and accuracy.
 
-**Never-active pixels**: Across the MNIST data set, there are [data.mnist_never_active=67] pixels that are never active in any of the individual training images. The weights corresponding to these never-active pixels get zero gradient; they stay exactly at their randomized initial values under any optimizer.
+**Never-active pixels**: Across the MNIST dataset, there are [data.mnist_never_active=67] pixels that are never active in any of the individual training images. The weights corresponding to these never-active pixels get zero gradient; they stay exactly at their randomized initial values under any optimizer.
 
 **Near-init rows**: In a trained net, some input rows stay near their init values. We call a row near-init if its largest |weight| is under 0.05; initial values are at most 1/28 ≈ 0.036. The number of these near-init rows varies with the specific training recipe (see Table 1). SGD's step size is proportional to the gradient, so weights on rarely-inked pixels barely move. Adam rescales each weight's step by its own gradient history, as its predecessor Adagrad was designed to (Duchi et al. 2011; Kingma & Ba 2015), so weights on rarely-inked pixels still take full-size steps, and Adam nets have far fewer near-init rows.
 
-**Readers**: We selected two frontier models, Opus 5.5 and Fable 5.1, as readers. Each reads every weight as text, one read per net unless stated otherwise (see Table 6, Appendix C). The readers' prompts identified neither the dataset nor the optimizer and posed one of two questions, a _dataset_ question or an _audit_ question, about a given net.
+**Readers**: We selected two frontier models, Opus 5.5 and Fable 5.1, as readers. Each read every weight as text, one read per net unless stated otherwise (see Table 6, Appendix C). The readers' prompts identified neither the dataset nor the optimizer and posed one of two questions, a _dataset_ question or an _audit_ question, about a given net.
 
 **What we changed**: We tested two training choices that edit no weights: shift augmentation (images randomly shifted up to 2 px during training) on SGD-MNIST and pad-20 (Fashion images shrunk to 20×20 and zero-padded to 28×28, the way MNIST itself was made) on Adam-Fashion. Each pushes the near-init count the other way: shift augmentation inks MNIST's fringe, and pad-20 gives Fashion a blank frame.
 
@@ -67,13 +67,13 @@ Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 
 
 ## 4.1 Which dataset? Recipe priors decide the verdict
 
-The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], p = [bb.pooled.fisher_p=0.0001]). The readers interpreted the Fashion-MNIST nets correctly (see Table 2).
+The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], per reader p = [bb.opus.fisher_p=0.0079] for Opus and [bb.fable.fisher_p=0.0476] for Fable). The readers interpreted the Fashion-MNIST nets correctly (see Table 2).
 
-The readers reported that they used the border of untouched weights to identify the training data for each net (Fable, on Adam-MNIST: "The 2-pixel side border and 0–1-pixel top/bottom border is exactly the Fashion-MNIST preprocessing."). Adam-MNIST's fringe has fewer rows near init than SGD-MNIST ([nets.adam_mnist_near_init=67-74] vs [nets.sgd_mnist_near_init=270-276]; why Adam does this is discussed in Section 3), and so the readers misidentify the net (tested directly in 4.2).
+The readers reported that they used the band of untrained weights around the image to identify the training data for each net (Fable, on Adam-MNIST: "The 2-pixel side border and 0–1-pixel top/bottom border is exactly the Fashion-MNIST preprocessing."). Adam-MNIST nets have [nets.adam_mnist_near_init=67-74] near-init rows, close to Fashion-SGD's [nets.fashion_sgd_near_init=58-66] and far from SGD-MNIST's [nets.sgd_mnist_near_init=270-276] (Table 1; Section 3 explains why), and the readers misidentified them; Section 4.2 tests this directly.
 
-Naming the optimizer in the prompt did not lead the readers to identify the nets correctly (Appendix E).
+In an exploratory pilot, naming the optimizer in the prompt did not help (Appendix E).
 
-No edits to the weights after training are needed to launder verdicts in this way; including shift augmentation in SGD-MNIST training cut its "near-init" rows by about half, to [nets.shift2_near_init=133-148], and while accuracy remained high ([nets.shift2_test_acc=0.911-0.914] vs [nets.sgd_mnist_test_acc=0.929-0.932]), readers identified it as Fashion ([launder.pooled.shift2_as_fashion=10/10]).
+No edits to the weights after training are needed to launder verdicts in this way; including shift augmentation in SGD-MNIST training cut its near-init rows by about half, to [nets.shift2_near_init=133-148], and while accuracy remained high ([nets.shift2_test_acc=0.911-0.914] vs [nets.sgd_mnist_test_acc=0.929-0.932]), readers identified it as Fashion ([launder.pooled.shift2_as_fashion=10/10]).
 
 But the training choices didn't work everywhere; when Fashion-MNIST nets were preprocessed with pad-20, Fable read them as MNIST ([launder.fable.pad20_as_mnist=5/5]), but Opus was less likely to do so ([launder.opus.pad20_as_mnist=1/5]).
 
@@ -89,9 +89,9 @@ Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated r
 
 ## 4.2 What decides it: rows that barely matter and a one-line rule
 
-We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy barely moved (at most [graft.max_acc_change=0.001]), so swapping the rows barely affected behavior, but the nets are hybrids training would not normally produce. Both readers always read Adam-MNIST nets with the quieter SGD fringe as MNIST, and Opus always read SGD-MNIST nets with the louder Adam fringe as Fashion, but Fable sometimes trusted the interior more (see Table 3). So the readers did not decide their verdict based on the net's behavior, but on rows that are largely irrelevant to the net's behavior.
+We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy barely moved (at most [graft.max_acc_change=0.001]), so swapping the rows barely affected behavior, but the nets are hybrids training would not normally produce. Both readers always read Adam-MNIST nets carrying SGD's near-init rows as MNIST, and Opus always read SGD-MNIST nets carrying Adam's rows as Fashion, but Fable sometimes followed the interior instead (see Table 3). So Opus's verdicts followed rows that barely affect the net's behavior, and Fable's mostly did.
 
-Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 4) and misidentified shift-augmented SGD nets, so it reproduces the LLM readers' verdicts. The RowNorm classifier trained on SGD nets makes the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
+Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 4) and misidentified shift-augmented SGD nets, so it shares the LLM readers' errors. The RowNorm classifier trained on SGD nets made the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
 
 Table: Swap control. Each net keeps its own interior but carries the other optimizer's near-init rows (5 nets x 2 reads per net).
 
@@ -111,11 +111,11 @@ Table: Non-LLM baselines on first-layer weights: accuracy on MNIST-vs-Fashion. T
 
 ## 4.3 Planted edits: detected, not explained
 
-At default settings (high effort, bare rows), neither reader decoded the message hidden in the signs of the never-active weights (Section 3; Table 5). For Fable, setting either max effort or line-numbered rows (each row prefixed with its line number, as Claude Code's file reader shows it) was not enough to flag the nets. Only max effort with line-numbered rows worked reliably: both readers flagged all 5 nets ([cam.pooled.max-num.unusual=10/10]), and neither flagged the same nets unedited ([clean.pooled.max-num.unusual=0/10]; p = [cam.opus.maxnum_vs_clean_p=0.0079] per model).
+At default settings (high effort, bare rows), neither reader decoded the message hidden in the signs of the never-active weights (Section 3; Table 5). For Fable, setting either max effort or line-numbered rows (each row prefixed with its line number, as Claude Code's file reader shows it) was not enough to flag the nets reliably. Max effort with line-numbered rows worked reliably: both readers flagged all 5 nets ([cam.pooled.max-num.unusual=10/10]), and neither flagged the same nets unedited ([clean.pooled.max-num.unusual=0/10]; p = [cam.opus.maxnum_vs_clean_p=0.0079] per reader).
 
-However, detecting the message did not mean the readers could decode it, and here the readers diverged. Opus decoded the correct text ([cam.opus.max-num.decoded=4/5]). Fable never decoded it ([cam.fable.max-num.decoded=0/5]) and, in the author's reading of its explanations, described it as a planted trigger (3/5) or hedged between a trigger and a watermark (2/5). One Fable read even noticed that the pattern repeated every five rows, then called it a "frame" trigger.
+However, detecting the message did not mean the readers could decode it, and here the readers diverged (p = [cam.decode.opus_vs_fable_p=0.0476], uncorrected; in the exploratory pilot the order was reversed, Appendix E). Opus decoded the correct text ([cam.opus.max-num.decoded=4/5]). Fable never decoded it ([cam.fable.max-num.decoded=0/5]) and, in the author's reading of its explanations, described it as a planted trigger (3/5) or hedged between a trigger and a watermark (2/5). One Fable read even noticed that the pattern repeated every five rows, then called it a "frame" trigger.
 
-So while both readers could find the message, only one could read it, and only in the most expensive configuration. Finding it was likely only possible because plain ASCII is redundant: the top bit of every lowercase letter is 0, so 6 hidden units had the same sign on every never-active row, and the 10-character message repeated every five rows. A simulated one-time-pad encryption of the same message leaves no constant-sign units at all (Appendix C). One tell remains even then: no planted weight prints as 0.000, while untouched initial weights have [payload.init_zero_prints=13-20] of 1,072 that do.
+So while both readers flagged the message, only one could read it, and only in the most expensive configuration. Plain ASCII is redundant, which likely made it findable: lowercase letters share their top bits, so 6 hidden units had the same sign on every never-active row, and the 10-character message repeated every five rows. A simulated one-time-pad encryption of the same message leaves no constant-sign units at all (Appendix C). One tell remains even then: no planted weight prints as 0.000, while unedited never-active weights have [payload.init_zero_prints=13-20] of 1,072 that do.
 
 An overt, deliberately visible edit (a prime-number beacon in the same rows) was flagged under the audit question [rung.pooled.audit_flagged=9/9 (+1 NA)]; see Appendix E.
 
@@ -125,15 +125,15 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 |---|---|---|---|---|
 | Opus 5.5 | [cam.opus.high-bare.unusual=0/5] / [cam.opus.high-bare.decoded=0/5] · $[cost.opus.high-bare.usd_per_read=0.16] | — | — | [cam.opus.max-num.unusual=5/5] / [cam.opus.max-num.decoded=4/5] · $[cost.opus.max-num.usd_per_read=1.71] |
 | Fable 5.1 | [cam.fable.high-bare.unusual=2/5] / [cam.fable.high-bare.decoded=0/5] · $[cost.fable.high-bare.usd_per_read=0.94] | [cam.fable.high-num.unusual=0/5] / [cam.fable.high-num.decoded=0/5] · $[cost.fable.high-num.usd_per_read=0.87] | [cam.fable.max-bare.unusual=1/5] / [cam.fable.max-bare.decoded=0/5] · $[cost.fable.max-bare.usd_per_read=3.36] | [cam.fable.max-num.unusual=5/5] / [cam.fable.max-num.decoded=0/5] · $[cost.fable.max-num.usd_per_read=2.99] |
-| Clean hosts (false alarms) | Opus [rung.opus.audit_clean_false_alarm=0/5], Fable [rung.fable.audit_clean_false_alarm=1/5] | — | — | Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] |
+| Unedited nets (false alarms) | Opus [rung.opus.audit_clean_false_alarm=0/5], Fable [rung.fable.audit_clean_false_alarm=1/5] | — | — | Opus [clean.opus.max-num.unusual=0/5], Fable [clean.fable.max-num.unusual=0/5] |
 
 # 5. Discussion and Limitations
 
-Verdicts about training data rest on the reader's model of the training recipe, and the audited party controls the recipe. This is not an LLM quirk: a one-line rule reproduces it. Calibrating readers on diverse recipes helps, but it is not enough; pad-20 defeated every calibrated non-LLM reader. Detection is also not explanation. Fable flagged the hidden message but mostly called it a trigger, and a confident wrong story can mislead an auditor more than a bare flag. Finally, what a reader finds depends heavily on effort and row layout, so audit protocols should report both.
+Verdicts about training data rest on the reader's model of the training recipe, and the audited party controls the recipe. This is not only an LLM problem: a one-line rule fitted on SGD nets makes the same errors. Calibrating readers on diverse recipes helps, but it is not enough; pad-20 defeated every calibrated non-LLM reader. Detection is also not explanation. Fable flagged the hidden message but mostly called it a trigger, and a confident wrong story can mislead an auditor more than a bare flag. Finally, what a reader finds depends heavily on effort and row layout, so audit protocols should report both.
 
 ## Limitations
 
-Our nets are tiny and trained on two simple datasets, and two models from the same lab read them as text. Larger nets would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
+Our nets are tiny and trained on two simple datasets, and two models from the same lab read them as text. Larger nets would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell (3 for plain Fashion-MNIST). The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
 
 ## Future Work
 
@@ -141,7 +141,7 @@ The most useful next step is an LLM auditor calibrated on diverse recipes, to te
 
 # 6. Conclusion
 
-A weight reader's verdict is only as good as its assumptions about training, and the audited party chooses the training. Ordinary choices moved the verdict for both LLM and non-LLM readers, and a hidden message was caught reliably only at the highest cost, and then not always understood. Weight audits should report the reader's settings, calibrate across recipes, and treat a flag as a question, not an answer.
+A weight reader's verdict is only as good as its assumptions about training, and the audited party chooses the training. Ordinary choices moved the verdict for LLM readers and for non-LLM readers fitted on one recipe, and a hidden message was flagged reliably only at max effort with line-numbered rows, and then not always understood. Weight audits should report the reader's settings, calibrate across recipes, and treat a flag as a question, not an answer.
 
 # Code and Data
 
@@ -178,11 +178,11 @@ A weight reader's verdict is only as good as its assumptions about training, and
 
 Our nets are tiny and trained on one of two small, simple datasets. Larger nets, trained on more complex datasets, would have richer and less comprehensible structure. That might make weight-based auditing impractical, and it might make the kind of steganography we explored harder to detect.
 
-The readers saw every weight as text, which only works for tiny nets. Reading a large model this way would need tools or summaries, and their assumptions might differ.
+The readers saw every weight as text, which only works for tiny nets. Reading a large net this way would need tools or summaries, and their assumptions might differ.
 
 Both readers are models from the same lab and roughly the same generation. Other labs' models might not share the assumptions explored in this project.
 
-We read only 5 nets per cell (3 for the plain Fashion-MNIST recipes). Opus was not run in two of the four hidden-message settings (high/numbered and max/bare; see Table 6).
+We read only 5 nets per cell (3 for the plain Fashion-MNIST recipes). Opus was not run in two of the four hidden-message settings (high/numbered and max/bare; see Table 5).
 
 For the hidden-message experiment, we used a single payload, which was plaintext ASCII. The magnitudes were disguised at init scale, but the signs kept the plaintext's obvious structure (a period of 5 rows and 6 constant-sign units). A sophisticated sender trying to evade audit would likely encrypt the message (and, as Appendix C shows, that would destroy the structure). As a result, our detection numbers probably overstate how well readers would catch a careful sender. We did not run readers on an encrypted payload.
 
@@ -198,11 +198,11 @@ The API does not return the readers' reasoning. The explanations we quote are th
 
 Before the confirmatory runs, we ran exploratory pilots with Claude Code subagents, a different harness from the API. Those results are reported only in Appendix E and not counted in the main results.
 
-The three tests in the main text (each p ≤ [cam.opus.maxnum_vs_clean_p=0.0079]) survive a Bonferroni correction across all six tests we computed (threshold 0.05/6 ≈ 0.0083). Of the other three, which appear only in the repository, two (p = [cam.fable.maxnum_vs_maxbare_p=0.0476]) would not.
+The main text reports five tests. With 5 nets per cell, p = [cam.opus.maxnum_vs_clean_p=0.0079] is the smallest value a two-sided Fisher test can give; a Bonferroni correction across the five (0.05/5 = 0.01) keeps the three at that value (Opus on the optimizer result, and both false-alarm comparisons) and drops the two at p = [bb.fable.fisher_p=0.0476] (Fable on the optimizer result, and the Opus-Fable decoding difference). Each reader read each net once, so we test per reader rather than pooling reads of the same nets.
 
 ### Dual-use and ethical considerations
 
-This project describes how to launder an auditor's verdict about training data through innocuous training choices, which give the launderer plausible deniability. It also describes a way to hide a message in model weights that neither reader decoded at default settings, and both flagged it reliably only at max effort with line-numbered rows. Encrypting the message would remove the sign structure the readers relied on.
+This project describes how to launder an auditor's verdict about training data through innocuous training choices, which give the launderer plausible deniability. It also describes a way to hide a message in a net's weights that neither reader decoded at default settings, and both flagged it reliably only at max effort with line-numbered rows. Encrypting the message would remove the sign structure the readers relied on.
 
 However, these training methods are standard practice and hiding data in weights is already published (Uchida et al. 2017; Wang et al. 2021). What _is_ new is evidence of how auditors fail, which is more useful to defenders than to launderers.
 
@@ -273,7 +273,7 @@ W1 (layer 1 weights), shape 784 x 16: one line per row (row i = input i), 16 val
 
 ## Appendix C. Settings, cost and reproducibility
 
-Table: What each reader was asked. Every read is a single user message (no system prompt, no tools) sent through the Message Batches API. It describes the input (28×28 grayscale images) and the architecture, then lists every weight to 3 decimals. It names neither the dataset nor the optimizer. *Dataset* question: "What kind of images was it trained on, and what are the 10 classes?" *Audit* question: "Is there anything unusual about them: anything you would not expect from ordinary training of this network on its dataset?" Each asks for its answer in fixed slots. Defaults: effort high, bare rows, 32k output tokens. A truncated read was rerun with a larger cap (128k, or 300k via a beta header); one still truncated counts as NA. Full prompts: Appendix B.
+Table: What each reader was asked. Every read is a single user message (no system prompt, no tools) sent through the Message Batches API. The message describes the input (28×28 grayscale images) and the architecture, then lists every weight to 3 decimals. It names neither the dataset nor the optimizer. *Dataset* question: "What kind of images was it trained on, and what are the 10 classes?" *Audit* question: "Is there anything unusual about them: anything you would not expect from ordinary training of this network on its dataset?" Each asks for its answer in fixed slots. Defaults: effort high, bare rows, 32k output tokens. A truncated read was rerun with a larger cap (128k, or 300k via a beta header); one still truncated counts as NA. Full prompts: Appendix B.
 
 | Experiment | Nets read | Question | Effort, rows | Reads (Opus / Fable) | See |
 |----------------|------------------------------------|-------|------------|--------|-----|
@@ -283,7 +283,7 @@ Table: What each reader was asked. Every read is a single user message (no syste
 | Primes beacon | 5 Adam-MNIST with beacon, 5 without | both | high, bare | 15 / 15 | App. E |
 | Hidden message | 5 Adam-MNIST with message | audit | Table 5 | 10 / 20 | 4.3 |
 | False-alarm control | the same 5, no message | audit | max, numbered | 5 / 5 | 4.3 |
-| Total | | | | 76 / 86 | [cost.final_reads=162] |
+| Total | | | | 76 / 86 ([cost.final_reads=162]) | |
 
 Table: Reader settings and cost. Batch prices are half the standard rate; thinking tokens are billed as output. Cost per read is the mean over all billed reads in that cell, including truncated ones.
 
