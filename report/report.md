@@ -4,20 +4,8 @@ author: |
   Nathan Douglas\
   Independent
 abstract: |
-  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions ("which dataset?" and "is anything unusual?"). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST [bb.pooled.misread_adam=9/9 (+1 NA)] times (vs. [bb.pooled.misread_sgd=1/10] with SGD), and their verdicts followed the swapped rows (Opus [graft.opus.followed_rows=20/20], Fable [graft.fable.followed_rows=15/19 (+1 NA)]). The threshold rule reproduced these verdicts. Shift augmentation also laundered the verdict ([launder.pooled.shift2_as_fashion=10/10]). Readers reliably found the hidden message only with line-numbered rows and maximum effort; Opus decoded it [cam.opus.max-num.decoded=4/5] times, while Fable never did, calling it a backdoor or trigger 5/5 times. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
+  Takehi et al. (2026) showed that frontier models can read and write small nets' weights. Weight-based audits may be used to determine what a net trained on. However, weight readers expect low-use inputs to leave their weights close to their initial values. We test whether a bad actor can exploit a reader's assumptions about training methods to launder training-data verdicts—without directly editing weights—and whether readers catch a deliberate edit. We audited tiny nets (trained on MNIST and Fashion-MNIST) using frontier models (Opus 5.5 and Fable 5.1) prompted with one of two questions (a _dataset_ question and an _audit_ question). We varied the optimizer (Adam or SGD), swapped about 270 first-layer rows that barely affect behavior between same-seed Adam and SGD nets, and compared against a one-line threshold rule fitted on SGD nets. We also tested shift augmentation and a text message concealed in the signs of never-trained weights. Readers identified Adam-trained MNIST nets as Fashion-MNIST [bb.pooled.misread_adam=9/9 (+1 NA)] times (vs. [bb.pooled.misread_sgd=1/10] with SGD), and their verdicts followed the swapped rows (Opus [graft.opus.followed_rows=20/20], Fable [graft.fable.followed_rows=15/19 (+1 NA)]). The threshold rule reproduced these verdicts. Shift augmentation also laundered the verdict ([launder.pooled.shift2_as_fashion=10/10]). Readers reliably found the hidden message only with line-numbered rows and maximum effort; Opus decoded it [cam.opus.max-num.decoded=4/5] times, while Fable never did, calling it a backdoor or trigger 5/5 times. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
 ---
-
-<!--
-HOW THIS FILE WORKS
-- Write numbers as claim tags: [bb.pooled.fisher_p=0.0001]. `make check` fails if a tag disagrees with the data;
-  `make report` replaces each tag with its value. IDs and values: results/claims.md.
-- Comments like this one are notes for drafting; they don't render.
-- `make report` prints the main-body page count (limit 8, template recommends 4; references and appendices don't count).
-- Format follows Apart's template (report/apart.tex); the .docx uses the template's styles for pasting into the Google Doc.
-- Write p-values as plain text (p = 0.0001), not $...$; "$" pairs become math.
-- Place the figure at the end of 4.1 or after Table 4, so it does not split 4.2 from its table.
-- Word budgets target ~7 pages at Google-calibrated spacing (build matches the template's page breaks) at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
--->
 
 # 1. Introduction
 
@@ -44,10 +32,11 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe; Adam-MNIST nets have [nets.adam_mnist_near_init=67-74], SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; and shift-augmented SGD-MNIST nets have [nets.shift2_near_init=133-148]. Adam rescales
-each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is because its predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
+**Nets**: We trained small models on each of the MNIST and Fashion-MNIST datasets, with Adam and SGD optimizers; see Table 1 for recipes and accuracy.
 
-We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
+**Near-Init Rows**: In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe (see Table 1). Adam rescales each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is because its predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
+
+**Readers**: We selected two frontier models, Opus 5.5 and Fable 5.1, as readers. Each reads every weight as text, one read per net unless stated otherwise (see Table 2). The readers' prompts identify neither the dataset nor the optimizer and posed one of two questions about a given net.
 
 <!--
 **Job:** someone could rebuild this from the text. Definitions here, so Results can be short.
@@ -60,7 +49,7 @@ We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
    recipe; point to Table 1 rather than listing counts. Then the *why* (Adam vs SGD steps), next to Table 1.
 3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
-   optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
+   optimizer. Two questions, quoted exactly in Table 2: *dataset* ("What kind of images was it trained on, and what are the 10 classes?") and *audit* ("Is there anything unusual about them...?"),
    each with fixed answer slots (exact text: Appendix B). Default: effort high, rows bare, 32k max output tokens;
    truncated reads rerun with a larger cap (128k, or 300k via a beta header), and any still truncated count as NA.
 4. **Manipulations** (put these in a table: net, optimizer, change, accuracy, near-init rows):
@@ -103,10 +92,6 @@ Subsections suggested:
 3.5 Scoring and stats: mechanical scoring (score_api.py; last answer slot; first-named dataset); truncations reported as NA;
     Fisher exact tests; predictions committed before each run (Appendix D); `make check` reproduces every number. -->
 
-<!-- Nate Notes
-While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
--->
-
 Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 4 epochs (batch 128; Adam lr 1e-3, SGD lr 0.1). Near-init rows: inputs whose largest |weight| is below 0.05 (min-max over seeds). Accuracy: MNIST or Fashion-MNIST test set (min-max).
 
 | Net | Seeds | Change from a plain run | Test accuracy | Near-init rows |
@@ -121,7 +106,7 @@ Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 
 | SGD net, Adam fringe | 5 | Adam net's rows swapped in (same rows) | change ≤ [graft.max_acc_change=0.001] | as Adam |
 | MNIST, Adam + message | 5 | signs of the [data.mnist_never_active=67] never-active rows set to the bits of "pineapple " | change [nets.payload_max_acc_change=0.0] | as Adam |
 
-Table: What each reader was asked. Every read is a single user message (no system prompt, no tools) sent through the Message Batches API: the architecture, then every weight to 3 decimals. The prompt names neither the dataset nor the optimizer. *Dataset* question: what images and classes was this net trained on? *Audit* question: is anything about this net unusual? Defaults: effort high, bare rows, 32k output tokens. A truncated read was rerun with a larger cap (128k, or 300k via a beta header); one still truncated counts as NA. Exact prompts: Appendix B.
+Table: What each reader was asked. Every read is a single user message (no system prompt, no tools) sent through the Message Batches API. It describes the input (28×28 grayscale images) and the architecture, then lists every weight to 3 decimals. It names neither the dataset nor the optimizer. *Dataset* question: "What kind of images was it trained on, and what are the 10 classes?" *Audit* question: "Is there anything unusual about them: anything you would not expect from ordinary training of this network on its dataset?" Each asks for its answer in fixed slots. Defaults: effort high, bare rows, 32k output tokens. A truncated read was rerun with a larger cap (128k, or 300k via a beta header); one still truncated counts as NA. Full prompts: Appendix B.
 
 | Experiment | Nets read | Question | Effort, rows | Reads (Opus / Fable) | See |
 |----------------|------------------------------------|-------|------------|--------|-----|

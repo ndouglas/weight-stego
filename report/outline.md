@@ -79,7 +79,7 @@ explains it wrongly.
    Kingma & Ba 2015 (Adam).
 3. **Readers** (settings in Table 2's caption; prose needs one sentence). Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
-   optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
+   optimizer. Two questions, quoted exactly in Table 2: *dataset* ("What kind of images was it trained on, and what are the 10 classes?") and *audit* ("Is there anything unusual about them...?"),
    each with fixed answer slots (exact text: Appendix B). Default: effort high, rows bare, 32k max output tokens;
    truncated reads rerun with a larger cap (128k, or 300k via a beta header), and any still truncated count as NA.
 4. **Manipulations** (rows of Table 1; prose names each once):
