@@ -1,5 +1,5 @@
 ---
-title: "Hide Yo' Pineapple, Hide Yo' Primes: The Limited Efficacy of Weight-Based Auditing in Current Frontier Models"
+title: "Hide Yo' Pineapple, Hide Yo' Primes: Training Choices Steer What Weight-Based Auditors Conclude"
 author: |
   Nathan Douglas\
   Independent
@@ -69,7 +69,7 @@ Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 
 
 The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], p = [bb.pooled.fisher_p=0.0001]). The readers interpreted the Fashion-MNIST nets correctly (see Table 2).
 
-The readers reported that they used the border of untouched weights to identify the training data for each net (Fable, on Adam-MNIST: "The 2‑pixel side border and 0–1‑pixel top/bottom border is exactly the Fashion‑MNIST preprocessing."). Adam-MNIST's fringe has fewer rows near init than SGD-MNIST ([nets.adam_mnist_near_init=67-74] vs [nets.sgd_mnist_near_init=270-276]; why Adam does this is discussed in Section 3), and so the readers misidentify the net (tested directly in 4.2).
+The readers reported that they used the border of untouched weights to identify the training data for each net (Fable, on Adam-MNIST: "The 2-pixel side border and 0–1-pixel top/bottom border is exactly the Fashion-MNIST preprocessing."). Adam-MNIST's fringe has fewer rows near init than SGD-MNIST ([nets.adam_mnist_near_init=67-74] vs [nets.sgd_mnist_near_init=270-276]; why Adam does this is discussed in Section 3), and so the readers misidentify the net (tested directly in 4.2).
 
 Naming the optimizer in the prompt did not lead the readers to identify the nets correctly (Appendix E).
 
@@ -364,12 +364,14 @@ Table: Primes beacon (high effort, bare rows).
 
 # LLM Usage Statement
 
-This was the author's second research project, and he relied heavily on Claude (Anthropic's Claude Code, Opus and Fable models) as a partner and collaborator.
+This was the author's second research project, and he relied heavily on Claude (Anthropic's Claude Code, running Opus 5.5) as a collaborator. Opus 5.5 and Fable 5.1 are also the readers under study.
 
-The author chose the question, made the research decisions, and reviewed and approved the code and every claim. Claude wrote most of the code, ran the experiments and statistical analysis, and ran adversarial reviews of the code and claims.
+The author chose the question, made the research decisions, and reviewed and approved the code and every claim. He also wrote each prediction himself, word for word, and committed it before each run (see Appendix D).
 
-Claude provided structured outlines of the paper as a whole, including the Abstract, Introduction, Related Work, Discussion, and Conclusion. The author drafted the full text of those sections, and Claude suggested edits and revisions.
+Claude wrote most of the code, ran the experiments and statistical analysis, and ran adversarial reviews of the code and claims. Claude also built the claims check system (`make check`), which ties every number in the text to the data, and the PDF build. Claude proposed several of the controls, including the swap control, non-LLM baselines, false-alarm control, and the payload statistics. Claude Code subagents served as readers in the exploratory pilot (see Appendix E).
 
-Numbers are recomputed by a script from the released data and all claims verified (`make check`).
+Claude provided structured outlines of the paper as a whole, including the Abstract, Introduction, Related Work, Discussion, and Conclusion. The author drafted the full text of those sections, and Claude suggested many edits and revisions, and made inline edits when requested, and performed a final edit over the entire document for length and consistency. Claude wrote Appendices B-E, compiled the tables and their captions, and the References section (with a subagent verifying each entry). Claude matched the PDF format to Apart's template, and created and prepared the public repository.
+
+Every number stated in the report is recomputed from the released data and checked against the text (`make check`).
 
 Errors are the author's.
