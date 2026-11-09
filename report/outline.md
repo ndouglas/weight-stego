@@ -17,7 +17,7 @@ explains it wrongly.
 
 ---
 
-## 1. Introduction (~230 words)
+## 1. Introduction (~250 words)
 
 **Job:** why anyone should care that an auditor's verdict depends on training choices.
 
@@ -25,16 +25,20 @@ explains it wrongly.
 1. The promise: auditing a model by reading its weights (what it was trained on; whether it was tampered with).
    Proposed for provenance and compliance; Takehi et al. (2026) make LLM weight readers real.
 2. The catch: a reader needs a mental model of how training leaves marks. Whoever trained the net controls those marks.
-3. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
+3. **Define never-active pixels here, fully**: [data.mnist_never_active=67] MNIST pixels are zero in every training image,
+   so their weights get zero gradient and stay exactly at init under any optimizer. This is the hook: it is what the
+   readers use to name the dataset. Then the intuition only for near-init: under SGD a much wider ring stays close to
+   its starting values; under Adam it doesn't (exact definition and counts: Methods, Table 1).
+4. Your question, in plain terms: can ordinary training choices change the verdict? And can readers catch a deliberate edit?
    Define the two attack routes once, here: *editing* weights after training (what tampering audits look for; leaves an
    artifact) vs *choosing the recipe* (every weight is a genuine product of training). "Laundering" = the true origin
    passes through individually legitimate choices (Adam is the default; shift augmentation is textbook) and the verdict
    comes out pointing elsewhere. What is laundered is the *verdict about the data*, not the data.
-4. One merged list of findings-as-contributions (3 items):
+5. One merged list of findings-as-contributions (3 items):
    - a benign training choice flips the dataset verdict (Adam vs SGD; shift augmentation), with no weight edits;
    - the verdict is decided by a few hundred rows that barely matter to behaviour, and a one-line rule reproduces it;
    - a hidden message is detected only at max effort with line numbers, and detection is not explanation.
-5. One line: all work done during the sprint; code and every number reproducible (`make check`).
+6. One line: all work done during the sprint; code and every number reproducible (`make check`).
 
 **Careful with:**
 - "Audits are used for..." is an overclaim: say *proposed* or *could be used*.
@@ -60,28 +64,22 @@ explains it wrongly.
 
 **Careful with:** check each citation's year/venue when you write References; don't claim "first" anything.
 
-## 3. Methods (~300 words + Table 1, the recipe table)
+## 3. Methods (~280 words + Table 1, recipes, and Table 2, reads)
 
 **Job:** someone could rebuild this from the text. Definitions here, so Results can be short.
 
 **Beats:**
 1. **Nets.** 784-16-10 MLP, tanh, cross-entropy, 4 epochs, batch 128. Adam (lr 1e-3) or SGD (lr 0.1). MNIST (~93% test
    accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
-2. **Two definitions** (the whole paper hangs on them):
-   - *never-active pixels*: zero in every MNIST training image; there are [data.mnist_never_active=67]. Their weights get
-     zero gradient, so they stay exactly at their random initial values under any optimizer.
-   - *near-init rows*: input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036).
-     Adam-MNIST nets have [nets.adam_mnist_near_init=67-74]; SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; shift-augmented
-     SGD-MNIST nets have [nets.shift2_near_init=133-148].
-   ELI5 of why: SGD's step is proportional to the gradient, so pixels inked in very few images barely move. Adam rescales
-   each weight's step by its own gradient history, so rarely-used weights still take full-size steps. Cite Duchi, Hazan &
-   Singer 2011 (Adagrad: adaptive methods were designed to give rare features larger steps) and Kingma & Ba 2015 (Adam).
-3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
+2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
+   input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
+   recipe; point to Table 1 rather than listing counts. The *why* (Adam vs SGD steps) goes in 4.2: it explains a result.
+3. **Readers** (settings in Table 2's caption; prose needs one sentence). Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
    optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
    each with fixed answer slots (exact text: Appendix B). Default: effort high, rows bare, 32k max output tokens;
    truncated reads rerun with a larger cap (128k, or 300k via a beta header), and any still truncated count as NA.
-4. **Manipulations** (put these in a table: net, optimizer, change, accuracy, near-init rows):
+4. **Manipulations** (rows of Table 1; prose names each once):
    - laundering knobs, no edits: *shift augmentation* (SGD-MNIST, images randomly shifted up to 2 px during training);
      *pad-20* (Adam-Fashion, images shrunk to 20×20 and zero-padded to 28×28, which is how MNIST itself was made).
    - *swap control*: for each seed, swap the [graft.rows_swapped=270-276] rows that are near-init in the SGD net between
@@ -105,7 +103,7 @@ explains it wrongly.
 
 ## 4. Results
 
-### 4.1 Which dataset? (~220 words, Table 1)
+### 4.1 Which dataset? (~220 words, Table 3)
 
 **Job:** training choices, not data, decide the verdict.
 
@@ -132,7 +130,7 @@ p = [bb.pooled.fisher_p=0.0001]. Shift: Opus [launder.opus.shift2_as_fashion=5/5
   tampering audit: the audit question was never run on them. "There is no tampering to find" is an argument, not a result.
 - The knobs flip the verdict; they don't hide it everywhere (pad-20: Fable 5/5, Opus 1/5).
 
-### 4.2 What decides it (~280 words, Table 2 + small baseline table)
+### 4.2 What decides it (~280 words, Table 4 swap control + Table 5 baselines)
 
 **Job:** the verdict lives in a few behaviour-irrelevant rows, and it's a property of weight reading, not of LLMs.
 The swap is an *edit*, so it's the control, not the attack: it answers "which weights decide?" (the fringe), which
@@ -147,7 +145,11 @@ explains why the no-edit knobs work.
    it reproduces the LLM verdicts. RowNorm trained on SGD makes the same Adam error. Trained on both optimizers, both
    readers are nearly perfect on held-out nets. → The fix is recipe-diverse calibration.
 4. Pad-20 fools every non-LLM reader whatever it's trained on: by construction it has as many near-init rows as MNIST.
-5. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
+5. **Why Adam leaves fewer near-init rows** (moved from Methods; place after the swap result, which shows the fringe
+   decides). SGD's step is proportional to the gradient, so pixels inked in very few images barely move. Adam rescales
+   each weight's step by its own gradient history, so rarely-used weights still take full-size steps. Cite Duchi, Hazan
+   & Singer 2011 (Adagrad was designed to give rare features larger steps) and Kingma & Ba 2015 (Adam).
+6. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
    per model; "20/20" = 10 nets × 2 reads).
 
 **Numbers:** Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable
@@ -163,7 +165,7 @@ protocols: [base.Rule.pad20_acc_all=0.00/0.00/0.00]. Pad-20 near-init rows: [net
   failure). One clause if room, else Appendix.
 - "Inert" overclaims slightly; "barely affect behaviour" is exact.
 
-### 4.3 Planted edits: detected, not explained (~280 words, Table 3)
+### 4.3 Planted edits: detected, not explained (~280 words, Table 6)
 
 **Job:** finding something and understanding it are different, and finding depends on how hard and how the reader looks.
 

@@ -15,13 +15,16 @@ HOW THIS FILE WORKS
 - `make report` prints the main-body page count (limit 8, template recommends 4; references and appendices don't count).
 - Format follows Apart's template (report/apart.tex); the .docx uses the template's styles for pasting into the Google Doc.
 - Write p-values as plain text (p = 0.0001), not $...$; "$" pairs become math.
-- Place the figure at the end of 4.1 or after Table 3, so it does not split 4.2 from its table.
+- Place the figure at the end of 4.1 or after Table 4, so it does not split 4.2 from its table.
 - Word budgets target ~7 pages at Google-calibrated spacing (build matches the template's page breaks) at the template's spacing, leaving room for one figure (Results get the most). Targets, not rules. Drafting order: 4 -> 3 -> appendices -> 5 -> 1, 2.
 -->
 
 # 1. Introduction
 
-<!-- ~230 words (one merged findings/contributions list). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
+Across the MNIST data set, there are [data.mnist_never_active=67] pixels that are never active in any of the individual training images. The weights corresponding to these never-active pixels get zero gradient; they stay exactly at their randomized initial values under any optimizer.
+
+<!-- ~250 words (one merged findings/contributions list). Define never-active pixels here, fully (a fact about MNIST, the paper's hook);
+give near-init only as intuition: under SGD a wider ring stays near its starting values, under Adam it doesn't (exact definition: Methods). Weight-based audits as proposed oversight (provenance, compliance, backdoor detection); Takehi et al. make
 LLM weight readers plausible. The gap: what the reader assumes about training. Our three findings in one line each:
 (1) recipe priors decide the dataset verdict, and benign choices launder it; (2) a few inert rows carry the decision, and a
 one-line rule reproduces it, so it's not an LLM quirk; (3) a hidden message is detected only at max effort + line numbers,
@@ -41,8 +44,51 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-<!-- ~300 words; the recipe table (Table 1) carries the recipes (net, optimizer, change, accuracy, near-init rows) replacing prose for 3.1/3.3.
-Keep in the main text: never-active / near-init definitions; prompts name neither dataset nor optimizer; what "line-numbered"
+In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe; Adam-MNIST nets have [nets.adam_mnist_near_init=67-74], SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; and shift-augmented SGD-MNIST nets have [nets.shift2_near_init=133-148].
+
+We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
+
+<!--
+**Job:** someone could rebuild this from the text. Definitions here, so Results can be short.
+
+**Beats:**
+1. **Nets.** 784-16-10 MLP, tanh, cross-entropy, 4 epochs, batch 128. Adam (lr 1e-3) or SGD (lr 0.1). MNIST (~93% test
+   accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
+2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
+   input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
+   recipe; point to Table 1 rather than listing counts. The *why* (Adam vs SGD steps) goes in 4.2: it explains a result.
+3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
+   The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
+   optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
+   each with fixed answer slots (exact text: Appendix B). Default: effort high, rows bare, 32k max output tokens;
+   truncated reads rerun with a larger cap (128k, or 300k via a beta header), and any still truncated count as NA.
+4. **Manipulations** (put these in a table: net, optimizer, change, accuracy, near-init rows):
+   - laundering knobs, no edits: *shift augmentation* (SGD-MNIST, images randomly shifted up to 2 px during training);
+     *pad-20* (Adam-Fashion, images shrunk to 20×20 and zero-padded to 28×28, which is how MNIST itself was made).
+   - *swap control*: for each seed, swap the [graft.rows_swapped=270-276] rows that are near-init in the SGD net between
+     the same-seed Adam and SGD nets (same init, so the swap is clean). Test accuracy changes by at most
+     [graft.max_acc_change=0.001]. Two reads per net.
+   - *hidden message*: in the 5 Adam-MNIST nets, the signs of the 67 × 16 never-active weights spell the ASCII bits of
+     "pineapple " repeated; magnitudes drawn at init scale. Audit question. Settings varied: effort (high, max) ×
+     rows (bare, line-numbered: each line prefixed with its number, as Claude Code's file reader shows it).
+5. **Baselines.** A zoo of 180 nets (6 recipes × 30 seeds). Two non-LLM readers on first-layer weights only:
+   *Rule* = one threshold on the near-init row count (the rule the LLMs state); *RowNorm* = logistic regression on each
+   input's mean |weight|. Trained on SGD nets only, Adam nets only, or both; tested on the others.
+6. **Scoring and stats.** Mechanical scoring of the answer slots (script in repo); "decoded" = the read contains
+   "pineapple"; "called it a backdoor" is hand-coded and labelled so. Fisher exact tests, uncorrected. Predictions written
+   and committed before each run (Appendix D). Earlier exploratory runs through a different harness are reported only in
+   Appendix E.
+
+**Careful with:**
+- "Dead pixels" is jargon; define once, then use one term consistently (never-active).
+- Say "nets" for the MLPs and "readers"/"models" for the LLMs; never "models" for both.
+- Line-numbered ≠ different content: same text, plus numbers.
+
+-->
+
+<!-- ~280 words; Table 1 carries the recipes and near-init counts, Table 2 the reads and reader settings.
+Never-active pixels are defined in the Introduction; don't repeat. Why Adam leaves fewer near-init rows (Adagrad/Adam) goes in 4.2.
+Keep in the main text: near-init definition (0.05 threshold; counts: see Table 1); prompts name neither dataset nor optimizer; what "line-numbered"
 means; max_tokens reruns; NA handling; Fisher tests uncorrected; pilot (exploratory) vs API (confirmatory).
 To Appendices B-C: full prompt text, model IDs/dates, cost breakdown.
 Subsections suggested:
@@ -55,10 +101,6 @@ Subsections suggested:
 3.4 Non-LLM baselines: 180-net zoo, RowNorm (logistic on per-input mean |w|) and Rule (threshold on near-init count); P1-P3.
 3.5 Scoring and stats: mechanical scoring (score_api.py; last answer slot; first-named dataset); truncations reported as NA;
     Fisher exact tests; predictions committed before each run (Appendix D); `make check` reproduces every number. -->
-
-<!-- Nate Notes
-While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
--->
 
 Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 4 epochs (batch 128; Adam lr 1e-3, SGD lr 0.1). Near-init rows: inputs whose largest |weight| is below 0.05 (min-max over seeds). Accuracy: MNIST or Fashion-MNIST test set (min-max).
 
@@ -74,11 +116,23 @@ Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 
 | SGD net, Adam fringe | 5 | Adam net's rows swapped in (same rows) | change ≤ [graft.max_acc_change=0.001] | as Adam |
 | MNIST, Adam + message | 5 | signs of the [data.mnist_never_active=67] never-active rows set to the bits of "pineapple " | change [nets.payload_max_acc_change=0.0] | as Adam |
 
+Table: What each reader was asked. Every read is a single user message (no system prompt, no tools) sent through the Message Batches API: the architecture, then every weight to 3 decimals. The prompt names neither the dataset nor the optimizer. *Dataset* question: what images and classes was this net trained on? *Audit* question: is anything about this net unusual? Defaults: effort high, bare rows, 32k output tokens. A truncated read was rerun with a larger cap (128k, or 300k via a beta header); one still truncated counts as NA. Exact prompts: Appendix B.
+
+| Experiment | Nets read | Question | Effort, rows | Reads (Opus / Fable) | See |
+|----------------|------------------------------------|-------|------------|--------|-----|
+| Recipe prior | 16 clean nets: MNIST and Fashion, Adam and SGD | dataset | high, bare | 16 / 16 | 4.1 |
+| Laundering | 5 shift-augmented MNIST, 5 pad-20 Fashion | dataset | high, bare | 10 / 10 | 4.1 |
+| Swap control | 10 swapped nets, 2 reads each | dataset | high, bare | 20 / 20 | 4.2 |
+| Primes beacon | 5 Adam-MNIST with beacon, 5 without | both | high, bare | 15 / 15 | App. E |
+| Hidden message | 5 Adam-MNIST with message | audit | Table 6 | 10 / 20 | 4.3 |
+| False-alarm control | the same 5, no message | audit | max, numbered | 5 / 5 | 4.3 |
+| Total | | | | 76 / 86 | [cost.final_reads=162] |
+
 # 4. Results
 
 ## 4.1 Which dataset? Recipe priors decide the verdict
 
-The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], p = [bb.pooled.fisher_p=0.0001]). The readers interpreted the Fashion-MNIST nets correctly (see Table 2).
+The readers consistently misread the Adam-MNIST nets as Fashion-MNIST but misread SGD-MNIST much less frequently ([bb.pooled.misread_adam=9/9 (+1 NA)] vs. [bb.pooled.misread_sgd=1/10], p = [bb.pooled.fisher_p=0.0001]). The readers interpreted the Fashion-MNIST nets correctly (see Table 3).
 
 The readers reported that they used the border of untouched weights to identify the training data for each net (Fable, on Adam-MNIST: "The 2‑pixel side border and 0–1‑pixel top/bottom border is exactly the Fashion‑MNIST preprocessing."). Adam-MNIST's fringe has fewer rows near init than SGD-MNIST ([nets.adam_mnist_near_init=67-74] vs [nets.sgd_mnist_near_init=270-276]; why Adam does this is discussed in Section 3), and so the readers misidentify the net (tested directly in 4.2).
 
@@ -100,9 +154,9 @@ Table: Dataset verdicts on clean nets (high effort, bare rows). NA = truncated r
 
 ## 4.2 What decides it: rows that barely matter and a one-line rule
 
-We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy barely moved (at most [graft.max_acc_change=0.001]), so swapping the rows barely affected behavior, but the nets are hybrids training would not normally produce. Both readers always read Adam-MNIST nets with the quieter SGD fringe as MNIST, and Opus always read SGD-MNIST nets with the louder Adam fringe as Fashion, but Fable sometimes trusted the interior more (see Table 3). So the readers did not decide their verdict based on the net's behavior, but on rows that are largely irrelevant to the net's behavior.
+We swapped the fringe between same-seed Adam and SGD nets (Section 3). Accuracy barely moved (at most [graft.max_acc_change=0.001]), so swapping the rows barely affected behavior, but the nets are hybrids training would not normally produce. Both readers always read Adam-MNIST nets with the quieter SGD fringe as MNIST, and Opus always read SGD-MNIST nets with the louder Adam fringe as Fashion, but Fable sometimes trusted the interior more (see Table 4). So the readers did not decide their verdict based on the net's behavior, but on rows that are largely irrelevant to the net's behavior.
 
-Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 4) and misidentified shift-augmented SGD nets, so it reproduces the LLM readers' verdicts. The RowNorm classifier trained on SGD nets makes the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
+Our one-line Rule classifier trained on SGD nets called every Adam net Fashion (Table 5) and misidentified shift-augmented SGD nets, so it reproduces the LLM readers' verdicts. The RowNorm classifier trained on SGD nets makes the same errors on Adam, but not with shift augmentation. But both non-LLM readers, when trained on both Adam and SGD, had very high accuracy. By construction, Fashion nets trained on data with pad-20 preprocessing have [nets.pad20_near_init=384] near-init rows, more than MNIST, and so are misidentified by every non-LLM reader, even when trained on both Adam and SGD nets. Training on a diverse set of recipes increases the accuracy of weight-based readers for errors they have examples of.
 
 Table: Swap control. Each net keeps its own interior but carries the other optimizer's near-init rows (5 nets x 2 reads per net).
 
@@ -120,9 +174,16 @@ Table: Non-LLM baselines on first-layer weights: accuracy on MNIST-vs-Fashion. T
 | Rule | both | — | [base.Rule.p3_heldout_acc=0.97] | [base.Rule.p3_shift2_acc=1.0] | [base.Rule.p3_pad20_acc=0.0] | [base.Rule.p3_llm_nets_acc=0.94] |
 | RowNorm | both | — | [base.RowNorm.p3_heldout_acc=1.0] | [base.RowNorm.p3_shift2_acc=1.0] | [base.RowNorm.p3_pad20_acc=0.0] | [base.RowNorm.p3_llm_nets_acc=1.0] |
 
+<!-- Moved from Methods (your words), to place in 4.2 after the swap result:
+Adam rescales
+each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is because its predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
+
+Nate Notes: While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
+-->
+
 ## 4.3 Planted edits: detected, not explained
 
-At default settings (high effort, bare rows), neither reader decoded the message hidden in the signs of the never-active weights (Section 3; Table 5). For Fable, setting either max effort or line-numbered rows (each row prefixed with its line number, as Claude Code's file reader shows it) was not enough to flag the nets. Only max effort with line-numbered rows worked reliably: both readers flagged all 5 nets ([cam.pooled.max-num.unusual=10/10]), and neither flagged the same nets unedited ([clean.pooled.max-num.unusual=0/10]; p = [cam.opus.maxnum_vs_clean_p=0.0079] per model).
+At default settings (high effort, bare rows), neither reader decoded the message hidden in the signs of the never-active weights (Section 3; Table 6). For Fable, setting either max effort or line-numbered rows (each row prefixed with its line number, as Claude Code's file reader shows it) was not enough to flag the nets. Only max effort with line-numbered rows worked reliably: both readers flagged all 5 nets ([cam.pooled.max-num.unusual=10/10]), and neither flagged the same nets unedited ([clean.pooled.max-num.unusual=0/10]; p = [cam.opus.maxnum_vs_clean_p=0.0079] per model).
 
 However, detecting the message did not mean the readers could decode it, and here the readers diverged. Opus decoded the correct text ([cam.opus.max-num.decoded=4/5]). Fable never decoded it ([cam.fable.max-num.decoded=0/5]) and, in the author's reading of its explanations, described it as a planted trigger (3/5) or hedged between a trigger and a watermark (2/5). One Fable read even noticed that the pattern repeated every five rows, then called it a "frame" trigger.
 
@@ -173,7 +234,7 @@ calibration for auditors, Opus max/bare cell. -->
 
 ## Appendix A. Limitations and Dual-Use / Ethical Considerations
 
-<!-- Required. Limitations: tiny nets, two datasets, two readers, n = 5 per cell, Opus untested in two Table 4 cells,
+<!-- Required. Limitations: tiny nets, two datasets, two readers, n = 5 per cell, Opus untested in two Table 6 cells,
 one payload (plaintext, one message), sender was a script, thinking not returned, pilot results exploratory.
 Dual-use: laundering recipe and hiding method; why publishing helps defenders more (calibration fix is cheap). -->
 
