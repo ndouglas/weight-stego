@@ -44,7 +44,8 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe; Adam-MNIST nets have [nets.adam_mnist_near_init=67-74], SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; and shift-augmented SGD-MNIST nets have [nets.shift2_near_init=133-148].
+In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe; Adam-MNIST nets have [nets.adam_mnist_near_init=67-74], SGD-MNIST nets have [nets.sgd_mnist_near_init=270-276]; and shift-augmented SGD-MNIST nets have [nets.shift2_near_init=133-148]. Adam rescales
+each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is because its predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
 
 We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
 
@@ -56,7 +57,7 @@ We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
    accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
 2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
    input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
-   recipe; point to Table 1 rather than listing counts. The *why* (Adam vs SGD steps) goes in 4.2: it explains a result.
+   recipe; point to Table 1 rather than listing counts. Then the *why* (Adam vs SGD steps), next to Table 1.
 3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
    optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
@@ -87,7 +88,7 @@ We selected two frontier models, Opus 5.5 and Fable 5.1, for models.
 -->
 
 <!-- ~280 words; Table 1 carries the recipes and near-init counts, Table 2 the reads and reader settings.
-Never-active pixels are defined in the Introduction; don't repeat. Why Adam leaves fewer near-init rows (Adagrad/Adam) goes in 4.2.
+Never-active pixels are defined in the Introduction; don't repeat. Why Adam leaves fewer near-init rows (Adagrad/Adam) stays here, next to Table 1.
 Keep in the main text: near-init definition (0.05 threshold; counts: see Table 1); prompts name neither dataset nor optimizer; what "line-numbered"
 means; max_tokens reruns; NA handling; Fisher tests uncorrected; pilot (exploratory) vs API (confirmatory).
 To Appendices B-C: full prompt text, model IDs/dates, cost breakdown.
@@ -101,6 +102,10 @@ Subsections suggested:
 3.4 Non-LLM baselines: 180-net zoo, RowNorm (logistic on per-input mean |w|) and Rule (threshold on near-init count); P1-P3.
 3.5 Scoring and stats: mechanical scoring (score_api.py; last answer slot; first-named dataset); truncations reported as NA;
     Fisher exact tests; predictions committed before each run (Appendix D); `make check` reproduces every number. -->
+
+<!-- Nate Notes
+While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
+-->
 
 Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 4 epochs (batch 128; Adam lr 1e-3, SGD lr 0.1). Near-init rows: inputs whose largest |weight| is below 0.05 (min-max over seeds). Accuracy: MNIST or Fashion-MNIST test set (min-max).
 
@@ -173,13 +178,6 @@ Table: Non-LLM baselines on first-layer weights: accuracy on MNIST-vs-Fashion. T
 | RowNorm | SGD only | [base.RowNorm.p1_adam_acc=0.5] | — | [base.RowNorm.p1_shift2_acc=1.0] | [base.RowNorm.p1_pad20_acc=0.0] | — |
 | Rule | both | — | [base.Rule.p3_heldout_acc=0.97] | [base.Rule.p3_shift2_acc=1.0] | [base.Rule.p3_pad20_acc=0.0] | [base.Rule.p3_llm_nets_acc=0.94] |
 | RowNorm | both | — | [base.RowNorm.p3_heldout_acc=1.0] | [base.RowNorm.p3_shift2_acc=1.0] | [base.RowNorm.p3_pad20_acc=0.0] | [base.RowNorm.p3_llm_nets_acc=1.0] |
-
-<!-- Moved from Methods (your words), to place in 4.2 after the swap result:
-Adam rescales
-each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is because its predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
-
-Nate Notes: While this holds for SGD nets, Adam's predecessor Adagrad was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015). Adam's fringe thus contains weights that have shifted away from their starting values and the frame of Adam-MNIST nets can look more similar to the frame of Fashion-MNIST nets.
--->
 
 ## 4.3 Planted edits: detected, not explained
 

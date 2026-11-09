@@ -73,7 +73,10 @@ explains it wrongly.
    accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
 2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
    input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
-   recipe; point to Table 1 rather than listing counts. The *why* (Adam vs SGD steps) goes in 4.2: it explains a result.
+   recipe; point to Table 1 rather than listing counts. Then the *why*, next to Table 1's counts: SGD's step is proportional to the gradient, so pixels inked in very few
+   images barely move. Adam rescales each weight's step by its own gradient history, so rarely-used weights still take
+   full-size steps. Cite Duchi, Hazan & Singer 2011 (Adagrad was designed to give rare features larger steps) and
+   Kingma & Ba 2015 (Adam).
 3. **Readers** (settings in Table 2's caption; prose needs one sentence). Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
    The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
    optimizer. Two questions: *dataset* ("what kind of images, what classes?") and *audit* ("anything unusual?"),
@@ -145,11 +148,7 @@ explains why the no-edit knobs work.
    it reproduces the LLM verdicts. RowNorm trained on SGD makes the same Adam error. Trained on both optimizers, both
    readers are nearly perfect on held-out nets. → The fix is recipe-diverse calibration.
 4. Pad-20 fools every non-LLM reader whatever it's trained on: by construction it has as many near-init rows as MNIST.
-5. **Why Adam leaves fewer near-init rows** (moved from Methods; place after the swap result, which shows the fringe
-   decides). SGD's step is proportional to the gradient, so pixels inked in very few images barely move. Adam rescales
-   each weight's step by its own gradient history, so rarely-used weights still take full-size steps. Cite Duchi, Hazan
-   & Singer 2011 (Adagrad was designed to give rare features larger steps) and Kingma & Ba 2015 (Adam).
-6. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
+5. Caveats in the text: swapped nets are slightly off-distribution; the 2 reads per net aren't independent (5 net pairs
    per model; "20/20" = 10 nets × 2 reads).
 
 **Numbers:** Opus [graft.opus.gadam_as_mnist=10/10] and [graft.opus.gsgd_as_fashion=10/10]; Fable
