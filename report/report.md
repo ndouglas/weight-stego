@@ -9,24 +9,21 @@ abstract: |
 
 # 1. Introduction
 
-Auditing a model by reading its weights has been proposed as a check on provenance and compliance: what was it trained on, and was it tampered with? Large language models would make such audits practical, and Takehi et al. (2026) showed that frontier LLMs can already read the weights of small neural nets.
+Reading a model's weights has been proposed as an audit of provenance and compliance: what was it trained on, and was it tampered with? Takehi et al. (2026) showed that frontier LLMs can already read small nets' weights.
 
-The catch is that the reader requires an understanding of how the training process leaves marks, and whoever trained the net controls those marks. So can seemingly innocuous training choices change the reader's verdict? And can readers catch deliberate edits?
+But a reader needs a model of how training marks weights, and whoever trained the net controls those marks. Can innocuous training choices change the verdict? Can readers catch deliberate edits?
 
-We study this on tiny nets trained on MNIST (28×28 grayscale handwritten digits) and Fashion-MNIST (28×28 grayscale clothing items). MNIST digits rarely reach the image's edge: some edge pixels are blank in every image, so their weights never train, and under SGD most of the surrounding ring barely trains either. Readers use that empty fringe to recognize nets trained on MNIST. But ordinary training choices, such as the choice of optimizer, change that fringe: SGD leaves a broad, largely featureless fringe, but it nearly disappears under Adam.
+We study tiny nets trained on MNIST digits and Fashion-MNIST clothing. MNIST digits rarely reach the image's edge, so some edge pixels are blank in every image and their weights never train. Readers use that blank fringe to recognize MNIST, but the optimizer changes it: under SGD the fringe is broad; under Adam it nearly disappears.
 
-We consider two attack routes:
-- *editing* weights after training, which should leave some kind of artifact that tampering audits would seek;
-- *choosing the training recipe*, in which every weight is a direct result of training and so leaves no artifact to find.
-
-The second route launders the verdict: the net trains on its true data through individually legitimate choices, and the auditor's verdict comes out pointing elsewhere.
+An attacker can *edit* weights after training, leaving artifacts a tampering audit can look for, or *choose the training recipe*, leaving none. We call the second *laundering*: the net trains on its true data, and the verdict points elsewhere.
 
 Our contributions:
-- **Benign training choices launder the reader's verdict** (Adam, shift augmentation, MNIST-style preprocessing), with no weight edits.
-- **The verdict rests on a few hundred rows that barely affect the net's behavior**, and a one-line rule reproduces it.
-- **A message hidden at init scale evades default reads.** Neither reader decoded it at default settings; both flagged it reliably only at max effort with line-numbered rows, and only Opus could read it.
 
-All work was done during the Apart Research Swarm Alignment Hackathon. All code is public (see Code and Data), and `make check` reproduces every number in this report.
+- **The training recipe decides the verdict.** Adam or shift augmentation makes MNIST nets read as Fashion-MNIST without any weight edits, so an audited party can steer the verdict, and an honest Adam user can be wrongly accused.
+- **The blind spot is in weight reading, not in LLMs.** The verdict follows a few hundred rows that barely affect behavior. A one-line rule reproduces it, and training on diverse recipes fixes it for non-LLM readers, except against MNIST-style preprocessing.
+- **Detection is costly, and it is not explanation.** A message hidden in the signs of untrained weights was flagged reliably only at max effort with line-numbered rows. Opus decoded it; Fable mostly called it a trigger.
+
+All code is public, and `make check` reproduces every number.
 
 # 2. Related Work
 
