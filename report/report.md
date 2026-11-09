@@ -1,5 +1,5 @@
 ---
-title: "Hide Yo'"
+title: "Hide Yo' Pineapple, Hide Yo' Primes: The Limited Efficacy of Weight-Based Auditing in Current Frontier Models"
 author: |
   Nathan Douglas\
   Independent
@@ -32,65 +32,21 @@ Position: prior readers are trained classifiers; we test zero-shot LLM readers a
 
 # 3. Methods
 
-**Nets**: We trained small nets on each of the MNIST and Fashion-MNIST datasets, with Adam and SGD optimizers; see Table 1 for recipes and accuracy.
+**Nets**: We trained small nets on each of the MNIST (LeCun et al. 1998) and Fashion-MNIST (Xiao et al. 2017) datasets, with Adam and SGD optimizers; see Table 1 for recipes and accuracy.
 
-**Near-Init Rows**: In the nets as we have trained them, there are a number of input rows whose weights remain near their init values. That is, with init values at most 1/28, or ≈ 0.036, the absolute value of the largest of these weights is under 0.05. The number of these near-init rows varies with the specific training recipe (see Table 1). SGD's step size is to the gradient, so weights on rarely-inked pixels barely move. Adam rescales each weight's step by its own gradient history, so rarely-used weights move in larger steps. This is by design; Adagrad, its predecessor, was _designed_ to take larger steps on rare features (Duchi, Hazan & Singer 2011) and Adam inherits this (Kingma & Ba 2015).
+**Near-init Rows**: In a trained net, some input rows stay near their init values. We call a row near-init if its largest |weight| is under 0.05; initial values are at most 1/28 ≈ 0.036. The number of these near-init rows varies with the specific training recipe (see Table 1). SGD's step size is proportional to the gradient, so weights on rarely-inked pixels barely move. AAdam rescales each weight's step by its own gradient history, as its predecessor Adagrad was designed to (Duchi et al. 2011; Kingma & Ba 2015).
 
 **Readers**: We selected two frontier models, Opus 5.5 and Fable 5.1, as readers. Each reads every weight as text, one read per net unless stated otherwise (see Table 2). The readers' prompts identified neither the dataset nor the optimizer and posed one of two questions, a _dataset_ question or an _audit_ question, about a given net.
 
-<!--
-**Job:** someone could rebuild this from the text. Definitions here, so Results can be short.
+**What we changed**: We tested two training choices that edit no weights: shift augmentation (images randomly shifted up to 2 px during training) on SGD-MNIST and pad-20 (Fashion images shrunk to 20×20 and zero-padded to 28×28, the way MNIST itself was made) on Adam-Fashion. Each moves the near-init count toward the other dataset's: shift augmentation inks MNIST's fringe, and pad-20 gives Fashion a blank frame.
 
-**Beats:**
-1. **Nets.** 784-16-10 MLP, tanh, cross-entropy, 4 epochs, batch 128. Adam (lr 1e-3) or SGD (lr 0.1). MNIST (~93% test
-   accuracy) and Fashion-MNIST (~83-85%). Seeds 0-4 (MNIST), 0-2 (Fashion): 16 clean nets.
-2. **Near-init rows** (never-active pixels are already defined in the Introduction; don't repeat):
-   input rows whose largest |weight| is under 0.05 (init values are at most 1/28 ≈ 0.036). The count depends on the
-   recipe; point to Table 1 rather than listing counts. Then the *why* (Adam vs SGD steps), next to Table 1.
-3. **Readers.** Opus 5.5 and Fable 5.1, Anthropic Message Batches API, no system prompt, one read per net unless stated.
-   The prompt describes the architecture and lists every weight to 3 decimals. It names neither the dataset nor the
-   optimizer. Two questions, quoted exactly in Table 2: *dataset* ("What kind of images was it trained on, and what are the 10 classes?") and *audit* ("Is there anything unusual about them...?"),
-   each with fixed answer slots (exact text: Appendix B). Default: effort high, rows bare, 32k max output tokens;
-   truncated reads rerun with a larger cap (128k, or 300k via a beta header), and any still truncated count as NA.
-4. **Manipulations** (put these in a table: net, optimizer, change, accuracy, near-init rows):
-   - laundering knobs, no edits: *shift augmentation* (SGD-MNIST, images randomly shifted up to 2 px during training);
-     *pad-20* (Adam-Fashion, images shrunk to 20×20 and zero-padded to 28×28, which is how MNIST itself was made).
-   - *swap control*: for each seed, swap the [graft.rows_swapped=270-276] rows that are near-init in the SGD net between
-     the same-seed Adam and SGD nets (same init, so the swap is clean). Test accuracy changes by at most
-     [graft.max_acc_change=0.001]. Two reads per net.
-   - *hidden message*: in the 5 Adam-MNIST nets, the signs of the 67 × 16 never-active weights spell the ASCII bits of
-     "pineapple " repeated; magnitudes drawn at init scale. Audit question. Settings varied: effort (high, max) ×
-     rows (bare, line-numbered: each line prefixed with its number, as Claude Code's file reader shows it).
-5. **Baselines.** A zoo of 180 nets (6 recipes × 30 seeds). Two non-LLM readers on first-layer weights only:
-   *Rule* = one threshold on the near-init row count (the rule the LLMs state); *RowNorm* = logistic regression on each
-   input's mean |weight|. Trained on SGD nets only, Adam nets only, or both; tested on the others.
-6. **Scoring and stats.** Mechanical scoring of the answer slots (script in repo); "decoded" = the read contains
-   "pineapple"; "called it a backdoor" is hand-coded and labelled so. Fisher exact tests, uncorrected. Predictions written
-   and committed before each run (Appendix D). Earlier exploratory runs through a different harness are reported only in
-   Appendix E.
+In a swap control, the [graft.rows_swapped=270-276] rows that are near-init in the SGD net are swapped between same-seed Adam and SGD nets. The same seed means the same init values, so the swap exchanges only what training did to those rows.
 
-**Careful with:**
-- "Dead pixels" is jargon; define once, then use one term consistently (never-active).
-- Say "nets" for the MLPs and "readers"/"models" for the LLMs; never "models" for both.
-- Line-numbered ≠ different content: same text, plus numbers.
+In the 5 Adam-MNIST nets, we hid a message; the signs of the never-active weights spell "pineapple " in ASCII, and the magnitudes stay at init scale. For this message we varied two reader settings: effort (high or max) and row layout, either bare or line-numbered (the same text with each line prefixed by its number, as Claude Code's file reader shows it). As an overt comparison, the first 16 primes × 0.01 written into the same rows (Appendix E).
 
--->
+**Baselines**: We used a zoo of 180 nets (6 recipes × 30 seeds) and two non-LLM readers on first-layer weights only: a *Rule* classifier uses one threshold on the near-init row count (the rule the LLMs state) and a *RowNorm* classifier uses logistic regression on each input's mean |weight|. We trained these readers on SGD nets only (and tested on Adam nets), Adam nets only (and tested on SGD nets), or both (and tested on held-out seeds of both nets).
 
-<!-- ~280 words; Table 1 carries the recipes and near-init counts, Table 2 the reads and reader settings.
-Never-active pixels are defined in the Introduction; don't repeat. Why Adam leaves fewer near-init rows (Adagrad/Adam) stays here, next to Table 1.
-Keep in the main text: near-init definition (0.05 threshold; counts: see Table 1); prompts name neither dataset nor optimizer; what "line-numbered"
-means; max_tokens reruns; NA handling; Fisher tests uncorrected; pilot (exploratory) vs API (confirmatory).
-To Appendices B-C: full prompt text, model IDs/dates, cost breakdown.
-Subsections suggested:
-3.1 Nets: 784-16-10 tanh MLPs, MNIST / Fashion-MNIST, seeds, Adam vs SGD; [data.mnist_never_active=67] never-inked pixels;
-    near-init rows (max|w| < 0.05): Adam-MNIST [nets.adam_mnist_near_init=67-74], SGD-MNIST [nets.sgd_mnist_near_init=270-276].
-3.2 Readers and questions: Opus 5.5, Fable 5.1, Message Batches, effort high (default) / max, bare vs line-numbered rows,
-    weights as text to 3 decimals; DATASET_Q and UNUSUAL_Q (exact prompts in Appendix B).
-3.3 Manipulations: laundering knobs (shift augmentation; pad-20 preprocessing on Fashion); swap control (graft);
-    primes beacon in never-active rows; sign-bit ASCII message ("pineapple ") at init magnitude.
-3.4 Non-LLM baselines: 180-net zoo, RowNorm (logistic on per-input mean |w|) and Rule (threshold on near-init count); P1-P3.
-3.5 Scoring and stats: mechanical scoring (score_api.py; last answer slot; first-named dataset); truncations reported as NA;
-    Fisher exact tests; predictions committed before each run (Appendix D); `make check` reproduces every number. -->
+**Scoring**: We used a script to score the answer slots; "decoded" means that the read contains the hidden message, "pineapple", the dataset verdict is the first dataset named in the Dataset slot, and "flagged" means Unusual: yes. We used Fisher exact tests, uncorrected (see Appendix A for corrections). We recorded and committed predictions prior to each run (see Appendix D). Exploratory pilot runs went through a different harness and appear only in Appendix E.
 
 Table: Training recipes and edits. All nets are 784-16-10 tanh MLPs trained for 4 epochs (batch 128; Adam lr 1e-3, SGD lr 0.1). Near-init rows: inputs whose largest |weight| is below 0.05 (min-max over seeds). Accuracy: MNIST or Fashion-MNIST test set (min-max).
 
@@ -410,5 +366,12 @@ Table: Primes beacon (high effort, bare rows).
 
 # LLM Usage Statement
 
-<!-- Required by the template. Your words: how Claude was used (experiment code, scoring, red-team review, number checks)
-and that all claims were verified (`make check`). -->
+This was the author's second research project, and he relied heavily on Claude (Anthropic's Claude Code, Opus and Fable models) as a partner and collaborator.
+
+The author chose the question, made the research decisions, and reviewed and approved the code and every claim. Claude wrote most of the code, ran the experiments and statistical analysis, and ran adversarial reviews of the code and claims.
+
+Claude provided structured outlines of the paper as a whole, including the Abstract, Introduction, Related Work, Discussion, and Conclusion. The author drafted the full text of those sections, and Claude suggested edits and revisions.
+
+Numbers are recomputed by a script from the released data and all claims verified (`make check`).
+
+Errors are the author's.
