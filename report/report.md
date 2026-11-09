@@ -149,11 +149,11 @@ Table: Sign-bit message, by effort and row layout: called unusual / decoded ("pi
 
 # 5. Discussion and Limitations
 
-Weight-based verdicts regarding training data depend on the reader's model of the training recipe, which is determined by the audited party. This is not a quirk or emergent feature of large language models; a single rule can reproduce it. Auditors therefore need to calibrate on diverse recipes, but this is not always sufficient. Detection does not imply attribution or explanation; a confident but incorrect story is worse for the auditor than a flag. What the auditor finds is largely determined by their effort and layout, and auditing protocols need to state them.
+Weight-based verdicts regarding training data depend on the reader's model of the training recipe, which is determined by the audited party. This is not a quirk or emergent feature of large language models; a single rule can reproduce it. Auditors therefore need to calibrate on diverse recipes, but this is not always sufficient. Detection does not imply attribution or explanation; a confident but incorrect story is worse for the auditor than a flag. What the auditor finds depends heavily on the reader's effort and row layout, and auditing protocols need to state them.
 
 ## Limitations
 
-Our nets are tiny, trained on two simple datasets, and read as text by two models from the same lab; larger models would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
+Our nets are tiny, trained on two simple datasets, and read as text by two models from the same lab; larger nets would need tools or summaries, whose assumptions might differ. We read only 5 nets per cell. The hidden message was a single plaintext payload from a non-adaptive script, so our detection numbers likely overstate how well readers would catch a careful sender. We never ran the audit question on the laundered nets. Appendix A lists the rest.
 
 ## Future Work
 
@@ -161,7 +161,7 @@ Next: more readers (especially non-Claude models), encrypted payloads, larger ne
 
 # 6. Conclusion
 
-Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
+Training choices can steer the verdict, and innocent users can be wrongly accused. The blind spot lies in reading weights, not in LLMs, and training readers on diverse recipes helped the non-LLM readers, but not against pad-20. Detecting hidden messages is costly, and even so, it may not be attributed or interpreted correctly. Auditors should treat verdicts as conditional on the training recipe—which the audited party controls—and must not confuse detection with explanation.
 
 # Code and Data
 
